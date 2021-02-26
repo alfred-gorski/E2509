@@ -9,6 +9,9 @@
 #include <Reset.h>
 
 #include <DrvUSART.h>
+#include <U_DrvSPI.h>
+
+#include <HW_RCC.h>
 
 unsigned volatile tickCounter = 0U;
 bool volatile runApplication = true; 
@@ -49,7 +52,24 @@ static void SetPRIMASK(WORD const primaskVal)
 /// Initialisierung des Hauptprogramms.
 static void MainInit(void)
 {
-  DEBUG_PUTS(__FUNCTION__);
+	/// Hauptinitialisierung des Controllers (inkl. Peripherie) erfolgt durch Aufruf von STM32F10xxx_Config()
+	STM32F10xxx_Config();
+	
+	
+	PeripheryEnable(RCC_GPIOA);
+	PeripheryEnable(RCC_GPIOB);
+	PeripheryEnable(RCC_GPIOC);
+	
+	
+	
+	
+	
+	SetCONTROL(1U);
+	
+	
+	
+	
+  /*DEBUG_PUTS(__FUNCTION__);
 
   /// Hauptinitialisierung des Controllers (inkl. Peripherie) erfolgt durch Aufruf von STM32F10xxx_Config()
 
@@ -70,6 +90,8 @@ static void MainInit(void)
   /// Aber Achtung: Der Exception-Modus ist immer privilegiert, unabhängig von CONTROL[0].
   
   SetCONTROL(1U);
+	*/
+	
 }
 
 /// Deinitialisierung des Hauptprogramms (mit Reset).

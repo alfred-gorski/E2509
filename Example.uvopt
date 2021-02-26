@@ -628,7 +628,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>C:\Users\jÃ¼rgen SchÃ¤fer.LESD\Desktop\Workspace_ET\trunk\Src\DrvUSART.c</Filename>
+          <Filename>C:\Users\j??rgen Sch?¤fer.LESD\Desktop\Workspace_ET\trunk\Src\DrvUSART.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\Example_Debug\Src/DrvUSART.c\91</Expression>
         </Bp>
@@ -721,8 +721,8 @@
       <Focus>1</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>98</TopLine>
-      <CurrentLine>109</CurrentLine>
+      <TopLine>1</TopLine>
+      <CurrentLine>162</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Example.c</PathWithFileName>
       <FilenameWithoutPath>Example.c</FilenameWithoutPath>
@@ -966,6 +966,22 @@
       <bDave2>0</bDave2>
       <PathWithFileName>.\Src\DrvUSART.c</PathWithFileName>
       <FilenameWithoutPath>DrvUSART.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>6</GroupNumber>
+      <FileNumber>17</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>2</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>7</TopLine>
+      <CurrentLine>19</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\Src\U_DrvSPI.c</PathWithFileName>
+      <FilenameWithoutPath>U_DrvSPI.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

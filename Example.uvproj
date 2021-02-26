@@ -570,6 +570,11 @@
               <FileType>1</FileType>
               <FilePath>.\Src\DrvUSART.c</FilePath>
             </File>
+            <File>
+              <FileName>U_DrvSPI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\U_DrvSPI.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -1077,6 +1082,11 @@
               <FileName>DrvUSART.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\DrvUSART.c</FilePath>
+            </File>
+            <File>
+              <FileName>U_DrvSPI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\U_DrvSPI.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1586,6 +1596,11 @@
               <FileType>1</FileType>
               <FilePath>.\Src\DrvUSART.c</FilePath>
             </File>
+            <File>
+              <FileName>U_DrvSPI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\U_DrvSPI.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -2093,6 +2108,11 @@
               <FileName>DrvUSART.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\DrvUSART.c</FilePath>
+            </File>
+            <File>
+              <FileName>U_DrvSPI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\U_DrvSPI.c</FilePath>
             </File>
           </Files>
         </Group>
