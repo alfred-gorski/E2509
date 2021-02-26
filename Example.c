@@ -9,12 +9,27 @@
 #include <Reset.h>
 
 #include <DrvUSART.h>
-#include <U_DrvSPI.h>
 
+#include <RB_SPI.h>
 #include <HW_RCC.h>
+
+#include <U_DrvSPI.h>
+#include <U_LEDMatrix.h>
 
 unsigned volatile tickCounter = 0U;
 bool volatile runApplication = true; 
+
+
+
+SPI_HandelTypDef hspi1;
+SPI_HandelTypDef hspi2;
+
+
+BYTE test[32]={1};
+
+
+
+
 
 typedef enum 
 {
@@ -61,6 +76,29 @@ static void MainInit(void)
 	PeripheryEnable(RCC_GPIOC);
 	
 	
+//Init
+	
+	//GPIO for all AnTx
+	GPIO_An_Init()
+	//GPIO for SPI1,SPI2
+	SPI1Init();
+	SPI2Init();
+	
+	
+	
+	//test
+ConfigureGPIO(&GPIOA, 12, GPIO_O_STD_PP_02MHZ);
+	//AnTR[n] GPIO init 
+//	for(uint16_t i=8;i<=12;i++)
+//	
+//			ConfigureGPIO(GPIOA, i, GPIO_O_STD_PP_02MHZ);
+//		}
+//		
+//	//for(unsigned i=7;i<9;i++)
+////		{
+////			ConfigureGPIO(GPIOC, i, GPIO_O_STD_PP_02MHZ);
+////		}
+		
 	
 	
 	
@@ -123,9 +161,18 @@ static void TestFsm(TestContextType * context)
 /// Routine, die im Hauprprogramm zyklisch aufgerufen wird.
 static void MainLoop(void)
 {
-	// Do the things you have to do ...
+	hspi1.Instance=&SPI1;
+	hspi2.Instance=&SPI2;
+	
+	
+	
+	if(SPT_Transmit(&hspi1,test,32)==SUCCEED_SEND){
+		DEBUG_PUTS("It all starts here ...");
+	}
 
-  TestFsm(&context);
+	
+	
+  //TestFsm(&context);
 
   __wfi();
 }

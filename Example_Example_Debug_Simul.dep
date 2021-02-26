@@ -1,130 +1,143 @@
 Dependencies for Project 'Example', Target 'Example_Debug_Simul': (DO NOT MODIFY !)
-F (.\Cfg\STM32F10xxx_Startup.s)(0x6038BC6C)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x--list .\lst\debug\stm32f10xxx_startup.lst --xref -o .\out\debug\stm32f10xxx_startup.o --depend .\out\debug\stm32f10xxx_startup.d)
-F (.\Cfg\STM32F10xxx_Config.c)(0x6038BC6C)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\stm32f10xxx_config.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\stm32f10xxx_config.crf --depend .\out\debug\stm32f10xxx_config.d)
-I (.\Cfg\STM32F10xxx.h)(0x6038BC6C)
-I (.\Inc\Compiler.h)(0x6038BC6C)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
-I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
-I (.\Inc\HW\RegBit.h)(0x6038BC6C)
-I (.\Inc\HW\HW_NVIC.h)(0x6038BC6C)
-I (.\Inc\RB\RB_NVIC.h)(0x6038BC6C)
-I (.\Inc\HW\HW_RCC.h)(0x6038BC6C)
-I (.\Inc\RB\RB_RCC.h)(0x6038BC6C)
-I (.\Inc\HW\HW_STK.h)(0x6038BC6C)
-I (.\Inc\RB\RB_STK.h)(0x6038BC6C)
-I (.\Inc\HW\HW_FLASH.h)(0x6038BC6C)
-I (.\Inc\RB\RB_FLASH.h)(0x6038BC6C)
-I (.\Inc\Debug.h)(0x6038BC6C)
-I (.\Inc\Reset.h)(0x6038BC6C)
-F (.\Example.c)(0x6038BDE2)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\example.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\example.crf --depend .\out\debug\example.d)
-I (.\Inc\Compiler.h)(0x6038BC6C)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
-I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
-I (.\Inc\Debug.h)(0x6038BC6C)
-I (.\Cfg\STM32F10xxx.h)(0x6038BC6C)
-I (.\Inc\Reset.h)(0x6038BC6C)
-I (.\Inc\DrvUSART.h)(0x6038BC6C)
-I (.\Inc\U_DrvSPI.h)(0x6038BDFF)
-I (.\Inc\HW\HW_RCC.h)(0x6038BC6C)
-I (.\Inc\RB\RB_RCC.h)(0x6038BC6C)
-F (.\Src\Fifo.c)(0x6038BC6C)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\fifo.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\fifo.crf --depend .\out\debug\fifo.d)
-I (.\Inc\Fifo.h)(0x6038BC6C)
-I (.\Inc\Compiler.h)(0x6038BC6C)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
-I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
-I (.\Inc\Debug.h)(0x6038BC6C)
-F (.\Src\Reset.c)(0x6038BC6C)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\reset.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\reset.crf --depend .\out\debug\reset.d)
-I (.\Inc\Reset.h)(0x6038BC6C)
-I (.\Inc\Debug.h)(0x6038BC6C)
-I (.\Inc\HW\HW_NVIC.h)(0x6038BC6C)
-I (.\Inc\RB\RB_NVIC.h)(0x6038BC6C)
-I (.\Inc\Compiler.h)(0x6038BC6C)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
-I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
-F (.\Src\HW\HW_TIM.c)(0x6038BC6C)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\hw_tim.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\hw_tim.crf --depend .\out\debug\hw_tim.d)
-I (.\Inc\HW\HW_TIM.H)(0x6038BC6C)
-I (.\Inc\RB\RB_TIM.H)(0x6038BC6C)
-I (.\Inc\Compiler.H)(0x6038BC6C)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
-I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
-F (.\Src\HW\HW_RCC.c)(0x6038BC6C)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\hw_rcc.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\hw_rcc.crf --depend .\out\debug\hw_rcc.d)
-I (.\Inc\HW\HW_RCC.h)(0x6038BC6C)
-I (.\Inc\RB\RB_RCC.h)(0x6038BC6C)
-I (.\Inc\Compiler.h)(0x6038BC6C)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
-I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
-F (.\Src\HW\HW_STK.c)(0x6038BC6C)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\hw_stk.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\hw_stk.crf --depend .\out\debug\hw_stk.d)
-I (.\Inc\HW\HW_STK.h)(0x6038BC6C)
-I (.\Inc\RB\RB_STK.h)(0x6038BC6C)
-I (.\Inc\Compiler.h)(0x6038BC6C)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
-I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
-F (.\Src\HW\HW_FLASH.c)(0x6038BC6C)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\hw_flash.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\hw_flash.crf --depend .\out\debug\hw_flash.d)
-I (.\Inc\HW\HW_FLASH.h)(0x6038BC6C)
-I (.\Inc\RB\RB_FLASH.h)(0x6038BC6C)
-I (.\Inc\Compiler.h)(0x6038BC6C)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
-I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
-F (.\Src\HW\HW_NVIC.c)(0x6038BC6C)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\hw_nvic.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\hw_nvic.crf --depend .\out\debug\hw_nvic.d)
-I (.\Inc\HW\HW_NVIC.h)(0x6038BC6C)
-I (.\Inc\RB\RB_NVIC.h)(0x6038BC6C)
-I (.\Inc\Compiler.h)(0x6038BC6C)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
-I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
-F (.\Src\HW\HW_GPIO.c)(0x6038BC6C)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\hw_gpio.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\hw_gpio.crf --depend .\out\debug\hw_gpio.d)
-I (.\Inc\Compiler.h)(0x6038BC6C)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
-I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
-I (.\Inc\Debug.h)(0x6038BC6C)
-I (.\Inc\HW\HW_GPIO.h)(0x6038BC6C)
-I (.\Inc\RB\RB_GPIO.h)(0x6038BC6C)
-F (.\Src\HW\HW_SPI.c)(0x6038BC6C)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\hw_spi.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\hw_spi.crf --depend .\out\debug\hw_spi.d)
-I (.\Inc\HW\HW_SPI.h)(0x6038BC6C)
-I (.\Inc\RB\RB_SPI.h)(0x6038BC6C)
-I (.\Inc\Compiler.h)(0x6038BC6C)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
-I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
-F (.\Src\HW\HW_USART.c)(0x6038BC6C)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\hw_usart.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\hw_usart.crf --depend .\out\debug\hw_usart.d)
-I (.\Inc\HW\HW_USART.h)(0x6038BC6C)
-I (.\Inc\RB\RB_USART.h)(0x6038BC6C)
-I (.\Inc\Compiler.h)(0x6038BC6C)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
-I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
-F (.\Src\Retarget.c)(0x6038BC6C)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\retarget.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\retarget.crf --depend .\out\debug\retarget.d)
-I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C819B4)
-I (C:\Keil\ARM\ARMCC\include\stdlib.h)(0x51C819B4)
-I (C:\Keil\ARM\ARMCC\include\rt_sys.h)(0x51C819B4)
-I (.\Inc\Debug.h)(0x6038BC6C)
-I (.\Inc\Reset.h)(0x6038BC6C)
-F (.\Src\Debug.c)(0x6038BC6C)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\debug.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\debug.crf --depend .\out\debug\debug.d)
-I (.\Inc\Compiler.h)(0x6038BC6C)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
-I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
-I (.\Inc\Debug.h)(0x6038BC6C)
-I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C819B4)
-I (C:\Keil\ARM\ARMCC\include\stdarg.h)(0x51C819B4)
-F (.\Src\DrvUSART.c)(0x6038BC6C)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\drvusart.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\drvusart.crf --depend .\out\debug\drvusart.d)
-I (.\Inc\HW\HW_RCC.h)(0x6038BC6C)
-I (.\Inc\RB\RB_RCC.h)(0x6038BC6C)
-I (.\Inc\Compiler.h)(0x6038BC6C)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
-I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
-I (.\Inc\HW\HW_GPIO.h)(0x6038BC6C)
-I (.\Inc\RB\RB_GPIO.h)(0x6038BC6C)
-I (.\Inc\HW\HW_USART.h)(0x6038BC6C)
-I (.\Inc\RB\RB_USART.h)(0x6038BC6C)
-I (.\Inc\HW\HW_NVIC.h)(0x6038BC6C)
-I (.\Inc\RB\RB_NVIC.h)(0x6038BC6C)
-I (.\Inc\DrvUSART.h)(0x6038BC6C)
-I (.\Inc\Fifo.h)(0x6038BC6C)
-I (.\Inc\Debug.h)(0x6038BC6C)
-I (.\Cfg\STM32F10xxx.h)(0x6038BC6C)
-F (.\Src\U_DrvSPI.c)(0x6038BE0A)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\u_drvspi.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\u_drvspi.crf --depend .\out\debug\u_drvspi.d)
-I (.\Inc\U_DrvSPI.h)(0x6038BDFF)
-I (.\Inc\HW\HW_GPIO.h)(0x6038BC6C)
-I (.\Inc\RB\RB_GPIO.h)(0x6038BC6C)
-I (.\Inc\Compiler.h)(0x6038BC6C)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
-I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
-I (.\Inc\HW\HW_SPI.h)(0x6038BC6C)
-I (.\Inc\RB\RB_SPI.h)(0x6038BC6C)
+F (.\Cfg\STM32F10xxx_Startup.s)(0x6038C52E)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --apcs=interwork -I E:\Keil\ARM\RV31\INC-I E:\Keil\ARM\CMSIS\Include-I E:\Keil\ARM\Inc\ST\STM32F10x--list .\lst\debug\stm32f10xxx_startup.lst --xref -o .\out\debug\stm32f10xxx_startup.o --depend .\out\debug\stm32f10xxx_startup.d)
+F (.\Cfg\STM32F10xxx_Config.c)(0x6038C52E)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I E:\Keil\ARM\RV31\INC-I E:\Keil\ARM\CMSIS\Include-I E:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\stm32f10xxx_config.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\stm32f10xxx_config.crf --depend .\out\debug\stm32f10xxx_config.d)
+I (.\Cfg\STM32F10xxx.h)(0x6038C52E)
+I (.\Inc\Compiler.h)(0x60390809)
+I (E:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
+I (E:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
+I (.\Inc\HW\RegBit.h)(0x6038C52E)
+I (.\Inc\HW\HW_NVIC.h)(0x6038C52E)
+I (.\Inc\RB\RB_NVIC.h)(0x6038C52E)
+I (.\Inc\HW\HW_RCC.h)(0x6038C52E)
+I (.\Inc\RB\RB_RCC.h)(0x6038C52E)
+I (.\Inc\HW\HW_STK.h)(0x6038C52E)
+I (.\Inc\RB\RB_STK.h)(0x6038C52E)
+I (.\Inc\HW\HW_FLASH.h)(0x6038C52E)
+I (.\Inc\RB\RB_FLASH.h)(0x6038C52E)
+I (.\Inc\Debug.h)(0x6038C52E)
+I (.\Inc\Reset.h)(0x6038C52E)
+F (.\Example.c)(0x6039055C)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I E:\Keil\ARM\RV31\INC-I E:\Keil\ARM\CMSIS\Include-I E:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\example.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\example.crf --depend .\out\debug\example.d)
+I (.\Inc\Compiler.h)(0x60390809)
+I (E:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
+I (E:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
+I (.\Inc\Debug.h)(0x6038C52E)
+I (.\Cfg\STM32F10xxx.h)(0x6038C52E)
+I (.\Inc\Reset.h)(0x6038C52E)
+I (.\Inc\DrvUSART.h)(0x6038C52E)
+I (.\Inc\RB\RB_SPI.h)(0x6038C52E)
+I (.\Inc\HW\HW_RCC.h)(0x6038C52E)
+I (.\Inc\RB\RB_RCC.h)(0x6038C52E)
+I (.\Inc\U_DrvSPI.h)(0x6039080A)
+I (.\Inc\HW\HW_GPIO.h)(0x6038C52E)
+I (.\Inc\RB\RB_GPIO.h)(0x6038C52E)
+I (.\Inc\HW\HW_SPI.h)(0x6038C52E)
+I (.\Inc\U_LEDMatrix.h)(0x603909B0)
+F (.\Src\Fifo.c)(0x6038C52E)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I E:\Keil\ARM\RV31\INC-I E:\Keil\ARM\CMSIS\Include-I E:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\fifo.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\fifo.crf --depend .\out\debug\fifo.d)
+I (.\Inc\Fifo.h)(0x6038C52E)
+I (.\Inc\Compiler.h)(0x60390809)
+I (E:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
+I (E:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
+I (.\Inc\Debug.h)(0x6038C52E)
+F (.\Src\U_LEDMatrix.c)(0x603909B2)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I E:\Keil\ARM\RV31\INC-I E:\Keil\ARM\CMSIS\Include-I E:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\u_ledmatrix.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\u_ledmatrix.crf --depend .\out\debug\u_ledmatrix.d)
+I (.\Inc\U_LEDMatrix.h)(0x603909B0)
+I (.\Inc\HW\HW_GPIO.h)(0x6038C52E)
+I (.\Inc\RB\RB_GPIO.h)(0x6038C52E)
+I (.\Inc\Compiler.h)(0x60390809)
+I (E:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
+I (E:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
+I (E:\Keil\ARM\ARMCC\include\stdio.h)(0x51C819B4)
+F (.\Src\Reset.c)(0x6038C52E)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I E:\Keil\ARM\RV31\INC-I E:\Keil\ARM\CMSIS\Include-I E:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\reset.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\reset.crf --depend .\out\debug\reset.d)
+I (.\Inc\Reset.h)(0x6038C52E)
+I (.\Inc\Debug.h)(0x6038C52E)
+I (.\Inc\HW\HW_NVIC.h)(0x6038C52E)
+I (.\Inc\RB\RB_NVIC.h)(0x6038C52E)
+I (.\Inc\Compiler.h)(0x60390809)
+I (E:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
+I (E:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
+F (.\Src\HW\HW_TIM.c)(0x6038C52E)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I E:\Keil\ARM\RV31\INC-I E:\Keil\ARM\CMSIS\Include-I E:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\hw_tim.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\hw_tim.crf --depend .\out\debug\hw_tim.d)
+I (.\Inc\HW\HW_TIM.H)(0x6038C52E)
+I (.\Inc\RB\RB_TIM.H)(0x6038C52E)
+I (.\Inc\Compiler.H)(0x60390809)
+I (E:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
+I (E:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
+F (.\Src\HW\HW_RCC.c)(0x6038C52E)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I E:\Keil\ARM\RV31\INC-I E:\Keil\ARM\CMSIS\Include-I E:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\hw_rcc.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\hw_rcc.crf --depend .\out\debug\hw_rcc.d)
+I (.\Inc\HW\HW_RCC.h)(0x6038C52E)
+I (.\Inc\RB\RB_RCC.h)(0x6038C52E)
+I (.\Inc\Compiler.h)(0x60390809)
+I (E:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
+I (E:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
+F (.\Src\HW\HW_STK.c)(0x6038C52E)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I E:\Keil\ARM\RV31\INC-I E:\Keil\ARM\CMSIS\Include-I E:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\hw_stk.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\hw_stk.crf --depend .\out\debug\hw_stk.d)
+I (.\Inc\HW\HW_STK.h)(0x6038C52E)
+I (.\Inc\RB\RB_STK.h)(0x6038C52E)
+I (.\Inc\Compiler.h)(0x60390809)
+I (E:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
+I (E:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
+F (.\Src\HW\HW_FLASH.c)(0x6038C52E)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I E:\Keil\ARM\RV31\INC-I E:\Keil\ARM\CMSIS\Include-I E:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\hw_flash.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\hw_flash.crf --depend .\out\debug\hw_flash.d)
+I (.\Inc\HW\HW_FLASH.h)(0x6038C52E)
+I (.\Inc\RB\RB_FLASH.h)(0x6038C52E)
+I (.\Inc\Compiler.h)(0x60390809)
+I (E:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
+I (E:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
+F (.\Src\HW\HW_NVIC.c)(0x6038C52E)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I E:\Keil\ARM\RV31\INC-I E:\Keil\ARM\CMSIS\Include-I E:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\hw_nvic.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\hw_nvic.crf --depend .\out\debug\hw_nvic.d)
+I (.\Inc\HW\HW_NVIC.h)(0x6038C52E)
+I (.\Inc\RB\RB_NVIC.h)(0x6038C52E)
+I (.\Inc\Compiler.h)(0x60390809)
+I (E:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
+I (E:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
+F (.\Src\HW\HW_GPIO.c)(0x6038C52E)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I E:\Keil\ARM\RV31\INC-I E:\Keil\ARM\CMSIS\Include-I E:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\hw_gpio.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\hw_gpio.crf --depend .\out\debug\hw_gpio.d)
+I (.\Inc\Compiler.h)(0x60390809)
+I (E:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
+I (E:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
+I (.\Inc\Debug.h)(0x6038C52E)
+I (.\Inc\HW\HW_GPIO.h)(0x6038C52E)
+I (.\Inc\RB\RB_GPIO.h)(0x6038C52E)
+F (.\Src\HW\HW_SPI.c)(0x6038C52E)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I E:\Keil\ARM\RV31\INC-I E:\Keil\ARM\CMSIS\Include-I E:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\hw_spi.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\hw_spi.crf --depend .\out\debug\hw_spi.d)
+I (.\Inc\HW\HW_SPI.h)(0x6038C52E)
+I (.\Inc\RB\RB_SPI.h)(0x6038C52E)
+I (.\Inc\Compiler.h)(0x60390809)
+I (E:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
+I (E:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
+F (.\Src\HW\HW_USART.c)(0x6038C52E)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I E:\Keil\ARM\RV31\INC-I E:\Keil\ARM\CMSIS\Include-I E:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\hw_usart.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\hw_usart.crf --depend .\out\debug\hw_usart.d)
+I (.\Inc\HW\HW_USART.h)(0x6038C52E)
+I (.\Inc\RB\RB_USART.h)(0x6038C52E)
+I (.\Inc\Compiler.h)(0x60390809)
+I (E:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
+I (E:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
+F (.\Src\Retarget.c)(0x6038C52E)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I E:\Keil\ARM\RV31\INC-I E:\Keil\ARM\CMSIS\Include-I E:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\retarget.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\retarget.crf --depend .\out\debug\retarget.d)
+I (E:\Keil\ARM\ARMCC\include\stdio.h)(0x51C819B4)
+I (E:\Keil\ARM\ARMCC\include\stdlib.h)(0x51C819B4)
+I (E:\Keil\ARM\ARMCC\include\rt_sys.h)(0x51C819B4)
+I (.\Inc\Debug.h)(0x6038C52E)
+I (.\Inc\Reset.h)(0x6038C52E)
+F (.\Src\Debug.c)(0x6038C52E)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I E:\Keil\ARM\RV31\INC-I E:\Keil\ARM\CMSIS\Include-I E:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\debug.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\debug.crf --depend .\out\debug\debug.d)
+I (.\Inc\Compiler.h)(0x60390809)
+I (E:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
+I (E:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
+I (.\Inc\Debug.h)(0x6038C52E)
+I (E:\Keil\ARM\ARMCC\include\stdio.h)(0x51C819B4)
+I (E:\Keil\ARM\ARMCC\include\stdarg.h)(0x51C819B4)
+F (.\Src\DrvUSART.c)(0x6038C52E)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I E:\Keil\ARM\RV31\INC-I E:\Keil\ARM\CMSIS\Include-I E:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\drvusart.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\drvusart.crf --depend .\out\debug\drvusart.d)
+I (.\Inc\HW\HW_RCC.h)(0x6038C52E)
+I (.\Inc\RB\RB_RCC.h)(0x6038C52E)
+I (.\Inc\Compiler.h)(0x60390809)
+I (E:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
+I (E:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
+I (.\Inc\HW\HW_GPIO.h)(0x6038C52E)
+I (.\Inc\RB\RB_GPIO.h)(0x6038C52E)
+I (.\Inc\HW\HW_USART.h)(0x6038C52E)
+I (.\Inc\RB\RB_USART.h)(0x6038C52E)
+I (.\Inc\HW\HW_NVIC.h)(0x6038C52E)
+I (.\Inc\RB\RB_NVIC.h)(0x6038C52E)
+I (.\Inc\DrvUSART.h)(0x6038C52E)
+I (.\Inc\Fifo.h)(0x6038C52E)
+I (.\Inc\Debug.h)(0x6038C52E)
+I (.\Cfg\STM32F10xxx.h)(0x6038C52E)
+F (.\Src\U_DrvSPI.c)(0x6038FABB)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I E:\Keil\ARM\RV31\INC-I E:\Keil\ARM\CMSIS\Include-I E:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG -DFIFO_ARRAY_LOG2LEN="6"-o .\out\debug\u_drvspi.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\u_drvspi.crf --depend .\out\debug\u_drvspi.d)
+I (.\Inc\U_DrvSPI.h)(0x6039080A)
+I (.\Inc\HW\HW_GPIO.h)(0x6038C52E)
+I (.\Inc\RB\RB_GPIO.h)(0x6038C52E)
+I (.\Inc\Compiler.h)(0x60390809)
+I (E:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
+I (E:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
+I (.\Inc\HW\HW_SPI.h)(0x6038C52E)
+I (.\Inc\RB\RB_SPI.h)(0x6038C52E)

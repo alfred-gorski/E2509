@@ -2,6 +2,10 @@
 // Compiler.h
 //
 
+
+
+
+
 #if ! defined(__COMPILER_H__)
 # define __COMPILER_H__
 
@@ -36,4 +40,10 @@
 #  error "Unknown Compiler"
 # endif
 #endif
+
+
+
+
+#define		SUCCEED_SEND  0
+#define		ERROR_SEND		1
 

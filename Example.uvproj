@@ -430,6 +430,11 @@
               <FileType>1</FileType>
               <FilePath>.\Src\Fifo.c</FilePath>
             </File>
+            <File>
+              <FileName>U_LEDMatrix.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\U_LEDMatrix.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1003,6 +1008,11 @@
               <FileType>1</FileType>
               <FilePath>.\Src\Fifo.c</FilePath>
             </File>
+            <File>
+              <FileName>U_LEDMatrix.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\U_LEDMatrix.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1516,6 +1526,11 @@
               <FileType>1</FileType>
               <FilePath>.\Src\Fifo.c</FilePath>
             </File>
+            <File>
+              <FileName>U_LEDMatrix.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\U_LEDMatrix.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2028,6 +2043,11 @@
               <FileName>Fifo.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\Fifo.c</FilePath>
+            </File>
+            <File>
+              <FileName>U_LEDMatrix.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\U_LEDMatrix.c</FilePath>
             </File>
           </Files>
         </Group>
