@@ -25,7 +25,7 @@ SPI_HandelTypDef hspi1;
 SPI_HandelTypDef hspi2;
 
 
-BYTE test[32]={1};
+
 
 
 
@@ -79,7 +79,7 @@ static void MainInit(void)
 //Init
 	
 	//GPIO for all AnTx
-	GPIO_An_Init()
+	GPIO_An_Init();
 	//GPIO for SPI1,SPI2
 	SPI1Init();
 	SPI2Init();
@@ -99,7 +99,7 @@ ConfigureGPIO(&GPIOA, 12, GPIO_O_STD_PP_02MHZ);
 ////			ConfigureGPIO(GPIOC, i, GPIO_O_STD_PP_02MHZ);
 ////		}
 		
-	
+	SetPRIMASK(0U);
 	
 	
 	SetCONTROL(1U);
@@ -159,6 +159,7 @@ static void TestFsm(TestContextType * context)
 }
 
 /// Routine, die im Hauprprogramm zyklisch aufgerufen wird.
+BYTE test[32]={1};
 static void MainLoop(void)
 {
 	hspi1.Instance=&SPI1;
