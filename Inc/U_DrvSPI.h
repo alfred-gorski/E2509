@@ -13,6 +13,8 @@
 #define		ERROR_SEND		1
 
 
+
+
 typedef enum
 {
   OK       = 0,
@@ -61,10 +63,12 @@ void SPI2Init(void);
 
 
 
-int SPT_Transmit(SPI_HandelTypDef *hspi,WORD *Data,BYTE Size);
+int SPI_Transmit(SPI_HandelTypDef *hspi,WORD *Data,BYTE Size);
 
 
 
+
+int TxBuffer_Empty(SPI_HandelTypDef *hspi);
 
 
 

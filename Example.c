@@ -15,12 +15,13 @@
 
 #include <U_DrvSPI.h>
 #include <U_LEDMatrix.h>
+#include <U_Queue.h>
 
 unsigned volatile tickCounter = 0U;
 bool volatile runApplication = true; 
 
 
-
+SPI_HandelTypDef hspi1;
 
 
 
@@ -149,24 +150,52 @@ static void TestFsm(TestContextType * context)
 }
 
 /// Routine, die im Hauprprogramm zyklisch aufgerufen wird.
-WORD test=0xFF00FFFF;
+
+int i;
+//Queue buffer;
+//uint32_t data;
 static void MainLoop(void)
 {
 	
+	GPIO_ResetPin(&GPIOA, 12);
+	GPIO_ResetPin(&GPIOA, 9);
+	//En_Gn_Set;
+	//************
+	hspi1.Instance=&SPI1;
+	//hspi2.Instance=&SPI2;
+	//************
 	
-//	
-//	GPIO_SetPin(&GPIOA, 12);
-//	
-//	
-//	
-//	if(SPT_Transmit(&hspi1,&test,32)==SUCCEED_SEND){
-//		DEBUG_PUTS("It all starts here ...");
-//	}
-
-//	
+	/*
+	init(&buffer);
 	
-  //TestFsm(&context);
-
+	
+	for(i=0;i<4;i++){
+		push(&buffer,0xEC);
+	}
+	data=0;
+	for(i=0;i<4;i++){
+		uint8_t popped=pop(&buffer);
+		data = (data) <<8+ popped;
+	}
+	*/
+	/*
+	uint32_t data = 0xFFFFFF;
+	SPI_Transmit(&hspi1,&data,32);
+	*/
+	SPI_transmit_with_ff(&hspi1);
+	
+	latch_SPI_Gn();
+	En_Gn_Set;
+	En_Gn_Set;
+	
+	
+	
+	
+	
+	
+		
+	
+	
   __wfi();
 }
 
