@@ -21,8 +21,7 @@ bool volatile runApplication = true;
 
 
 
-SPI_HandelTypDef hspi1;
-SPI_HandelTypDef hspi2;
+
 
 
 
@@ -75,6 +74,8 @@ static void MainInit(void)
 	PeripheryEnable(RCC_GPIOB);
 	PeripheryEnable(RCC_GPIOC);
 	
+	PeripheryEnable(RCC_SPI1);
+	PeripheryEnable(RCC_SPI1);
 	
 //Init
 	
@@ -85,19 +86,8 @@ static void MainInit(void)
 	SPI2Init();
 	
 	
-	
-	//test
-ConfigureGPIO(&GPIOA, 12, GPIO_O_STD_PP_02MHZ);
-	//AnTR[n] GPIO init 
-//	for(uint16_t i=8;i<=12;i++)
-//	
-//			ConfigureGPIO(GPIOA, i, GPIO_O_STD_PP_02MHZ);
-//		}
-//		
-//	//for(unsigned i=7;i<9;i++)
-////		{
-////			ConfigureGPIO(GPIOC, i, GPIO_O_STD_PP_02MHZ);
-////		}
+
+
 		
 	SetPRIMASK(0U);
 	
@@ -159,19 +149,21 @@ static void TestFsm(TestContextType * context)
 }
 
 /// Routine, die im Hauprprogramm zyklisch aufgerufen wird.
-BYTE test[32]={1};
+WORD test=0xFF00FFFF;
 static void MainLoop(void)
 {
-	hspi1.Instance=&SPI1;
-	hspi2.Instance=&SPI2;
 	
 	
-	
-	if(SPT_Transmit(&hspi1,test,32)==SUCCEED_SEND){
-		DEBUG_PUTS("It all starts here ...");
-	}
+//	
+//	GPIO_SetPin(&GPIOA, 12);
+//	
+//	
+//	
+//	if(SPT_Transmit(&hspi1,&test,32)==SUCCEED_SEND){
+//		DEBUG_PUTS("It all starts here ...");
+//	}
 
-	
+//	
 	
   //TestFsm(&context);
 

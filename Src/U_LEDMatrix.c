@@ -1,7 +1,11 @@
 #include <U_LEDMatrix.h>
 #include <Compiler.h>
+#include <U_DrvSPI.h>
 #include <stdio.h>
 
+
+SPI_HandelTypDef hspi1;
+SPI_HandelTypDef hspi2;
 
 BYTE GPIO_An_Init(){
 	static const Def_GPIO An[] = 	{
@@ -33,6 +37,14 @@ void GPIO_SetPin(RegisterBankGPIO volatile * const GPIOx, unsigned const pin){
 
 void GPIO_ResetPin(RegisterBankGPIO volatile * const GPIOx, unsigned const pin){
 	GPIOx->BRR |= (1<<pin);
+	//************
+	hspi1.Instance=&SPI1;
+	hspi2.Instance=&SPI2;
+	//************
 	
 }
+
+
+
+
 

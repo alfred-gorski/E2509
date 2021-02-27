@@ -61,7 +61,7 @@ void SPI2Init(void);
 
 
 
-int SPT_Transmit(SPI_HandelTypDef *hspi,BYTE *Data,BYTE Size);
+int SPT_Transmit(SPI_HandelTypDef *hspi,WORD *Data,BYTE Size);
 
 
 

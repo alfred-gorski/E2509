@@ -17,10 +17,11 @@ typedef struct __reg_bank_SPI
   WORD CR1;                                           ///< Control register 1.
   WORD CR2;                                           ///< Control register 2.
   WORD SR;                                            ///< Status register.
-  union {
-    BYTE asByte;
-    HWRD asHwrd;
-  } DR;                                               ///< Data register (wahlweise als Byte oder Halbwort).
+//  union {
+//    BYTE asByte;
+//    HWRD asHwrd;
+//  } DR;          
+  uint16_t DR;                                   ///< Data register (wahlweise als Byte oder Halbwort).
   HWRD dontTouchMe;
   WORD CRCPR;                                         ///< CRC polynomial register.
   WORD RXCRCR;                                        ///< Rx CRC register.
