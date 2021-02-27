@@ -4,3 +4,4 @@ OUT
 *.uvproj
 *.uvopt
 *.dep
+*.uvgui.*
