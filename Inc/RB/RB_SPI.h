@@ -17,12 +17,7 @@ typedef struct __reg_bank_SPI
   WORD CR1;                                           ///< Control register 1.
   WORD CR2;                                           ///< Control register 2.
   WORD SR;                                            ///< Status register.
-//  union {
-//    BYTE asByte;
-//    HWRD asHwrd;
-//  } DR;          
-  uint16_t DR;                                   ///< Data register (wahlweise als Byte oder Halbwort).
-  HWRD dontTouchMe;
+  WORD DR;
   WORD CRCPR;                                         ///< CRC polynomial register.
   WORD RXCRCR;                                        ///< Rx CRC register.
   WORD TXCRCR;                                        ///< Tx CRC register.
@@ -74,6 +69,10 @@ typedef struct __reg_bank_SPI
 # define INDX_SPI_SR_TXE        1
 # define MASK_SPI_SR_TXE        (1U << INDX_SPI_SR_TXE)
     
+		
+# define INDX_SPI_SR_RXNE       0
+# define MASK_SPI_SR_RXNE        (1U << INDX_SPI_SR_RXNE)	
+
 #endif
 
 

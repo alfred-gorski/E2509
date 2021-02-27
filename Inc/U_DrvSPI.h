@@ -45,6 +45,7 @@ typedef struct
 {
 	RegisterBankSPI	 volatile	*Instance;
 	BYTE 							*pTxBuffer;
+	BYTE 							*pRxBuffer;
 	StatusTypeDef			Status;
 	
 	
