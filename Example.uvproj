@@ -426,6 +426,11 @@
               <FilePath>.\Example.c</FilePath>
             </File>
             <File>
+              <FileName>Fifo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\Fifo.c</FilePath>
+            </File>
+            <File>
               <FileName>U_LEDMatrix.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\U_LEDMatrix.c</FilePath>
@@ -570,6 +575,11 @@
         <Group>
           <GroupName>Drivers</GroupName>
           <Files>
+            <File>
+              <FileName>DrvUSART.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\DrvUSART.c</FilePath>
+            </File>
             <File>
               <FileName>U_DrvSPI.c</FileName>
               <FileType>1</FileType>
@@ -999,6 +1009,11 @@
               <FilePath>.\Example.c</FilePath>
             </File>
             <File>
+              <FileName>Fifo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\Fifo.c</FilePath>
+            </File>
+            <File>
               <FileName>U_LEDMatrix.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\U_LEDMatrix.c</FilePath>
@@ -1083,6 +1098,11 @@
         <Group>
           <GroupName>Drivers</GroupName>
           <Files>
+            <File>
+              <FileName>DrvUSART.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\DrvUSART.c</FilePath>
+            </File>
             <File>
               <FileName>U_DrvSPI.c</FileName>
               <FileType>1</FileType>
@@ -1512,6 +1532,11 @@
               <FilePath>.\Example.c</FilePath>
             </File>
             <File>
+              <FileName>Fifo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\Fifo.c</FilePath>
+            </File>
+            <File>
               <FileName>U_LEDMatrix.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\U_LEDMatrix.c</FilePath>
@@ -1596,6 +1621,11 @@
         <Group>
           <GroupName>Drivers</GroupName>
           <Files>
+            <File>
+              <FileName>DrvUSART.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\DrvUSART.c</FilePath>
+            </File>
             <File>
               <FileName>U_DrvSPI.c</FileName>
               <FileType>1</FileType>
@@ -2025,6 +2055,11 @@
               <FilePath>.\Example.c</FilePath>
             </File>
             <File>
+              <FileName>Fifo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\Fifo.c</FilePath>
+            </File>
+            <File>
               <FileName>U_LEDMatrix.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\U_LEDMatrix.c</FilePath>
@@ -2109,6 +2144,11 @@
         <Group>
           <GroupName>Drivers</GroupName>
           <Files>
+            <File>
+              <FileName>DrvUSART.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\DrvUSART.c</FilePath>
+            </File>
             <File>
               <FileName>U_DrvSPI.c</FileName>
               <FileType>1</FileType>

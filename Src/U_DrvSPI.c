@@ -19,9 +19,9 @@ void SPI1Init(){
 	// SDI_Gn
 	ConfigureGPIO(&GPIOA, 7, GPIO_I_FLOATING);
 	// LA_Gn
-	ConfigureGPIO(&GPIOA, 4, GPIO_O_ALT_PP_02MHZ);
+	ConfigureGPIO(&GPIOA, 4, GPIO_O_STD_PP_02MHZ);
 	// EN_Gn
-	ConfigureGPIO(&GPIOC, 4, GPIO_O_ALT_PP_02MHZ);
+	ConfigureGPIO(&GPIOC, 4, GPIO_O_STD_PP_02MHZ);
 	
 	
 	
@@ -56,9 +56,9 @@ void SPI2Init(){
 	// SDI_Rd
 	ConfigureGPIO(&GPIOB, 15, GPIO_I_FLOATING);
 	// LA_Rd
-	ConfigureGPIO(&GPIOB, 12, GPIO_O_ALT_PP_02MHZ);
+	ConfigureGPIO(&GPIOB, 12, GPIO_O_STD_PP_02MHZ);
 	// EN_Rd
-	ConfigureGPIO(&GPIOC, 6, GPIO_O_ALT_PP_02MHZ);
+	ConfigureGPIO(&GPIOC, 6, GPIO_O_STD_PP_02MHZ);
 	
 	
 	// CR2 config
@@ -79,8 +79,8 @@ void SPI2Init(){
 
 
 
-
-int SPT_Transmit(SPI_HandelTypDef *hspi,WORD *Data,BYTE Size){
+BYTE x;
+int SPI_Transmit(SPI_HandelTypDef *hspi,WORD *Data,BYTE Size){
 	
 	BYTE TxCount;
 	BYTE TimeOutCount=0;
@@ -94,20 +94,26 @@ int SPT_Transmit(SPI_HandelTypDef *hspi,WORD *Data,BYTE Size){
 
 	// Transmit data in 8 Bit mode 
 	hspi->Status=BUSY;
-	hspi->Instance->DR=*hspi->pTxBuffer;
+	hspi->Instance->DR=*(hspi->pTxBuffer);
+	x=*(hspi->pTxBuffer);
 	hspi->pTxBuffer+=sizeof(BYTE);
 	TxCount--;
 	
 	// Transmit data in 8 Bit mode 
+	
 	while(TxCount>0){
 		// Wait until TXE flag is set to send data 
 		if((hspi->Instance->SR&MASK_SPI_SR_TXE)==MASK_SPI_SR_TXE){
 			
-			hspi->Instance->DR=*hspi->pTxBuffer;
+			hspi->Instance->DR=*(hspi->pTxBuffer);
+			x=*(hspi->pTxBuffer);
+			
 			hspi->pTxBuffer+=sizeof(BYTE);
 			
 			TxCount--;
+
 		}
+
 		//TimeOut error
 		else{
 			TimeOutCount++;
@@ -118,13 +124,29 @@ int SPT_Transmit(SPI_HandelTypDef *hspi,WORD *Data,BYTE Size){
 		}
 		
 	}
+	
 
  	hspi->Status=OK;
 	
-	if(hspi->Status==ERROR||BUSY)
+	if(hspi->Status==ERROR||hspi->Status==BUSY)
 		return ERROR_SEND;
 	else
 		return SUCCEED_SEND;
 
 
 }
+
+int TxBuffer_Empty(SPI_HandelTypDef *hspi){
+	if((hspi->Instance->SR&MASK_SPI_SR_TXE)==MASK_SPI_SR_TXE)
+			return 0;
+	else
+			return 1;
+
+
+}		
+
+void SPI_transmit_with_ff(SPI_HandelTypDef *hspi){
+	uint32_t data = 0x12481248;
+	SPI_Transmit(hspi,&data,32);
+}
+

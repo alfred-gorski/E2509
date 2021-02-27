@@ -4,8 +4,8 @@
 #include <stdio.h>
 
 
-SPI_HandelTypDef hspi1;
-SPI_HandelTypDef hspi2;
+//SPI_HandelTypDef hspi1;
+//SPI_HandelTypDef hspi2;
 
 BYTE GPIO_An_Init(){
 	static const Def_GPIO An[] = 	{
@@ -23,6 +23,7 @@ BYTE GPIO_An_Init(){
 	uint32_t i;
 	for(i=0;i<8;i++){
 		ConfigureGPIO(An[i].GPIOx, An[i].pin, GPIO_O_ALT_PP_02MHZ);
+		GPIO_SetPin(An[i].GPIOx, An[i].pin);
 	
 	}
 	
@@ -38,13 +39,21 @@ void GPIO_SetPin(RegisterBankGPIO volatile * const GPIOx, unsigned const pin){
 void GPIO_ResetPin(RegisterBankGPIO volatile * const GPIOx, unsigned const pin){
 	GPIOx->BRR |= (1<<pin);
 	//************
-	hspi1.Instance=&SPI1;
-	hspi2.Instance=&SPI2;
+	//hspi1.Instance=&SPI1;
+	//hspi2.Instance=&SPI2;
 	//************
 	
 }
 
+void latch_SPI_Gn(void){
+	La_Gn_Set;
+	La_Gn_Reset;
+}
 
+void latch_SPI_Rd(void){
+	La_Rd_Set;
+	La_Rd_Reset;
+}
 
 
 
