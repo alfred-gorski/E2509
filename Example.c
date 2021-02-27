@@ -183,9 +183,9 @@ static void MainLoop(void)
 	SPI_Transmit(&hspi1,&data,32);
 	*/
 	
-	data=0x12345678;
+	data=0xF00FEAAE;
 	
-	SPI_Transmit(&hspi1,&data,32);
+	SPI_Transmit(&hspi2,&data,32);
 	//SPI_transmit_with_ff(&hspi2);
 	
 	//latch_SPI_Gn();
