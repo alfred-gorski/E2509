@@ -22,8 +22,9 @@ BYTE GPIO_An_Init(){
 
 	uint32_t i;
 	for(i=0;i<8;i++){
-		ConfigureGPIO(An[i].GPIOx, An[i].pin, GPIO_O_ALT_PP_02MHZ);
+		ConfigureGPIO(An[i].GPIOx, An[i].pin, GPIO_O_STD_PP_02MHZ);
 		GPIO_SetPin(An[i].GPIOx, An[i].pin);
+		
 	
 	}
 	

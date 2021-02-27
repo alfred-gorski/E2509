@@ -101,29 +101,29 @@ int SPI_Transmit(SPI_HandelTypDef *hspi,WORD *Data,BYTE Size){
 	
 	// Transmit data in 8 Bit mode 
 	
-	while(TxCount>0){
-		// Wait until TXE flag is set to send data 
-		if((hspi->Instance->SR&MASK_SPI_SR_TXE)==MASK_SPI_SR_TXE){
-			
-			hspi->Instance->DR=*(hspi->pTxBuffer);
-			x=*(hspi->pTxBuffer);
-			
-			hspi->pTxBuffer+=sizeof(BYTE);
-			
-			TxCount--;
+//	while(TxCount>0){
+//		// Wait until TXE flag is set to send data 
+//		if((hspi->Instance->SR&MASK_SPI_SR_TXE)==MASK_SPI_SR_TXE){
+//			
+//			hspi->Instance->DR=*(hspi->pTxBuffer);
+//			x=*(hspi->pTxBuffer);
+//			
+//			hspi->pTxBuffer+=sizeof(BYTE);
+//			
+//			TxCount--;
 
-		}
+//		}
 
-		//TimeOut error
-		else{
-			TimeOutCount++;
-				if(TimeOutCount==TIMEOUT){
-					hspi->Status=ERROR;
-					
-				}
-		}
-		
-	}
+//		//TimeOut error
+//		else{
+//			TimeOutCount++;
+//				if(TimeOutCount==TIMEOUT){
+//					hspi->Status=ERROR;
+//					
+//				}
+//		}
+//		
+//	}
 	
 
  	hspi->Status=OK;

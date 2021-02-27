@@ -22,6 +22,7 @@ bool volatile runApplication = true;
 
 
 SPI_HandelTypDef hspi1;
+SPI_HandelTypDef hspi2;
 
 
 
@@ -157,12 +158,11 @@ int i;
 static void MainLoop(void)
 {
 	
-	GPIO_ResetPin(&GPIOA, 12);
-	GPIO_ResetPin(&GPIOA, 9);
+	
 	//En_Gn_Set;
 	//************
 	hspi1.Instance=&SPI1;
-	//hspi2.Instance=&SPI2;
+	hspi2.Instance=&SPI2;
 	//************
 	
 	/*
@@ -186,7 +186,15 @@ static void MainLoop(void)
 	
 	latch_SPI_Gn();
 	En_Gn_Set;
+	
+	
+	//latch_SPI_Rd();
+	//En_Rd_Set;
+	
 	En_Gn_Set;
+	
+	GPIO_ResetPin(&GPIOA, 9);
+	GPIO_SetPin(&GPIOA, 10);
 	
 	
 	
