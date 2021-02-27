@@ -44,7 +44,7 @@ typedef enum{
 typedef struct 
 {
 	RegisterBankSPI	 volatile	*Instance;
-	BYTE 							*pTxBuffer;
+	BYTE							*pTxBuffer;
 	BYTE 							*pRxBuffer;
 	StatusTypeDef			Status;
 	

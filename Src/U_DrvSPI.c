@@ -94,7 +94,9 @@ void SPI2Init(){
 int SPI_Transmit(SPI_HandelTypDef *hspi,WORD *Data,BYTE Size){
 	
 	BYTE TxCount;
+	
 	BYTE TimeOutCount=0;
+	
 	hspi->pTxBuffer  = (uint8_t *)Data;
 
 
@@ -115,6 +117,7 @@ int SPI_Transmit(SPI_HandelTypDef *hspi,WORD *Data,BYTE Size){
 	while(TxCount>0){
 		// Wait until TXE flag is set to send data 
 		if((hspi->Instance->SR&MASK_SPI_SR_TXE)==MASK_SPI_SR_TXE){
+			
 			
 			hspi->Instance->DR=*(hspi->pTxBuffer);
 		
