@@ -39,22 +39,5 @@ void GPIO_SetPin(RegisterBankGPIO volatile * const GPIOx, unsigned const pin){
 
 void GPIO_ResetPin(RegisterBankGPIO volatile * const GPIOx, unsigned const pin){
 	GPIOx->BRR |= (1<<pin);
-	//************
-	//hspi1.Instance=&SPI1;
-	//hspi2.Instance=&SPI2;
-	//************
-	
 }
-
-void latch_SPI_Gn(void){
-	La_Gn_Set;
-	La_Gn_Reset;
-}
-
-void latch_SPI_Rd(void){
-	La_Rd_Set;
-	La_Rd_Reset;
-}
-
-
 

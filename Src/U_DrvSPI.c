@@ -8,79 +8,63 @@
 
 
 
-SPIHandle hSPIGn;
-SPIHandle hSPIRd;
-
-
 void SPIGPIOConfig(_GPIOConfig gpioconfig, uint8_t value);
 
 
-const _SPIGPIO SPIGPIOsGn = {
-	{&GPIOA, 4},
-	{&GPIOA, 5},
-	{&GPIOA, 6},
-	{&GPIOA, 7},
-	{&GPIOC, 4},
-};
-
-const _SPIGPIO SPIGPIOsRd = {
-	{&GPIOB, 12},
-	{&GPIOB, 13},
-	{&GPIOB, 14},
-	{&GPIOB, 15},
-	{&GPIOC, 6},
-};
 
 
+SPIHandle SPIInit(Color color){
+	SPIHandle hSPI;
+	_SPIGPIOs gpios;
+	
+	const _SPIGPIOs SPIGPIOsGn = {
+		{&GPIOA, 4},
+		{&GPIOA, 5},
+		{&GPIOA, 6},
+		{&GPIOA, 7},
+		{&GPIOC, 4},
+	};
 
-void SPIInit(Color color){
-	SPIHandle *hSPI;
-	_SPIGPIO gpios;
+	const _SPIGPIOs SPIGPIOsRd = {
+		{&GPIOB, 12},
+		{&GPIOB, 13},
+		{&GPIOB, 14},
+		{&GPIOB, 15},
+		{&GPIOC, 6},
+	};
 	
 	switch(color){
 		case Gn:
-			hSPI = &hSPIGn;
-			hSPI -> instance = &SPI1;
-			hSPI -> gpios = SPIGPIOsGn;
-			break;
-		case Rd:
-			hSPI = &hSPIRd;
-			hSPI -> instance = &SPI2;
-			hSPI -> gpios = SPIGPIOsRd;
-			break;
-	}
-	
-	gpios = hSPI->gpios;
-	switch(color){
-		case Gn:
+			hSPI.instance = &SPI1;
+			hSPI.gpios =SPIGPIOsGn;
 			PeripheryEnable(RCC_SPI1);
 			break;
 		case Rd:
+			hSPI.instance = &SPI2;
+			hSPI.gpios = SPIGPIOsRd;
 			PeripheryEnable(RCC_SPI2);
 			break;
 	}
+	
+	gpios = hSPI.gpios;
+	
 	SPIGPIOConfig(gpios.latch,	GPIO_O_STD_PP_02MHZ);
 	SPIGPIOConfig(gpios.clock,	GPIO_O_ALT_PP_02MHZ);
 	SPIGPIOConfig(gpios.input,	GPIO_I_FLOATING);
 	SPIGPIOConfig(gpios.output,	GPIO_O_ALT_PP_02MHZ);
-	SPIGPIOConfig(gpios.oe,			GPIO_O_STD_PP_02MHZ);
+	SPIGPIOConfig(gpios.outEn,	GPIO_O_STD_PP_02MHZ);
 	
-	hSPI->instance->CR1 |= 
-							(BaudRateScaler_8 << INDX_SPI_CR1_BR) // baudrate f_pclk/8
-							| MASK_SPI_CR1_CPOL 												// second clock transition is the first data capture edge
+	hSPI.instance->CR1 |= 
+							(BaudRateScaler_8 << INDX_SPI_CR1_BR)		// baudrate f_pclk/8
+							| MASK_SPI_CR1_CPOL 										// second clock transition is the first data capture edge
 							| MASK_SPI_CR1_SSM
 							| MASK_SPI_CR1_SSI
-							| MASK_SPI_CR1_MSTR;												// master configuration
-	/*
-	hSPI->instance->CR2 |= //MASK_SPI_CR2_TXEIE
-							 MASK_SPI_CR2_SSOE;*/
-	hSPI->instance->CR1 |= MASK_SPI_CR1_SPE;	
-	
-	
-}
+							| MASK_SPI_CR1_MSTR;										// master configuration
 
-void SPIGPIOConfig(_GPIOConfig gpioconfig, uint8_t value){
-	ConfigureGPIO(gpioconfig.gpio,gpioconfig.pin,value);
+	hSPI.instance->CR1 |= MASK_SPI_CR1_SPE;							// Enable
+	
+	return hSPI;
+	
 }
 
 
@@ -113,38 +97,19 @@ int SPIEmit(SPIHandle *hSPI,uint32_t data){
 }
 
 
-void testSPIGnRun(){
-	Queue buffer;
-	uint32_t data;
 
-	
-	
-	init(&buffer);
-	push(&buffer,0x12345678);
-	
-		
-	
-	data=pop(&buffer);
-	SPIEmit(&hSPIGn,data);
-	
-	
+void SPILatch(SPIHandle *hSPI){
+	_GPIOConfig latch = hSPI->gpios.latch;
+	latch.gpio->BSRR|= (1<<latch.pin);
 }
 
-void testSPIRdRun(){
-	Queue buffer;
-	uint32_t data;
-
-	
-	
-	init(&buffer);
-	push(&buffer,0x12345678);
-	
-		
-	
-	data=pop(&buffer);
-	SPIEmit(&hSPIRd,data);
-	
-	
+void SPIOutEn(SPIHandle *hSPI){
+	_GPIOConfig outEn = hSPI->gpios.outEn;
+	outEn.gpio->BSRR|= (1<<outEn.pin);
 }
 
+
+void SPIGPIOConfig(_GPIOConfig gpioconfig, uint8_t value){
+	ConfigureGPIO(gpioconfig.gpio,gpioconfig.pin,value);
+}
 

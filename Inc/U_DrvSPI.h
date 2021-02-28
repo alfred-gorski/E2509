@@ -50,28 +50,23 @@ typedef struct{
 	_GPIOConfig clock;
 	_GPIOConfig input;
 	_GPIOConfig output;
-	_GPIOConfig oe;
-}_SPIGPIO;
+	_GPIOConfig outEn;
+}_SPIGPIOs;
 
 typedef struct{
 	RegisterBankSPI volatile *instance;
-	_SPIGPIO gpios;
+	_SPIGPIOs gpios;
 	SPISendStatus status;
 }SPIHandle;
 
 
 
 
-void SPIInit(Color color);
+
+SPIHandle SPIInit(Color color);
 int SPIEmit(SPIHandle *hSPI,uint32_t Data);
-
-
-
-
-void testSPIGnRun(void);
-void testSPIRdRun(void);
-
-
+void SPILatch(SPIHandle *hSPI);
+void SPIOutEn(SPIHandle *hSPI);
 
 
 

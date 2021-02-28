@@ -21,8 +21,8 @@ unsigned volatile tickCounter = 0U;
 bool volatile runApplication = true; 
 
 
-SPI_HandelTypDef hspi1;
-SPI_HandelTypDef hspi2;
+SPIHandle hSPIGn;
+SPIHandle hSPIRd;
 
 
 
@@ -85,8 +85,14 @@ static void MainInit(void)
 	
 	//GPIO and RCC for SPI1,SPI2
 
-	SPIInit(Gn);
-	SPIInit(Rd);
+	// SPIInit(Gn);
+	// SPIInit(Rd);
+	
+	hSPIGn = SPIInit(Gn);
+	hSPIRd = SPIInit(Rd);
+	
+	
+	
 		
 	SetPRIMASK(0U);
 	
@@ -154,24 +160,20 @@ static void TestFsm(TestContextType * context)
 
 static void MainLoop(void)
 {
+
 	
-	testSPIGnRun();
-	testSPIRdRun();
+	SPIEmit(&hSPIGn,0x12345678);
+	SPIEmit(&hSPIRd,0xABCDEF12);
 	
-	latch_SPI_Gn();
-	En_Gn_Set;
-	
-	
-	latch_SPI_Rd();
-	En_Rd_Set;
-	
-	
-	//En_Gn_Set;
 	
 	GPIO_ResetPin(&GPIOA, 9);
-	GPIO_SetPin(&GPIOA, 10);
+	GPIO_ResetPin(&GPIOA, 10);
 	
+	SPILatch(&hSPIGn);
+	SPIOutEn(&hSPIGn);
 	
+	SPILatch(&hSPIRd);
+	SPIOutEn(&hSPIRd);
 	
 	
 	
