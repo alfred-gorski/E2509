@@ -590,6 +590,11 @@
               <FileType>1</FileType>
               <FilePath>.\Src\U_GPIOConfig.c</FilePath>
             </File>
+            <File>
+              <FileName>U_DrvTimer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\U_DrvTimer.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -1117,6 +1122,11 @@
               <FileName>U_GPIOConfig.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\U_GPIOConfig.c</FilePath>
+            </File>
+            <File>
+              <FileName>U_DrvTimer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\U_DrvTimer.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1646,6 +1656,11 @@
               <FileType>1</FileType>
               <FilePath>.\Src\U_GPIOConfig.c</FilePath>
             </File>
+            <File>
+              <FileName>U_DrvTimer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\U_DrvTimer.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -2173,6 +2188,11 @@
               <FileName>U_GPIOConfig.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\U_GPIOConfig.c</FilePath>
+            </File>
+            <File>
+              <FileName>U_DrvTimer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\U_DrvTimer.c</FilePath>
             </File>
           </Files>
         </Group>

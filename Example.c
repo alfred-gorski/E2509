@@ -23,11 +23,14 @@
 unsigned volatile tickCounter = 0U;
 bool volatile runApplication = true; 
 
+WORD volatile code;
+int count;
 
 SPIHandle hSPIGn;
 SPIHandle hSPIRd;
 
-
+extern TimerHandle Timer2;
+extern TimerHandle Timer3;
 
 
 
@@ -58,7 +61,12 @@ static void SetCONTROL(WORD const controlVal)
 	
 	controlReg = controlVal;
 }
-
+static void SetBASEPRI(WORD const basepriVal)
+{
+  register WORD basepriReg __asm("basepri");
+	
+	basepriReg = basepriVal;
+}
 static void SetPRIMASK(WORD const primaskVal)
 {
   register WORD primaskReg __asm("primask");
@@ -91,37 +99,39 @@ static void MainInit(void)
 	
 	
 	
+	//TIM_Init
+	/*
+	InitTIM2();
+	InitTIM3();
 		
-	SetPRIMASK(0U);
+	
+	StartTIM2();
+	StartTIM3();
+	
+	ENABLETIM2();
+	ENABLETIM3();
+	
+	*/
+	
+	timerInit(&Timer2);
+	timerInit(&Timer3);
+	timerEn(&Timer2);
+	timerEn(&Timer3);
+	timerStart(&Timer2);
+	timerStart(&Timer3);
 	
 	
-	SetCONTROL(1U);
 	
-	
-	
-	
-  /*DEBUG_PUTS(__FUNCTION__);
-
-  /// Hauptinitialisierung des Controllers (inkl. Peripherie) erfolgt durch Aufruf von STM32F10xxx_Config()
-
-  STM32F10xxx_Config();
-
-  if ( InitUsart(usartPort3, 9600U, &context.handle) == usartSuccess )
-  {
-  } else
-    DEBUG_BREAK(1U);
-  
   /// Das PRIMASK-Register ist im Start-up-Code auf 1 eingestellt worden. Damit kann kein IRQ aktiv werden. 
   /// Erst mit dem Auruf der nachfolgenden Funktion können alle IRQs aktiv werden.
-
-  SetPRIMASK(0U);
-  
-  /// Indem Bit #0 im CONTROL-Register des Cortex-M3 gesetzt wird, wird der Prozessor in den non-priviliegierten Modus gesetzt.
+	SetPRIMASK(0U);
+	// SetBASEPRI(0U);
+	
+	 /// Indem Bit #0 im CONTROL-Register des Cortex-M3 gesetzt wird, wird der Prozessor in den non-priviliegierten Modus gesetzt.
   /// Damit können diverse, wichtige Einstellungen nicht mehr versehentlich überschrieben werden.
   /// Aber Achtung: Der Exception-Modus ist immer privilegiert, unabhängig von CONTROL[0].
-  
-  SetCONTROL(1U);
-	*/
+	SetCONTROL(1U);
+	
 	
 }
 
@@ -156,28 +166,30 @@ static void TestFsm(TestContextType * context)
 
 
 
-static void MainLoop(void)
-{
-
-	
-	SPIEmit(&hSPIGn,0x12345678);
-	SPIEmit(&hSPIRd,0xABCDEF12);
+static void MainLoop(void){
 	
 	
-	//GPIO_ResetPin(&GPIOA, 9);
-	//GPIO_ResetPin(&GPIOA, 10);
+	while(code ==1){
+		
+		code =0;
+		count++;
+		SPIEmit(&hSPIGn,0x12345678);
+		SPIEmit(&hSPIRd,0xABCDEF12);
+		SPILatch(&hSPIGn);
+		SPILatch(&hSPIRd);
+		
+		AnTOnAt(2);
+		AnTOnAt(3);
 	
-	AnTOnAt(2);
-	AnTOnAt(3);
+		if(count%2 ==1){
+			SPIOutEn(&hSPIGn);
+			SPIOutEn(&hSPIRd);
+		}else{
+			SPIOutEnOff(&hSPIGn);
+			SPIOutEnOff(&hSPIRd);
+		}
 	
-	SPILatch(&hSPIGn);
-	SPIOutEn(&hSPIGn);
-	
-	SPILatch(&hSPIRd);
-	SPIOutEn(&hSPIRd);
-	
-	
-	
+	}
 	
 		
 	
@@ -186,16 +198,11 @@ static void MainLoop(void)
 }
 
 __declspec(noreturn) 
-int main()
-{
- 	DEBUG_PUTS("It all starts here ...");
- 	DEBUG_PRINT("System clock = %u MHz", STM32F10xxx_GetSysClk() / 1000000U);
- 	DEBUG_PRINT("APB1 clock = %u MHz", STM32F10xxx_GetAPB1_Clock() / 1000000U);
- 	DEBUG_PRINT("APB2 clock = %u MHz", STM32F10xxx_GetAPB2_Clock() / 1000000U);
+int main(){
+
+	
   
 	MainInit();
-
- 	DEBUG_PUTS("Starting main loop ...");
 
 	while ( runApplication )
 		MainLoop();
