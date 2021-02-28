@@ -152,7 +152,7 @@ static void TestFsm(TestContextType * context)
 
 /// Routine, die im Hauprprogramm zyklisch aufgerufen wird.
 
-int i;
+
 //Queue buffer;
 uint32_t data;
 static void MainLoop(void)
@@ -183,17 +183,22 @@ static void MainLoop(void)
 	SPI_Transmit(&hspi1,&data,32);
 	*/
 	
-	data=0xF00FEAAE;
 	
-	SPI_Transmit(&hspi2,&data,32);
-	//SPI_transmit_with_ff(&hspi2);
 	
-	//latch_SPI_Gn();
-	//En_Gn_Set;
+	
+	data=0x12345678;
+	
+	SPI_Transmit(&hspi1,&data);
+	SPI_Transmit(&hspi2,&data);
+	
+	
+	latch_SPI_Gn();
+	En_Gn_Set;
 	
 	
 	latch_SPI_Rd();
 	En_Rd_Set;
+	
 	
 	//En_Gn_Set;
 	

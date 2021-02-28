@@ -7,27 +7,17 @@
 #include <Compiler.h>
 
 
-#define TIMEOUT 2000
-
-#define		SUCCEED_SEND  0
-#define		ERROR_SEND		1
+#define TIMEOUT_THRESHOLD 2000
+#define SIZE_8_MASK ( 1 << 8) - 1
 
 
 
 
-typedef enum
-{
+typedef enum{
   OK       = 0,
   ERROR,    
   BUSY
-	
-}StatusTypeDef;
-
-
-
-	
-
-
+}SPISendStatus;
 
 
 typedef enum{
@@ -46,15 +36,8 @@ typedef struct
 	RegisterBankSPI	 volatile	*Instance;
 	BYTE							*pTxBuffer;
 	BYTE 							*pRxBuffer;
-	StatusTypeDef			Status;
-	
-	
-	
+	SPISendStatus			Status;
 }SPI_HandelTypDef;
-
-
-
-
 
 
 
@@ -64,12 +47,7 @@ void SPI2Init(void);
 
 
 
-int SPI_Transmit(SPI_HandelTypDef *hspi,WORD *Data,BYTE Size);
-
-
-
-
-int TxBuffer_Empty(SPI_HandelTypDef *hspi);
+int SPI_Transmit(SPI_HandelTypDef *hspi,WORD *Data);
 
 
 
