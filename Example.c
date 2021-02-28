@@ -76,20 +76,17 @@ static void MainInit(void)
 	PeripheryEnable(RCC_GPIOB);
 	PeripheryEnable(RCC_GPIOC);
 	
-	//PeripheryEnable(RCC_SPI1);
-	PeripheryEnable(RCC_SPI2);
-	
+
 //Init
 	
 	//GPIO for all AnTx
 	GPIO_An_Init();
-	//GPIO for SPI1,SPI2
-	testSPIGnInit();
-	SPIInit();
 	
 	
+	//GPIO and RCC for SPI1,SPI2
 
-
+	SPIInit(Gn);
+	SPIInit(Rd);
 		
 	SetPRIMASK(0U);
 	
@@ -153,32 +150,13 @@ static void TestFsm(TestContextType * context)
 /// Routine, die im Hauprprogramm zyklisch aufgerufen wird.
 
 
-//Queue buffer;
+
 
 static void MainLoop(void)
 {
-	/*
-	Queue buffer;
-	uint32_t data;
-
-	
-	hspi1.Instance=&SPI1;
-	hspi2.Instance=&SPI2;
-
-	
-	init(&buffer);
-	push(&buffer,0xABCDEF12);
-	push(&buffer,0x12345678);
-	
-		
-	
-	data=pop(&buffer);
-	SPI_Transmit(&hspi1,&data);
-	data=pop(&buffer);
-	SPI_Transmit(&hspi2,&data);
-	*/
 	
 	testSPIGnRun();
+	testSPIRdRun();
 	
 	latch_SPI_Gn();
 	En_Gn_Set;

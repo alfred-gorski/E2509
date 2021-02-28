@@ -10,7 +10,10 @@
 #define TIMEOUT_THRESHOLD 2000
 #define SIZE_8_MASK ( 1 << 8) - 1
 
-
+typedef enum{
+	Gn=0,
+	Rd
+}Color;
 
 
 typedef enum{
@@ -58,11 +61,15 @@ typedef struct{
 
 
 
-void SPIInit(void);
 
-int SPI_Transmit(SPI_HandelTypDef *hspi,WORD *Data);
+void SPIInit(Color color);
+int SPIEmit(SPIHandle *hSPI,uint32_t Data);
+
+
+
+
 void testSPIGnRun(void);
-void testSPIGnInit(void);
+void testSPIRdRun(void);
 
 
 

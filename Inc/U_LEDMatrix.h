@@ -47,4 +47,4 @@ void GPIO_ResetPin(RegisterBankGPIO volatile * const GPIOx, unsigned const pin);
 void latch_SPI_Gn(void);
 void latch_SPI_Rd(void);
 
-void SPI_transmit_with_ff(SPI_HandelTypDef *hspi);
+
