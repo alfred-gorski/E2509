@@ -1,9 +1,13 @@
 #include <U_DrvSPI.h>
 #include <HW_GPIO.h>
 #include <HW_SPI.h>
+#include <HW_RCC.h>
 #include <Compiler.h>
 
-const SPIGPIO SPIGn = {
+
+
+
+const _SPIGPIO SPIGPIOsGn = {
 	{&GPIOA, 4},
 	{&GPIOA, 5},
 	{&GPIOA, 6},
@@ -11,7 +15,7 @@ const SPIGPIO SPIGn = {
 	{&GPIOC, 4},
 };
 
-const SPIGPIO SPIRed = {
+const _SPIGPIO SPIRed = {
 	{&GPIOB, 12},
 	{&GPIOB, 13},
 	{&GPIOB, 14},
@@ -19,7 +23,7 @@ const SPIGPIO SPIRed = {
 	{&GPIOC, 6},
 };
 
-
+SPIHandle hSPIGn;
 
 
 static RegisterBankSPI volatile *pspi1 = &SPI1;
@@ -27,6 +31,8 @@ static RegisterBankSPI volatile *pspi2 = &SPI2;
 
 void SPI1Init(void);
 void SPI2Init(void);
+
+void SPIGPIOConfig(_GPIOConfig gpioconfig, uint8_t value);
 
 void SPIInit(void){
 	SPI1Init();
@@ -98,6 +104,40 @@ void SPI2Init(){
 	
 	
 }
+
+
+void testSPIGnInit(void){
+	_SPIGPIO gpios;
+	hSPIGn.instance = &SPI1;
+	hSPIGn.gpios = SPIGPIOsGn;
+	
+	gpios = hSPIGn.gpios;
+	
+	PeripheryEnable(RCC_SPI1);
+	
+	SPIGPIOConfig(gpios.latch,GPIO_O_STD_PP_02MHZ);
+	SPIGPIOConfig(gpios.clock,GPIO_O_ALT_PP_02MHZ);
+	SPIGPIOConfig(gpios.input,GPIO_I_FLOATING);
+	SPIGPIOConfig(gpios.output,GPIO_O_ALT_PP_02MHZ);
+	SPIGPIOConfig(gpios.oe,GPIO_O_STD_PP_02MHZ);
+	
+	hSPIGn.instance->CR1 |= 
+							(BaudRateScaler_8 << INDX_SPI_CR1_BR) // baudrate f_pclk/8
+							| MASK_SPI_CR1_CPOL 												// second clock transition is the first data capture edge
+							| MASK_SPI_CR1_SSM
+							| MASK_SPI_CR1_SSI
+							| MASK_SPI_CR1_MSTR;												// master configuration
+	
+	hSPIGn.instance->CR1 |= MASK_SPI_CR1_SPE;	
+	
+	
+}
+
+void SPIGPIOConfig(_GPIOConfig gpioconfig, uint8_t value){
+	ConfigureGPIO(gpioconfig.gpio,gpioconfig.pin,value);
+}
+
+
 
 
 

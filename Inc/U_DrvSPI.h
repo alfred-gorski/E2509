@@ -40,19 +40,19 @@ typedef struct
 typedef struct{
 	RegisterBankGPIO volatile *gpio;
 	uint8_t pin;
-}GPIOConfig;
+}_GPIOConfig;
 
 typedef struct{
-	GPIOConfig latch;
-	GPIOConfig clock;
-	GPIOConfig output;
-	GPIOConfig input;
-	GPIOConfig oe;
-}SPIGPIO;
+	_GPIOConfig latch;
+	_GPIOConfig clock;
+	_GPIOConfig input;
+	_GPIOConfig output;
+	_GPIOConfig oe;
+}_SPIGPIO;
 
 typedef struct{
 	RegisterBankSPI volatile *instance;
-	SPIGPIO *gpios;
+	_SPIGPIO gpios;
 	SPISendStatus status;
 }SPIHandle;
 
@@ -62,7 +62,7 @@ void SPIInit(void);
 
 int SPI_Transmit(SPI_HandelTypDef *hspi,WORD *Data);
 
-
+void testSPIGnInit(void);
 
 
 
