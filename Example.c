@@ -17,6 +17,7 @@
 #include <U_LEDMatrix.h>
 #include <U_Queue.h>
 
+
 unsigned volatile tickCounter = 0U;
 bool volatile runApplication = true; 
 
@@ -80,8 +81,7 @@ static void MainInit(void)
 	//Init
 	
 	//GPIO for all AnTx
-	GPIO_An_Init();
-	
+	AnTInit();
 	
 	//GPIO and RCC for SPI
 	hSPIGn = SPIInit(Gn);
@@ -162,8 +162,11 @@ static void MainLoop(void)
 	SPIEmit(&hSPIRd,0xABCDEF12);
 	
 	
-	GPIO_ResetPin(&GPIOA, 9);
-	GPIO_ResetPin(&GPIOA, 10);
+	//GPIO_ResetPin(&GPIOA, 9);
+	//GPIO_ResetPin(&GPIOA, 10);
+	
+	AnTOnAt(2);
+	AnTOnAt(3);
 	
 	SPILatch(&hSPIGn);
 	SPIOutEn(&hSPIGn);

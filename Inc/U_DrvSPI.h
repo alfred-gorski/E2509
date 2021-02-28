@@ -1,11 +1,10 @@
 #ifndef U_DrvSPI_H
 #define U_DrvSPI_H
 
-#include <U_DrvSPI.h>
 #include <HW_GPIO.h>
 #include <HW_SPI.h>
 #include <Compiler.h>
-
+#include <U_GPIOConfig.h>
 
 
 #define TIMEOUT_THRESHOLD 2000
@@ -38,11 +37,6 @@ typedef enum{
 
 
 typedef struct{
-	RegisterBankGPIO volatile *gpio;
-	uint8_t pin;
-}_GPIOConfig;
-
-typedef struct{
 	_GPIOConfig latch;
 	_GPIOConfig clock;
 	_GPIOConfig input;
@@ -62,7 +56,7 @@ SPIHandle SPIInit(Color color);
 int SPIEmit(SPIHandle *hSPI,uint32_t data);
 void SPILatch(SPIHandle *hSPI);
 void SPIOutEn(SPIHandle *hSPI);
-
+void SPIOutEnOff(SPIHandle *hSPI);
 
 
 #endif

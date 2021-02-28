@@ -585,6 +585,11 @@
               <FileType>1</FileType>
               <FilePath>.\Src\U_DrvSPI.c</FilePath>
             </File>
+            <File>
+              <FileName>U_GPIOConfig.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\U_GPIOConfig.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -1107,6 +1112,11 @@
               <FileName>U_DrvSPI.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\U_DrvSPI.c</FilePath>
+            </File>
+            <File>
+              <FileName>U_GPIOConfig.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\U_GPIOConfig.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1631,6 +1641,11 @@
               <FileType>1</FileType>
               <FilePath>.\Src\U_DrvSPI.c</FilePath>
             </File>
+            <File>
+              <FileName>U_GPIOConfig.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\U_GPIOConfig.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -2153,6 +2168,11 @@
               <FileName>U_DrvSPI.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\U_DrvSPI.c</FilePath>
+            </File>
+            <File>
+              <FileName>U_GPIOConfig.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\U_GPIOConfig.c</FilePath>
             </File>
           </Files>
         </Group>

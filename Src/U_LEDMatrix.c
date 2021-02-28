@@ -1,43 +1,42 @@
-#include <U_LEDMatrix.h>
 #include <Compiler.h>
+
+
+#include <U_LEDMatrix.h>
+#include <U_GPIOConfig.h>
 #include <U_DrvSPI.h>
-#include <stdio.h>
 
 
-//SPI_HandelTypDef hspi1;
-//SPI_HandelTypDef hspi2;
 
-BYTE GPIO_An_Init(){
-	static const Def_GPIO An[] = 	{
-																&GPIOA, 12, //antr1
-																&GPIOA, 11, //antr2
-																&GPIOA, 10, //antr3
-																&GPIOA, 9 , //antr4
-																&GPIOA, 8 , //antr5
-																&GPIOC, 9 , //antr6
-																&GPIOC, 8 , //antr7
-																&GPIOC, 7 , //antr8
-		
-																};
+static const AnTType AnT = {
+//static const _GPIOConfig AnT[] = {
+															{&GPIOA, 12}, //antr1
+															{&GPIOA, 11}, //antr2
+															{&GPIOA, 10}, //antr3
+															{&GPIOA, 9 }, //antr4
+															{&GPIOA, 8 }, //antr5
+															{&GPIOC, 9 }, //antr6
+															{&GPIOC, 8 }, //antr7
+															{&GPIOC, 7 }, //antr8
+};
 
-	uint32_t i;
-	for(i=0;i<8;i++){
-		ConfigureGPIO(An[i].GPIOx, An[i].pin, GPIO_O_STD_PP_02MHZ);
-		GPIO_SetPin(An[i].GPIOx, An[i].pin);
-		
-	
+
+
+void AnTInit(void){
+	int i=0;
+	for(i=0;i<ANT_LEN;i++){
+		GPIOConfig(AnT[i],GPIO_O_STD_PP_02MHZ);
+		setGPIOPin(AnT[i]);
 	}
-	
-	return SUCCEED_SEND;
-}
-
-void GPIO_SetPin(RegisterBankGPIO volatile * const GPIOx, unsigned const pin){
-	GPIOx->BSRR |= (1<<pin);
-	
 }
 
 
-void GPIO_ResetPin(RegisterBankGPIO volatile * const GPIOx, unsigned const pin){
-	GPIOx->BRR |= (1<<pin);
+void AnTOnAt(uint8_t index){
+	resetGPIOPin(AnT[index]);
 }
+
+void AnTOffAt(uint8_t index){
+	setGPIOPin(AnT[index]);
+}
+
+
 
