@@ -4,21 +4,23 @@
 
 #include <U_DrvSPI.h>
 
-typedef struct _GPIO
-{
-		RegisterBankGPIO volatile * const GPIOx;
-		unsigned const pin;
-} Def_GPIO;
+
+
+#define ANT_LEN 8U
+
+
+typedef _GPIOConfig  AnTType[ANT_LEN];
+
+
+
+void AnTInit(void);
+void AnTOnAt(uint8_t index);
+void AnTOffAt(uint8_t index);
 
 
 
 
-//Function for GPIO
-BYTE GPIO_An_Init(void);
 
-void GPIO_SetPin(RegisterBankGPIO volatile * const GPIOx, unsigned const pin);
-
-void GPIO_ResetPin(RegisterBankGPIO volatile * const GPIOx, unsigned const pin);
 
 
 

@@ -1,3 +1,4 @@
+
 #include <HW_GPIO.h>
 #include <HW_SPI.h>
 #include <HW_RCC.h>
@@ -5,12 +6,14 @@
 
 
 
-
-#include <U_Queue.h>
 #include <U_DrvSPI.h>
+#include <U_Queue.h>
+#include <U_GPIOConfig.h>
 
 
-void SPIGPIOConfig(_GPIOConfig gpioconfig, uint8_t value);
+
+
+
 
 
 
@@ -50,11 +53,11 @@ SPIHandle SPIInit(Color color){
 	
 	gpios = hSPI.gpios;
 	
-	SPIGPIOConfig(gpios.latch,	GPIO_O_STD_PP_02MHZ);
-	SPIGPIOConfig(gpios.clock,	GPIO_O_ALT_PP_02MHZ);
-	SPIGPIOConfig(gpios.input,	GPIO_I_FLOATING);
-	SPIGPIOConfig(gpios.output,	GPIO_O_ALT_PP_02MHZ);
-	SPIGPIOConfig(gpios.outEn,	GPIO_O_STD_PP_02MHZ);
+	GPIOConfig(gpios.latch,	GPIO_O_STD_PP_02MHZ);
+	GPIOConfig(gpios.clock,	GPIO_O_ALT_PP_02MHZ);
+	GPIOConfig(gpios.input,	GPIO_I_FLOATING);
+	GPIOConfig(gpios.output,	GPIO_O_ALT_PP_02MHZ);
+	GPIOConfig(gpios.outEn,	GPIO_O_STD_PP_02MHZ);
 	
 	hSPI.instance->CR1 |= 
 							(BaudRateScaler_8 << INDX_SPI_CR1_BR)		// baudrate f_pclk/8
@@ -102,19 +105,29 @@ int SPIEmit(SPIHandle *hSPI,uint32_t data){
 
 void SPILatch(SPIHandle *hSPI){
 	_GPIOConfig latch = hSPI->gpios.latch;
-	latch.gpio->BSRR|= (1<<latch.pin);
+	resetGPIOPin(latch);
+	//latch.gpio->BSRR|= (1<<latch.pin);
 }
 
 
 
 void SPIOutEn(SPIHandle *hSPI){
 	_GPIOConfig outEn = hSPI->gpios.outEn;
-	outEn.gpio->BSRR|= (1<<outEn.pin);
+	setGPIOPin(outEn);
+	//outEn.gpio->BSRR|= (1<<outEn.pin);
+}
+
+void SPIOutEnOff(SPIHandle *hSPI){
+	_GPIOConfig outEn = hSPI->gpios.outEn;
+	resetGPIOPin(outEn);
+	//outEn.gpio->BSRR|= (1<<outEn.pin);
 }
 
 
+/*
 
 void SPIGPIOConfig(_GPIOConfig gpioconfig, uint8_t value){
 	ConfigureGPIO(gpioconfig.gpio,gpioconfig.pin,value);
 }
 
+*/
