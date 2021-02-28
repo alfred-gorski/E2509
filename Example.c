@@ -76,7 +76,7 @@ static void MainInit(void)
 	PeripheryEnable(RCC_GPIOB);
 	PeripheryEnable(RCC_GPIOC);
 	
-	PeripheryEnable(RCC_SPI1);
+	//PeripheryEnable(RCC_SPI1);
 	PeripheryEnable(RCC_SPI2);
 	
 //Init
@@ -84,7 +84,7 @@ static void MainInit(void)
 	//GPIO for all AnTx
 	GPIO_An_Init();
 	//GPIO for SPI1,SPI2
-	
+	testSPIGnInit();
 	SPIInit();
 	
 	
@@ -157,6 +157,7 @@ static void TestFsm(TestContextType * context)
 
 static void MainLoop(void)
 {
+	/*
 	Queue buffer;
 	uint32_t data;
 
@@ -175,7 +176,9 @@ static void MainLoop(void)
 	SPI_Transmit(&hspi1,&data);
 	data=pop(&buffer);
 	SPI_Transmit(&hspi2,&data);
+	*/
 	
+	testSPIGnRun();
 	
 	latch_SPI_Gn();
 	En_Gn_Set;

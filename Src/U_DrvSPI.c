@@ -4,7 +4,7 @@
 #include <HW_RCC.h>
 #include <Compiler.h>
 
-
+#include <U_Queue.h>
 
 
 const _SPIGPIO SPIGPIOsGn = {
@@ -33,9 +33,10 @@ void SPI1Init(void);
 void SPI2Init(void);
 
 void SPIGPIOConfig(_GPIOConfig gpioconfig, uint8_t value);
+int testSPIEmmit(SPIHandle *hSPIGn,uint32_t Data);
 
 void SPIInit(void){
-	SPI1Init();
+	//SPI1Init();
 	SPI2Init();
 }
 
@@ -137,7 +138,49 @@ void SPIGPIOConfig(_GPIOConfig gpioconfig, uint8_t value){
 	ConfigureGPIO(gpioconfig.gpio,gpioconfig.pin,value);
 }
 
+void testSPIGnRun(){
+	Queue buffer;
+	uint32_t data;
 
+	
+	
+	init(&buffer);
+	push(&buffer,0x12345678);
+	
+		
+	
+	data=pop(&buffer);
+	testSPIEmmit(&hSPIGn,data);
+	
+	
+}
+
+int testSPIEmmit(SPIHandle *hSPIGn,uint32_t data){
+	BYTE TxCount = 0;
+	BYTE TimeOutCount = 0;
+	BYTE pick = 0;
+	
+	hSPIGn->status = BUSY;
+	while(TxCount < 4 && TimeOutCount < TIMEOUT_THRESHOLD ){
+		if((hSPIGn->instance->SR&MASK_SPI_SR_TXE)==MASK_SPI_SR_TXE){
+			pick = data & SIZE_8_MASK;
+			data = data >> 8;
+			hSPIGn->instance->DR=pick;
+			TxCount++;
+		}else{
+			TimeOutCount++;
+			if(TimeOutCount==TIMEOUT_THRESHOLD){
+				hSPIGn->status=ERROR;	
+			}
+		}
+	}
+	if(hSPIGn->status==BUSY){
+		hSPIGn->status=OK;
+		return SUCCEED_SEND;
+	}else{
+		return ERROR_SEND;
+	}
+}
 
 
 

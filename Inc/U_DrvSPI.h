@@ -61,7 +61,7 @@ typedef struct{
 void SPIInit(void);
 
 int SPI_Transmit(SPI_HandelTypDef *hspi,WORD *Data);
-
+void testSPIGnRun(void);
 void testSPIGnInit(void);
 
 
