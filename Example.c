@@ -84,8 +84,8 @@ static void MainInit(void)
 	//GPIO for all AnTx
 	GPIO_An_Init();
 	//GPIO for SPI1,SPI2
-	SPI1Init();
-	SPI2Init();
+	
+	SPIInit();
 	
 	
 
@@ -159,36 +159,17 @@ static void MainLoop(void)
 {
 	Queue buffer;
 	uint32_t data;
-	//En_Gn_Set;
-	//************
+
+	
 	hspi1.Instance=&SPI1;
 	hspi2.Instance=&SPI2;
-	//************
+
 	
 	init(&buffer);
 	push(&buffer,0xABCDEF12);
 	push(&buffer,0x12345678);
 	
-	/*
-	init(&buffer);
-	
-	
-	for(i=0;i<4;i++){
-		push(&buffer,0xEC);
-	}
-	data=0;
-	for(i=0;i<4;i++){
-		uint8_t popped=pop(&buffer);
-		data = (data) <<8+ popped;
-	}
-	*/
-	/*
-	uint32_t data = 0xFFFFFF;
-	SPI_Transmit(&hspi1,&data,32);
-	*/
-	
-	
-	
+		
 	
 	data=pop(&buffer);
 	SPI_Transmit(&hspi1,&data);

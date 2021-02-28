@@ -24,6 +24,7 @@ void GPIO_ResetPin(RegisterBankGPIO volatile * const GPIOx, unsigned const pin);
 //Enable for Gn
 #define En_Gn_Set GPIO_SetPin(&GPIOC, 4)
 //Set  Gn_LAT
+
 #define La_Gn_Set GPIO_SetPin(&GPIOA, 4)
 
 //Enable for Rd

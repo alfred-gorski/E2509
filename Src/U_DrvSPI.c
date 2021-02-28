@@ -3,16 +3,37 @@
 #include <HW_SPI.h>
 #include <Compiler.h>
 
-static RegisterBankSPI volatile *pspi1 = &SPI1;
+const SPIGPIO SPIGn = {
+	{&GPIOA, 4},
+	{&GPIOA, 5},
+	{&GPIOA, 6},
+	{&GPIOA, 7},
+	{&GPIOC, 4},
+};
 
+const SPIGPIO SPIRed = {
+	{&GPIOB, 12},
+	{&GPIOB, 13},
+	{&GPIOB, 14},
+	{&GPIOB, 15},
+	{&GPIOC, 6},
+};
+
+
+
+
+static RegisterBankSPI volatile *pspi1 = &SPI1;
 static RegisterBankSPI volatile *pspi2 = &SPI2;
 
-void SPIInit(){
+void SPI1Init(void);
+void SPI2Init(void);
+
+void SPIInit(void){
 	SPI1Init();
 	SPI2Init();
 }
 
-void SPI1Init(){
+void SPI1Init(void){
 	/// GPIO Config_Gn
 	
 	// CLK_Gn
