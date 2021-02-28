@@ -7,6 +7,11 @@ static RegisterBankSPI volatile *pspi1 = &SPI1;
 
 static RegisterBankSPI volatile *pspi2 = &SPI2;
 
+void SPIInit(){
+	SPI1Init();
+	SPI2Init();
+}
+
 void SPI1Init(){
 	/// GPIO Config_Gn
 	
@@ -26,12 +31,18 @@ void SPI1Init(){
 	// CR1 config
 	pspi1->CR1 |= (BaudRateScaler_8 << INDX_SPI_CR1_BR) // baudrate f_pclk/8
 							| MASK_SPI_CR1_CPOL 	
-							|MASK_SPI_CR1_SSI												// second clock transition is the first data capture edge
-							|INDX_SPI_CR1_SSM
+							| MASK_SPI_CR1_SSI												// second clock transition is the first data capture edge
+							| INDX_SPI_CR1_SSM
 							| MASK_SPI_CR1_MSTR;										// master configuration
 	
+	
+	
+	// TODO: SPI1 muss be setted as this with unknown reasion
+	pspi1->CR2 |= //MASK_SPI_CR2_TXEIE
+							 MASK_SPI_CR2_SSOE;
+							
 	//SPI enable
-	pspi1->CR1 |= MASK_SPI_CR1_SPE;										
+	pspi1->CR1 |= MASK_SPI_CR1_SPE;			
 	
 	
 }

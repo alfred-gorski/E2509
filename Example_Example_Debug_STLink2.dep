@@ -16,7 +16,7 @@ I (.\Inc\HW\HW_FLASH.h)(0x6038BC6C)
 I (.\Inc\RB\RB_FLASH.h)(0x6038BC6C)
 I (.\Inc\Debug.h)(0x6038BC6C)
 I (.\Inc\Reset.h)(0x6038BC6C)
-F (.\Example.c)(0x603AF4C2)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG-o .\out\debug\example.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\example.crf --depend .\out\debug\example.d)
+F (.\Example.c)(0x603AFAC1)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG-o .\out\debug\example.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\example.crf --depend .\out\debug\example.d)
 I (.\Inc\Compiler.h)(0x60391D09)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
 I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
@@ -27,7 +27,7 @@ I (.\Inc\DrvUSART.h)(0x6038BC6C)
 I (.\Inc\RB\RB_SPI.h)(0x603AC60E)
 I (.\Inc\HW\HW_RCC.h)(0x6038BC6C)
 I (.\Inc\RB\RB_RCC.h)(0x6038BC6C)
-I (.\Inc\U_DrvSPI.h)(0x603AF20E)
+I (.\Inc\U_DrvSPI.h)(0x603AFCAF)
 I (.\Inc\HW\HW_GPIO.h)(0x6038BC6C)
 I (.\Inc\RB\RB_GPIO.h)(0x6038BC6C)
 I (.\Inc\HW\HW_SPI.h)(0x6038BC6C)
@@ -47,7 +47,7 @@ I (.\Inc\RB\RB_GPIO.h)(0x6038BC6C)
 I (.\Inc\Compiler.h)(0x60391D09)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
 I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C819B4)
-I (.\Inc\U_DrvSPI.h)(0x603AF20E)
+I (.\Inc\U_DrvSPI.h)(0x603AFCAF)
 I (.\Inc\HW\HW_SPI.h)(0x6038BC6C)
 I (.\Inc\RB\RB_SPI.h)(0x603AC60E)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C819B4)
@@ -141,8 +141,8 @@ I (.\Inc\DrvUSART.h)(0x6038BC6C)
 I (.\Inc\Fifo.h)(0x60391C61)
 I (.\Inc\Debug.h)(0x6038BC6C)
 I (.\Cfg\STM32F10xxx.h)(0x6038BC6C)
-F (.\Src\U_DrvSPI.c)(0x603AF444)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG-o .\out\debug\u_drvspi.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\u_drvspi.crf --depend .\out\debug\u_drvspi.d)
-I (.\Inc\U_DrvSPI.h)(0x603AF20E)
+F (.\Src\U_DrvSPI.c)(0x603AFCB8)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Inc -I.\Inc\RB -I.\Inc\HW -I.\Cfg-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DDEBUG-o .\out\debug\u_drvspi.o --list_dir ".\\Lst\\Debug\\" --list --omf_browse .\out\debug\u_drvspi.crf --depend .\out\debug\u_drvspi.d)
+I (.\Inc\U_DrvSPI.h)(0x603AFCAF)
 I (.\Inc\HW\HW_GPIO.h)(0x6038BC6C)
 I (.\Inc\RB\RB_GPIO.h)(0x6038BC6C)
 I (.\Inc\Compiler.h)(0x60391D09)

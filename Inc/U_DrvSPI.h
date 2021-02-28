@@ -34,12 +34,10 @@ typedef enum{
 typedef struct 
 {
 	RegisterBankSPI	 volatile	*Instance;
-	BYTE							*pTxBuffer;
-	BYTE 							*pRxBuffer;
 	SPISendStatus			Status;
 }SPI_HandelTypDef;
 
-
+void SPIInit(void);
 
 void SPI1Init(void);
 void SPI2Init(void);

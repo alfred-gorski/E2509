@@ -154,16 +154,20 @@ static void TestFsm(TestContextType * context)
 
 
 //Queue buffer;
-uint32_t data;
+
 static void MainLoop(void)
 {
-	
-	
+	Queue buffer;
+	uint32_t data;
 	//En_Gn_Set;
 	//************
 	hspi1.Instance=&SPI1;
 	hspi2.Instance=&SPI2;
 	//************
+	
+	init(&buffer);
+	push(&buffer,0xABCDEF12);
+	push(&buffer,0x12345678);
 	
 	/*
 	init(&buffer);
@@ -186,9 +190,9 @@ static void MainLoop(void)
 	
 	
 	
-	data=0x12345678;
-	
+	data=pop(&buffer);
 	SPI_Transmit(&hspi1,&data);
+	data=pop(&buffer);
 	SPI_Transmit(&hspi2,&data);
 	
 	
