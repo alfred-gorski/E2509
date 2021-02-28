@@ -18,13 +18,15 @@
 #include <U_LEDMatrix.h>
 #include <U_Queue.h>
 
-
+#define COUNT_MASK (1<<3)-1
 
 unsigned volatile tickCounter = 0U;
 bool volatile runApplication = true; 
 
 WORD volatile code;
 int count;
+int countmask;
+
 
 SPIHandle hSPIGn;
 SPIHandle hSPIRd;
@@ -61,12 +63,7 @@ static void SetCONTROL(WORD const controlVal)
 	
 	controlReg = controlVal;
 }
-static void SetBASEPRI(WORD const basepriVal)
-{
-  register WORD basepriReg __asm("basepri");
-	
-	basepriReg = basepriVal;
-}
+
 static void SetPRIMASK(WORD const primaskVal)
 {
   register WORD primaskReg __asm("primask");
@@ -125,7 +122,7 @@ static void MainInit(void)
   /// Das PRIMASK-Register ist im Start-up-Code auf 1 eingestellt worden. Damit kann kein IRQ aktiv werden. 
   /// Erst mit dem Auruf der nachfolgenden Funktion können alle IRQs aktiv werden.
 	SetPRIMASK(0U);
-	// SetBASEPRI(0U);
+
 	
 	 /// Indem Bit #0 im CONTROL-Register des Cortex-M3 gesetzt wird, wird der Prozessor in den non-priviliegierten Modus gesetzt.
   /// Damit können diverse, wichtige Einstellungen nicht mehr versehentlich überschrieben werden.
@@ -168,29 +165,23 @@ static void TestFsm(TestContextType * context)
 
 static void MainLoop(void){
 	
-	
-	while(code ==1){
-		
+	while(code == 1){
+		SPIOutEnOff(&hSPIGn);
+		SPIOutEnOff(&hSPIRd);
 		code =0;
 		count++;
+		countmask=count&COUNT_MASK;
 		SPIEmit(&hSPIGn,0x12345678);
 		SPIEmit(&hSPIRd,0xABCDEF12);
 		SPILatch(&hSPIGn);
 		SPILatch(&hSPIRd);
-		
-		AnTOnAt(2);
-		AnTOnAt(3);
-	
-		if(count%2 ==1){
-			SPIOutEn(&hSPIGn);
-			SPIOutEn(&hSPIRd);
-		}else{
-			SPIOutEnOff(&hSPIGn);
-			SPIOutEnOff(&hSPIRd);
-		}
+		SPIOutEn(&hSPIGn);
+		SPIOutEn(&hSPIRd);
+		AnTOffAt(countmask-1 );
+		AnTOnAt(countmask);
+
 	
 	}
-	
 		
 	
 	
