@@ -77,17 +77,13 @@ static void MainInit(void)
 	PeripheryEnable(RCC_GPIOC);
 	
 
-//Init
+	//Init
 	
 	//GPIO for all AnTx
 	GPIO_An_Init();
 	
 	
-	//GPIO and RCC for SPI1,SPI2
-
-	// SPIInit(Gn);
-	// SPIInit(Rd);
-	
+	//GPIO and RCC for SPI
 	hSPIGn = SPIInit(Gn);
 	hSPIRd = SPIInit(Rd);
 	

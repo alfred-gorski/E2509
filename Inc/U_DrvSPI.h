@@ -7,21 +7,22 @@
 #include <Compiler.h>
 
 
+
 #define TIMEOUT_THRESHOLD 2000
 #define SIZE_8_MASK ( 1 << 8) - 1
+
+
 
 typedef enum{
 	Gn=0,
 	Rd
 }Color;
 
-
 typedef enum{
   OK       = 0,
   ERROR,    
   BUSY
 }SPISendStatus;
-
 
 typedef enum{
 	BaudRateScaler_2=0,
@@ -34,11 +35,7 @@ typedef enum{
 	BaudRateScaler_256
 }BaudRate;
 
-typedef struct 
-{
-	RegisterBankSPI	 volatile	*Instance;
-	SPISendStatus			Status;
-}SPI_HandelTypDef;
+
 
 typedef struct{
 	RegisterBankGPIO volatile *gpio;
@@ -61,10 +58,8 @@ typedef struct{
 
 
 
-
-
 SPIHandle SPIInit(Color color);
-int SPIEmit(SPIHandle *hSPI,uint32_t Data);
+int SPIEmit(SPIHandle *hSPI,uint32_t data);
 void SPILatch(SPIHandle *hSPI);
 void SPIOutEn(SPIHandle *hSPI);
 

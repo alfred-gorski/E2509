@@ -103,10 +103,13 @@ void SPILatch(SPIHandle *hSPI){
 	latch.gpio->BSRR|= (1<<latch.pin);
 }
 
+
+
 void SPIOutEn(SPIHandle *hSPI){
 	_GPIOConfig outEn = hSPI->gpios.outEn;
 	outEn.gpio->BSRR|= (1<<outEn.pin);
 }
+
 
 
 void SPIGPIOConfig(_GPIOConfig gpioconfig, uint8_t value){
