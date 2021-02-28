@@ -28,6 +28,8 @@ bool volatile runApplication = true;
 
 SPIHandle hSPIGn;
 SPIHandle hSPIRd;
+ScreenHandle* hScreen;
+
 
 extern TimerHandle Timer2;
 extern TimerHandle Timer3;
@@ -148,7 +150,7 @@ static void TestFsm(TestContextType * context)
 
 static void MainLoop(void){
 	
-	screenOn(&hSPIGn, &hSPIRd);
+	screenOn(hScreen, &hSPIGn, &hSPIRd);
 		
 	
 	

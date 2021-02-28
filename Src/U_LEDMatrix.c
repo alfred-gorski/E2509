@@ -5,12 +5,15 @@
 #include <U_GPIOConfig.h>
 #include <U_DrvSPI.h>
 
-int volatile code;
+int volatile timer2Flag;
 int count = 0;
 int previous;
 
 void AnTOnAt(uint8_t index);
 void AnTOffAt(uint8_t index);
+void sendToBuffer(ImageHandle *hImage);
+void sentToBufferOnPhase(ImageHandle *hImage, Phase phase);
+uint8_t getThreshold(Phase phase);
 
 static const AnTType AnT = {
 //static const _GPIOConfig AnT[] = {
@@ -25,18 +28,37 @@ static const AnTType AnT = {
 };
 
 
+uint8_t GnImage[][] = {
+      {255, 255, 170, 170, 85, 85, 0, 0},
+			{255, 255, 170, 170, 85, 85, 0, 0},
+      {255, 255, 170, 170, 85, 85, 0, 0},
+			{255, 255, 170, 170, 85, 85, 0, 0},
+      {0, 0, 85, 85, 170, 170, 255, 255}, 
+			{0, 0, 85, 85, 170, 170, 255, 255},
+      {0, 0, 85, 85, 170, 170, 255, 255},
+			{0, 0, 85, 85, 170, 170, 255, 255}
+};
+
+
+uint8_t RdImage[][] = {
+			{250, 250, 250, 250, 250, 250, 250, 250},
+      {80, 80, 80, 80, 80, 80, 80, 80},
+      {5, 5, 5, 5, 5, 5, 5, 5},
+      {175, 175, 175, 175, 175, 175, 175, 175},
+      {250, 250, 250, 250, 250, 250, 250, 250},
+      {80, 80, 80, 80, 80, 80, 80, 80},
+      {5, 5, 5, 5, 5, 5, 5, 5},
+      {175, 175, 175, 175, 175, 175, 175, 175}
+};
 
 
 
 
 
-
-
-
-
-void screenOn(SPIHandle* hSPIGn,SPIHandle* hSPIRd){
-	while(code == 1){
-		code =0;
+void screenOn(ScreenHandle* hScreen, SPIHandle* hSPIGn,SPIHandle* hSPIRd){
+	
+	while(timer2Flag == 1){
+		timer2Flag =0;
 		SPIOutEnOff(hSPIGn);
 		SPIOutEnOff(hSPIRd);
 		AnTOnAt(count);
@@ -49,8 +71,8 @@ void screenOn(SPIHandle* hSPIGn,SPIHandle* hSPIRd){
 		if (count == 8){
 			count = 0;
 		}
-		SPIEmit(hSPIGn,0x12345678);
-		SPIEmit(hSPIRd,0xABCDEF12);
+		SPIEmit(hSPIGn,pop(&hSreen->hImageGn.buffer));
+		SPIEmit(hSPIRd,pop(&hSreen->hImageRd.buffer));
 		SPILatch(hSPIGn);
 		SPILatch(hSPIRd);
 		SPIOutEn(hSPIGn);
@@ -61,11 +83,61 @@ void screenOn(SPIHandle* hSPIGn,SPIHandle* hSPIRd){
 	
 }
 
+void imageHandleInit(ScreenHandle* hScreen){
+	hScreen->hImageGn->image= &GnImage;
+	hScreen->hImageRd->image= &RdImage;
+	sendToBuffer(hScreen->hImageGn);
+	sendToBuffer(hScreen->hImageGn);
+	
+}
 
+void sendToBuffer(ImageHandle *hImage) {
+  sentToBufferOnPhase(hImage, phase0);
+  sentToBufferOnPhase(hImage, phase1);
+  sentToBufferOnPhase(hImage, phase2);
+  sentToBufferOnPhase(hImage, phase3);
+}
 
+void sentToBufferOnPhase(ImageHandle *hImage, Phase phase) {
+	uint32_t data = 0;
+  uint32_t flag = 0;
+	size_t col;
+	size_t row;
+	size_t j;
+	
+  uint8_t threshold = getThreshold(phase);
+	
 
+  for (col = 0; col < 8; col++) {
+		for (row = 0; row < 8; row++) {
+      for (j = 0; j < 4; j++) {
+        flag = ((hImage->image[row][col] & ((1 << (8 - j * 2)) - 1)) >> (6 - j * 2)) >= threshold;
+        data = (data << 1) + flag;
+      }
+      push(&hImage->buffer, data);
+      data = 0;
+     }
+   }
+ }
 
-
+uint8_t getThreshold(Phase phase) {
+  uint8_t threshold;
+  switch (phase) {
+  case phase0:
+    threshold = 1;
+    break;
+  case phase1:
+    threshold = 2;
+    break;
+  case phase2:
+    threshold = 3;
+    break;
+  case phase3:
+    threshold = 3;
+    break;
+  }
+  return threshold;
+}
 
 
 

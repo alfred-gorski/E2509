@@ -7,15 +7,15 @@
 
 #include <U_DrvTimer.h>
 
-extern int volatile code;
+extern int volatile timer2Flag;
 
 void Timer2Callback(void){
-	// code = 1;
+	timer2Flag = 1;
 }
 
 
 void Timer3Callback(void){
-	code = 1;
+	//timer2Flag = 1;
 }
 
 TimerHandle Timer2 = {
