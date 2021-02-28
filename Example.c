@@ -23,9 +23,7 @@
 unsigned volatile tickCounter = 0U;
 bool volatile runApplication = true; 
 
-WORD volatile code;
-int count;
-int countmask;
+
 
 
 SPIHandle hSPIGn;
@@ -95,21 +93,6 @@ static void MainInit(void)
 	hSPIRd = SPIInit(Rd);
 	
 	
-	
-	//TIM_Init
-	/*
-	InitTIM2();
-	InitTIM3();
-		
-	
-	StartTIM2();
-	StartTIM3();
-	
-	ENABLETIM2();
-	ENABLETIM3();
-	
-	*/
-	
 	timerInit(&Timer2);
 	timerInit(&Timer3);
 	timerEn(&Timer2);
@@ -165,23 +148,7 @@ static void TestFsm(TestContextType * context)
 
 static void MainLoop(void){
 	
-	while(code == 1){
-		SPIOutEnOff(&hSPIGn);
-		SPIOutEnOff(&hSPIRd);
-		code =0;
-		count++;
-		countmask=count&COUNT_MASK;
-		SPIEmit(&hSPIGn,0x12345678);
-		SPIEmit(&hSPIRd,0xABCDEF12);
-		SPILatch(&hSPIGn);
-		SPILatch(&hSPIRd);
-		SPIOutEn(&hSPIGn);
-		SPIOutEn(&hSPIRd);
-		AnTOffAt(countmask-1 );
-		AnTOnAt(countmask);
-
-	
-	}
+	screenOn(&hSPIGn, &hSPIRd);
 		
 	
 	

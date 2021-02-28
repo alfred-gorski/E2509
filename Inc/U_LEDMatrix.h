@@ -14,8 +14,11 @@ typedef _GPIOConfig  AnTType[ANT_LEN];
 
 
 void AnTInit(void);
-void AnTOnAt(uint8_t index);
-void AnTOffAt(uint8_t index);
+
+
+
+
+void screenOn(SPIHandle* hSPIGn,SPIHandle* hSPIRd);
 
 
 

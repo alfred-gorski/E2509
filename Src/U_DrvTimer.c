@@ -7,10 +7,10 @@
 
 #include <U_DrvTimer.h>
 
-extern WORD volatile code;
+extern int volatile code;
 
 void Timer2Callback(void){
-	
+	// code = 1;
 }
 
 
