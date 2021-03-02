@@ -40,7 +40,7 @@ void SPIInit(SPIHandle* hSPI, Color color){
 	switch(color){
 		case Gn:
 			hSPI->instance = &SPI1;
-			hSPI->gpios =SPIGPIOsGn;
+			hSPI->gpios = SPIGPIOsGn;
 			PeripheryEnable(RCC_SPI1);
 			hSPI->color = Gn;
 			break;

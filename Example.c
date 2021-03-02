@@ -25,9 +25,8 @@ bool volatile runApplication = true;
 
 
 
-
-SPIHandle hSPIGn;
-SPIHandle hSPIRd;
+ChannelHandle hChannelGn;
+ChannelHandle hChannelRd;
 
 
 extern TimerHandle Timer2;
@@ -92,8 +91,10 @@ static void MainInit(void)
 	AnTInit();
 	
 	//GPIO and RCC for SPI
-	SPIInit(&hSPIGn, Gn);
-	SPIInit(&hSPIRd, Rd);
+	
+
+	ChannelInitGn(&hChannelGn);
+	ChannelInitRd(&hChannelRd);
 	
 	
 	timerInit(&Timer2);
@@ -152,10 +153,14 @@ static void TestFsm(TestContextType * context)
 static void MainLoop(void){
 	
 	//screenOn(hScreen, &hSPIGn, &hSPIRd);
+	
 	while(timer2Flag == 1){
+		
 		timer2Flag =0;
-		SPIOutEnOff(&hSPIGn);
-		SPIOutEnOff(&hSPIRd);
+		
+		SPIOutEnOff(&hChannelGn.hSPI);
+		SPIOutEnOff(&hChannelRd.hSPI);
+		
 		AnTOnAt(count);
 		previous = count-1;
 		if(count == 0){
@@ -166,13 +171,17 @@ static void MainLoop(void){
 		if (count == 8){
 			count = 0;
 		}
-		SPIEmit(&hSPIGn,0x12345678);
-		SPIEmit(&hSPIRd,0xABCDEF12);
-		SPILatch(&hSPIGn);
-		SPILatch(&hSPIRd);
-		SPIOutEn(&hSPIGn);
-		SPIOutEn(&hSPIRd);
+		
 
+		SPIEmit(&hChannelGn.hSPI,0x12345678);
+		SPIEmit(&hChannelRd.hSPI,0xABCDEF12);
+		
+		SPILatch(&hChannelGn.hSPI);
+		SPILatch(&hChannelRd.hSPI);
+		
+		SPIOutEn(&hChannelGn.hSPI);
+		SPIOutEn(&hChannelRd.hSPI);
+		
 	
 	}
 	
