@@ -42,11 +42,13 @@ void SPIInit(SPIHandle* hSPI, Color color){
 			hSPI->instance = &SPI1;
 			hSPI->gpios =SPIGPIOsGn;
 			PeripheryEnable(RCC_SPI1);
+			hSPI->color = Gn;
 			break;
 		case Rd:
 			hSPI->instance = &SPI2;
 			hSPI->gpios = SPIGPIOsRd;
 			PeripheryEnable(RCC_SPI2);
+			hSPI->color = Rd;
 			break;
 	}
 	

@@ -48,6 +48,7 @@ typedef struct{
 	RegisterBankSPI volatile *instance;
 	_SPIGPIOs gpios;
 	SPISendStatus status;
+	Color color;
 }SPIHandle;
 
 
