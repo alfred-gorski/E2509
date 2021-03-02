@@ -28,13 +28,14 @@ bool volatile runApplication = true;
 
 SPIHandle hSPIGn;
 SPIHandle hSPIRd;
-ScreenHandle* hScreen;
 
 
 extern TimerHandle Timer2;
 extern TimerHandle Timer3;
 
-
+int volatile timer2Flag;
+int count = 0;
+int previous;
 
 
 
@@ -91,8 +92,8 @@ static void MainInit(void)
 	AnTInit();
 	
 	//GPIO and RCC for SPI
-	hSPIGn = SPIInit(Gn);
-	hSPIRd = SPIInit(Rd);
+	SPIInit(&hSPIGn, Gn);
+	SPIInit(&hSPIRd, Rd);
 	
 	
 	timerInit(&Timer2);
@@ -150,8 +151,30 @@ static void TestFsm(TestContextType * context)
 
 static void MainLoop(void){
 	
-	screenOn(hScreen, &hSPIGn, &hSPIRd);
-		
+	//screenOn(hScreen, &hSPIGn, &hSPIRd);
+	while(timer2Flag == 1){
+		timer2Flag =0;
+		SPIOutEnOff(&hSPIGn);
+		SPIOutEnOff(&hSPIRd);
+		AnTOnAt(count);
+		previous = count-1;
+		if(count == 0){
+			previous = 7;
+		}
+		AnTOffAt(previous);
+		count++;
+		if (count == 8){
+			count = 0;
+		}
+		SPIEmit(&hSPIGn,0x12345678);
+		SPIEmit(&hSPIRd,0xABCDEF12);
+		SPILatch(&hSPIGn);
+		SPILatch(&hSPIRd);
+		SPIOutEn(&hSPIGn);
+		SPIOutEn(&hSPIRd);
+
+	
+	}
 	
 	
   __wfi();

@@ -5,15 +5,9 @@
 #include <U_GPIOConfig.h>
 #include <U_DrvSPI.h>
 
-int volatile timer2Flag;
-int count = 0;
-int previous;
 
-void AnTOnAt(uint8_t index);
-void AnTOffAt(uint8_t index);
-void sendToBuffer(ImageHandle *hImage);
-void sentToBufferOnPhase(ImageHandle *hImage, Phase phase);
-uint8_t getThreshold(Phase phase);
+
+
 
 static const AnTType AnT = {
 //static const _GPIOConfig AnT[] = {
@@ -27,34 +21,24 @@ static const AnTType AnT = {
 															{&GPIOC, 7 }, //antr8
 };
 
-
-uint8_t GnImage[][] = {
-      {255, 255, 170, 170, 85, 85, 0, 0},
-			{255, 255, 170, 170, 85, 85, 0, 0},
-      {255, 255, 170, 170, 85, 85, 0, 0},
-			{255, 255, 170, 170, 85, 85, 0, 0},
-      {0, 0, 85, 85, 170, 170, 255, 255}, 
-			{0, 0, 85, 85, 170, 170, 255, 255},
-      {0, 0, 85, 85, 170, 170, 255, 255},
-			{0, 0, 85, 85, 170, 170, 255, 255}
-};
+void AnTInit(void){
+	int i=0;
+	for(i=0;i<ANT_LEN;i++){
+		GPIOConfig(AnT[i],GPIO_O_STD_PP_02MHZ);
+		setGPIOPin(AnT[i]);
+	}
+}
 
 
-uint8_t RdImage[][] = {
-			{250, 250, 250, 250, 250, 250, 250, 250},
-      {80, 80, 80, 80, 80, 80, 80, 80},
-      {5, 5, 5, 5, 5, 5, 5, 5},
-      {175, 175, 175, 175, 175, 175, 175, 175},
-      {250, 250, 250, 250, 250, 250, 250, 250},
-      {80, 80, 80, 80, 80, 80, 80, 80},
-      {5, 5, 5, 5, 5, 5, 5, 5},
-      {175, 175, 175, 175, 175, 175, 175, 175}
-};
+void AnTOnAt(uint8_t index){
+	resetGPIOPin(AnT[index]);
+}
 
+void AnTOffAt(uint8_t index){
+	setGPIOPin(AnT[index]);
+}
 
-
-
-
+/*
 void screenOn(ScreenHandle* hScreen, SPIHandle* hSPIGn,SPIHandle* hSPIRd){
 	
 	while(timer2Flag == 1){
@@ -82,6 +66,9 @@ void screenOn(ScreenHandle* hScreen, SPIHandle* hSPIGn,SPIHandle* hSPIRd){
 	}
 	
 }
+*/
+
+/*
 
 void imageHandleInit(ScreenHandle* hScreen){
 	hScreen->hImageGn->image= &GnImage;
@@ -139,6 +126,38 @@ uint8_t getThreshold(Phase phase) {
   return threshold;
 }
 
+*/
+
+
+
+
+
+/*
+
+uint8_t GnImage[][] = {
+      {255, 255, 170, 170, 85, 85, 0, 0},
+			{255, 255, 170, 170, 85, 85, 0, 0},
+      {255, 255, 170, 170, 85, 85, 0, 0},
+			{255, 255, 170, 170, 85, 85, 0, 0},
+      {0, 0, 85, 85, 170, 170, 255, 255}, 
+			{0, 0, 85, 85, 170, 170, 255, 255},
+      {0, 0, 85, 85, 170, 170, 255, 255},
+			{0, 0, 85, 85, 170, 170, 255, 255}
+};
+
+
+uint8_t RdImage[][] = {
+			{250, 250, 250, 250, 250, 250, 250, 250},
+      {80, 80, 80, 80, 80, 80, 80, 80},
+      {5, 5, 5, 5, 5, 5, 5, 5},
+      {175, 175, 175, 175, 175, 175, 175, 175},
+      {250, 250, 250, 250, 250, 250, 250, 250},
+      {80, 80, 80, 80, 80, 80, 80, 80},
+      {5, 5, 5, 5, 5, 5, 5, 5},
+      {175, 175, 175, 175, 175, 175, 175, 175}
+};
+
+*/
 
 
 
@@ -151,28 +170,6 @@ uint8_t getThreshold(Phase phase) {
 
 
 
-
-
-
-
-
-
-void AnTInit(void){
-	int i=0;
-	for(i=0;i<ANT_LEN;i++){
-		GPIOConfig(AnT[i],GPIO_O_STD_PP_02MHZ);
-		setGPIOPin(AnT[i]);
-	}
-}
-
-
-void AnTOnAt(uint8_t index){
-	resetGPIOPin(AnT[index]);
-}
-
-void AnTOffAt(uint8_t index){
-	setGPIOPin(AnT[index]);
-}
 
 
 

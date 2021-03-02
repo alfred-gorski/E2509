@@ -10,12 +10,12 @@
 extern int volatile timer2Flag;
 
 void Timer2Callback(void){
-	timer2Flag = 1;
+	//timer2Flag = 1;
 }
 
 
 void Timer3Callback(void){
-	//timer2Flag = 1;
+	timer2Flag = 1;
 }
 
 TimerHandle Timer2 = {

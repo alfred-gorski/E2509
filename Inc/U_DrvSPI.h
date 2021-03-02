@@ -52,7 +52,7 @@ typedef struct{
 
 
 
-SPIHandle SPIInit(Color color);
+void SPIInit(SPIHandle* hSPI, Color color);
 int SPIEmit(SPIHandle *hSPI,uint32_t data);
 void SPILatch(SPIHandle *hSPI);
 void SPIOutEn(SPIHandle *hSPI);

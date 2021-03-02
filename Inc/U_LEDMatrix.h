@@ -12,6 +12,8 @@
 
 typedef _GPIOConfig  AnTType[ANT_LEN];
 
+
+/*
 typedef struct uint8_t Image[8][8];
 
 typedef enum {
@@ -26,17 +28,22 @@ typedef struct{
 	Image* image;
 }ImageHandle;
 
+
 typedef struct{
 	ImageHandle *hImageGn;
 	ImageHandle *hImageRd;
 }ScreenHandle;
 
+*/
+
+
 void AnTInit(void);
+void AnTOnAt(uint8_t index);
+void AnTOffAt(uint8_t index);
 
 
 
-
-void screenOn(ScreenHandle* hScreen, SPIHandle* hSPIGn,SPIHandle* hSPIRd);
+//void screenOn(ScreenHandle* hScreen, SPIHandle* hSPIGn,SPIHandle* hSPIRd);
 
 
 

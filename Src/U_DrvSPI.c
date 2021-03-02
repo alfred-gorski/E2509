@@ -18,8 +18,7 @@
 
 
 
-SPIHandle SPIInit(Color color){
-	SPIHandle hSPI;
+void SPIInit(SPIHandle* hSPI, Color color){
 	_SPIGPIOs gpios;
 	
 	const _SPIGPIOs SPIGPIOsGn = {
@@ -40,18 +39,18 @@ SPIHandle SPIInit(Color color){
 	
 	switch(color){
 		case Gn:
-			hSPI.instance = &SPI1;
-			hSPI.gpios =SPIGPIOsGn;
+			hSPI->instance = &SPI1;
+			hSPI->gpios =SPIGPIOsGn;
 			PeripheryEnable(RCC_SPI1);
 			break;
 		case Rd:
-			hSPI.instance = &SPI2;
-			hSPI.gpios = SPIGPIOsRd;
+			hSPI->instance = &SPI2;
+			hSPI->gpios = SPIGPIOsRd;
 			PeripheryEnable(RCC_SPI2);
 			break;
 	}
 	
-	gpios = hSPI.gpios;
+	gpios = hSPI->gpios;
 	
 	GPIOConfig(gpios.latch,	GPIO_O_STD_PP_02MHZ);
 	GPIOConfig(gpios.clock,	GPIO_O_ALT_PP_02MHZ);
@@ -59,16 +58,15 @@ SPIHandle SPIInit(Color color){
 	GPIOConfig(gpios.output,	GPIO_O_ALT_PP_02MHZ);
 	GPIOConfig(gpios.outEn,	GPIO_O_STD_PP_02MHZ);
 	
-	hSPI.instance->CR1 |= 
+	hSPI->instance->CR1 |= 
 							(BaudRateScaler_8 << INDX_SPI_CR1_BR)		// baudrate f_pclk/8
 							| MASK_SPI_CR1_CPOL 										// second clock transition is the first data capture edge
 							| MASK_SPI_CR1_SSM
 							| MASK_SPI_CR1_SSI
 							| MASK_SPI_CR1_MSTR;										// master configuration
 
-	hSPI.instance->CR1 |= MASK_SPI_CR1_SPE;							// Enable
+	hSPI->instance->CR1 |= MASK_SPI_CR1_SPE;							// Enable
 	
-	return hSPI;
 	
 }
 
