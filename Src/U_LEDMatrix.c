@@ -4,6 +4,7 @@
 #include <U_LEDMatrix.h>
 #include <U_GPIOConfig.h>
 #include <U_DrvSPI.h>
+#include <U_Queue.h>
 
 #include <string.h>
 
@@ -11,6 +12,14 @@
 int volatile timer2Flag;
 int count = 0;
 int previous;
+
+
+
+
+void fillBuffer(ChannelHandle* hChannel);
+
+
+
 
 
 
@@ -101,9 +110,16 @@ void screenOn(ChannelHandle* hChannelGn, ChannelHandle *hChannelRd){
 			count = 0;
 		}
 		
+		if(isEmpty(&hChannelGn->buffer)){
+			fillBuffer(hChannelGn);
+		}
+		
+		if(isEmpty(&hChannelRd->buffer)){
+			fillBuffer(hChannelRd);
+		}
 
-		SPIEmit(&hChannelGn->hSPI,0x12345678);
-		SPIEmit(&hChannelRd->hSPI,0xABCDEF12);
+		SPIEmit(&hChannelGn->hSPI,pop(&hChannelGn->buffer));
+		SPIEmit(&hChannelRd->hSPI,pop(&hChannelRd->buffer));
 		
 		SPILatch(&hChannelGn->hSPI);
 		SPILatch(&hChannelRd->hSPI);
