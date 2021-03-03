@@ -15,8 +15,16 @@ int previous;
 
 
 
-void AnTOnAt(uint8_t index);
-void AnTOffAt(uint8_t index);
+
+
+void LEDOnAtCol(ImageHandle *hImage,uint8_t index);
+void LEDOffAtCol(ImageHandle *hImage,uint8_t index);
+
+
+void ImageOutEn		(ImageHandle *hImage);
+void ImageOutEnOff(ImageHandle *hImage);
+void ColDataSend	(ImageHandle *hImage);
+void ImageLatch		(ImageHandle *hImage);
 
 void ChannelInit(ChannelHandle *hChannel, Color color);
 void fillBuffer(ChannelHandle* hChannel);
@@ -28,17 +36,6 @@ uint8_t getThreshold(Phase phase);
 
 
 
-
-static const AnTType AnT = {
-	{&GPIOA, 12}, //antr1
-	{&GPIOA, 11}, //antr2
-	{&GPIOA, 10}, //antr3
-	{&GPIOA, 9 }, //antr4
-	{&GPIOA, 8 }, //antr5
-	{&GPIOC, 9 }, //antr6
-	{&GPIOC, 8 }, //antr7
-	{&GPIOC, 7 }, //antr8
-};
 
 static const uint8_t dataGn[8][8]= {
 	255, 255, 170, 170, 85, 85, 0, 0,
@@ -62,40 +59,51 @@ static const uint8_t dataRd[8][8]= {
 	175, 175, 175, 175, 175, 175, 175, 175
 };	
 
+static const Column columnConfig = {
+	{&GPIOA, 12}, //antr1
+	{&GPIOA, 11}, //antr2
+	{&GPIOA, 10}, //antr3
+	{&GPIOA, 9 }, //antr4
+	{&GPIOA, 8 }, //antr5
+	{&GPIOC, 9 }, //antr6
+	{&GPIOC, 8 }, //antr7
+	{&GPIOC, 7 }, //antr8
+};
 
 
 
 
 
-void AnTInit(void){
+
+void ImageInit(ImageHandle *hImage){
 	int i=0;
-	for(i=0;i<ANT_LEN;i++){
-		GPIOConfig(AnT[i],GPIO_O_STD_PP_02MHZ);
-		setGPIOPin(AnT[i]);
+	ChannelInit(&hImage->hChannelGn,Gn);
+	ChannelInit(&hImage->hChannelRd,Rd);
+	memcpy(hImage->hColumn,columnConfig,sizeof(columnConfig));
+
+	for(i=0;i<COLUMN_LEN;i++){
+		GPIOConfig(hImage->hColumn[i],GPIO_O_STD_PP_02MHZ);
+		LEDOffAtCol(hImage,i);
 	}
 }
 
 
-void ImageInit(ImageHandle *hImage){
-	ChannelInit(&hImage->hChannelGn,Gn);
-	ChannelInit(&hImage->hChannelRd,Rd);
-}
 
 
 void ScreenOn(ImageHandle *hImage){
 	while(timer2Flag == 1){
 		
 		timer2Flag =0;
-		
-		SPIOutEnOff(&hImage->hChannelGn.hSPI);
-		SPIOutEnOff(&hImage->hChannelRd.hSPI);
-		
-		AnTOnAt(count);
+
+		ImageOutEnOff(hImage);
+
+		LEDOnAtCol(hImage,count);
 		previous = count-1;
 		if(count == 0){
 			previous = 7;
 		}
-		AnTOffAt(previous);
+
+		LEDOffAtCol(hImage,previous);
 		count++;
 		if (count == 8){
 			count = 0;
@@ -109,34 +117,43 @@ void ScreenOn(ImageHandle *hImage){
 			fillBuffer(&hImage->hChannelRd);
 		}
 
-		SPIEmit(&hImage->hChannelGn.hSPI,pop(&hImage->hChannelGn.buffer));
-		SPIEmit(&hImage->hChannelRd.hSPI,pop(&hImage->hChannelRd.buffer));
-		
-		SPILatch(&hImage->hChannelGn.hSPI);
-		SPILatch(&hImage->hChannelRd.hSPI);
-		
-		SPIOutEn(&hImage->hChannelGn.hSPI);
-		SPIOutEn(&hImage->hChannelRd.hSPI);
+		ColDataSend(hImage);
+		ImageLatch(hImage);
+		ImageOutEn(hImage);
 	}
 }
 
 
 
 
-
-
-
-
-
-
-
-void AnTOnAt(uint8_t index){
-	resetGPIOPin(AnT[index]);
+void LEDOnAtCol(ImageHandle *hImage,uint8_t index){
+	resetGPIOPin(hImage->hColumn[index]);
 }
 
-void AnTOffAt(uint8_t index){
-	setGPIOPin(AnT[index]);
+void LEDOffAtCol(ImageHandle *hImage,uint8_t index){
+	setGPIOPin(hImage->hColumn[index]);
 }
+
+void ImageOutEn(ImageHandle *hImage){
+	SPIOutEn(&hImage->hChannelGn.hSPI);
+	SPIOutEn(&hImage->hChannelRd.hSPI);
+}
+
+void ImageOutEnOff(ImageHandle *hImage){
+	SPIOutEnOff(&hImage->hChannelGn.hSPI);
+	SPIOutEnOff(&hImage->hChannelRd.hSPI);
+}
+
+void ColDataSend(ImageHandle *hImage){
+	SPIEmit(&hImage->hChannelGn.hSPI,pop(&hImage->hChannelGn.buffer));
+	SPIEmit(&hImage->hChannelRd.hSPI,pop(&hImage->hChannelRd.buffer));
+}
+
+void ImageLatch(ImageHandle *hImage){
+	SPILatch(&hImage->hChannelGn.hSPI);
+	SPILatch(&hImage->hChannelRd.hSPI);
+}
+
 
 
 
@@ -148,10 +165,10 @@ void ChannelInit(ChannelHandle *hChannel, Color color){
 	QueueInit(&hChannel->buffer);
 	switch (color) {
 		case Gn:
-			memcpy(hChannel->data, dataGn,64);
+			memcpy(hChannel->data, dataGn,sizeof(dataGn));
 			break;
 		case Rd:
-			memcpy(hChannel->data, dataRd,64);
+			memcpy(hChannel->data, dataRd,sizeof(dataRd));
 	}
 }
 

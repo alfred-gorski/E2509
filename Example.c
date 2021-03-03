@@ -83,11 +83,6 @@ static void MainInit(void)
 	
 
 	//Init
-	
-	//GPIO for all AnTx
-	AnTInit();
-	
-	//GPIO and RCC for SPI
 	ImageInit(&hImage);
 	
 	

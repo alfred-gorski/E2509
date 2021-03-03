@@ -7,10 +7,9 @@
 
 
 
-#define ANT_LEN 8U
 
-
-typedef _GPIOConfig  AnTType[ANT_LEN];
+#define COLUMN_LEN 8U
+typedef _GPIOConfig Column[COLUMN_LEN];
 
 
 typedef enum {
@@ -39,11 +38,12 @@ typedef struct{
 typedef struct{
 	ChannelHandle hChannelGn;
 	ChannelHandle hChannelRd;
+	Column hColumn;
 }ImageHandle;
 
 
 
-void AnTInit(void);
+
 void ImageInit(ImageHandle *hImage);
 void ScreenOn(ImageHandle *hImage);
 
