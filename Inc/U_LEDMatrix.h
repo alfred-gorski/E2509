@@ -47,19 +47,16 @@ void AnTOnAt(uint8_t index);
 void AnTOffAt(uint8_t index);
 
 void ImageInit(ImageHandle *hImage);
-
-void ChannelInitGn(ChannelHandle* hChannel);
-void ChannelInitRd(ChannelHandle* hChannel);
+void ChannelInit(ChannelHandle *hChannel, Color color);
 
 
-void testScreenOn(ImageHandle *hImage);
+void ScreenOn(ImageHandle *hImage);
 
 void sentToBufferOnPhase(ChannelHandle* hChannel, Phase phase);
 uint8_t getThreshold(Phase phase);
 
 
 
-//void screenOn(ScreenHandle* hScreen, SPIHandle* hSPIGn,SPIHandle* hSPIRd);
 
 
 

@@ -147,7 +147,7 @@ static void TestFsm(TestContextType * context)
 static void MainLoop(void){
 	
 
-	testScreenOn(&hImage);
+	ScreenOn(&hImage);
 	
   __wfi();
 }

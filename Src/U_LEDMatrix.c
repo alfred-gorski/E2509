@@ -53,47 +53,48 @@ void AnTOffAt(uint8_t index){
 }
 
 
-void ChannelInitGn(ChannelHandle* hChannel){
-	const uint8_t data[8][8]= {
-      255, 255, 170, 170, 85, 85, 0, 0,
-			255, 255, 170, 170, 85, 85, 0, 0,
-      255, 255, 170, 170, 85, 85, 0, 0,
-			255, 255, 170, 170, 85, 85, 0, 0,
-      0, 0, 85, 85, 170, 170, 255, 255, 
-			0, 0, 85, 85, 170, 170, 255, 255,
-      0, 0, 85, 85, 170, 170, 255, 255,
-			0, 0, 85, 85, 170, 170, 255, 255
-			};
-	
-	SPIInit(&hChannel->hSPI, Gn);
-	init(&hChannel->buffer);
-	memcpy(hChannel->data, data,64);
 
+void ChannelInit(ChannelHandle *hChannel, Color color){
+	const uint8_t dataGn[8][8]= {
+		255, 255, 170, 170, 85, 85, 0, 0,
+		255, 255, 170, 170, 85, 85, 0, 0,
+		255, 255, 170, 170, 85, 85, 0, 0,
+		255, 255, 170, 170, 85, 85, 0, 0,
+		0, 0, 85, 85, 170, 170, 255, 255, 
+		0, 0, 85, 85, 170, 170, 255, 255,
+		0, 0, 85, 85, 170, 170, 255, 255,
+		0, 0, 85, 85, 170, 170, 255, 255
+	};
+	const uint8_t dataRd[8][8]= {
+		250, 250, 250, 250, 250, 250, 250, 250,
+		80, 80, 80, 80, 80, 80, 80, 80,
+		5, 5, 5, 5, 5, 5, 5, 5,
+		175, 175, 175, 175, 175, 175, 175, 175,
+		250, 250, 250, 250, 250, 250, 250, 250,
+		80, 80, 80, 80, 80, 80, 80, 80,
+		5, 5, 5, 5, 5, 5, 5, 5,
+		175, 175, 175, 175, 175, 175, 175, 175
+	};	
+	
+	SPIInit(&hChannel->hSPI, color);
+	init(&hChannel->buffer);
+	switch (color) {
+		case Gn:
+			memcpy(hChannel->data, dataGn,64);
+			break;
+		case Rd:
+			memcpy(hChannel->data, dataRd,64);
+	}
 }
 
-void ChannelInitRd(ChannelHandle* hChannel){
-		const uint8_t data[8][8]= {
-			250, 250, 250, 250, 250, 250, 250, 250,
-      80, 80, 80, 80, 80, 80, 80, 80,
-      5, 5, 5, 5, 5, 5, 5, 5,
-      175, 175, 175, 175, 175, 175, 175, 175,
-      250, 250, 250, 250, 250, 250, 250, 250,
-      80, 80, 80, 80, 80, 80, 80, 80,
-      5, 5, 5, 5, 5, 5, 5, 5,
-      175, 175, 175, 175, 175, 175, 175, 175
-			};
-	
-	SPIInit(&hChannel->hSPI, Rd);
-	init(&hChannel->buffer);
-	memcpy(hChannel->data, data,64);
-}
+
 
 void ImageInit(ImageHandle *hImage){
-	ChannelInitGn(&hImage->hChannelGn);
-	ChannelInitRd(&hImage->hChannelRd);
+	ChannelInit(&hImage->hChannelGn,Gn);
+	ChannelInit(&hImage->hChannelRd,Rd);
 }
 
-void testScreenOn(ImageHandle *hImage){
+void ScreenOn(ImageHandle *hImage){
 	while(timer2Flag == 1){
 		
 		timer2Flag =0;
@@ -187,91 +188,6 @@ uint8_t getThreshold(Phase phase) {
   return threshold;
 }
 
-
-
-
-
-/*
-void screenOn(ScreenHandle* hScreen, SPIHandle* hSPIGn,SPIHandle* hSPIRd){
-	
-	while(timer2Flag == 1){
-		timer2Flag =0;
-		SPIOutEnOff(hSPIGn);
-		SPIOutEnOff(hSPIRd);
-		AnTOnAt(count);
-		previous = count-1;
-		if(count == 0){
-			previous = 7;
-		}
-		AnTOffAt(previous);
-		count++;
-		if (count == 8){
-			count = 0;
-		}
-		SPIEmit(hSPIGn,pop(&hSreen->hImageGn.buffer));
-		SPIEmit(hSPIRd,pop(&hSreen->hImageRd.buffer));
-		SPILatch(hSPIGn);
-		SPILatch(hSPIRd);
-		SPIOutEn(hSPIGn);
-		SPIOutEn(hSPIRd);
-
-	
-	}
-	
-}
-*/
-
-/*
-
-void imageHandleInit(ScreenHandle* hScreen){
-	hScreen->hImageGn->image= &GnImage;
-	hScreen->hImageRd->image= &RdImage;
-	sendToBuffer(hScreen->hImageGn);
-	sendToBuffer(hScreen->hImageGn);
-	
-}
-
-void sendToBuffer(ImageHandle *hImage) {
-  sentToBufferOnPhase(hImage, phase0);
-  sentToBufferOnPhase(hImage, phase1);
-  sentToBufferOnPhase(hImage, phase2);
-  sentToBufferOnPhase(hImage, phase3);
-}
-
-
-
-*/
-
-
-
-
-
-/*
-
-uint8_t GnImage[][] = {
-      {255, 255, 170, 170, 85, 85, 0, 0},
-			{255, 255, 170, 170, 85, 85, 0, 0},
-      {255, 255, 170, 170, 85, 85, 0, 0},
-			{255, 255, 170, 170, 85, 85, 0, 0},
-      {0, 0, 85, 85, 170, 170, 255, 255}, 
-			{0, 0, 85, 85, 170, 170, 255, 255},
-      {0, 0, 85, 85, 170, 170, 255, 255},
-			{0, 0, 85, 85, 170, 170, 255, 255}
-};
-
-
-uint8_t RdImage[][] = {
-			{250, 250, 250, 250, 250, 250, 250, 250},
-      {80, 80, 80, 80, 80, 80, 80, 80},
-      {5, 5, 5, 5, 5, 5, 5, 5},
-      {175, 175, 175, 175, 175, 175, 175, 175},
-      {250, 250, 250, 250, 250, 250, 250, 250},
-      {80, 80, 80, 80, 80, 80, 80, 80},
-      {5, 5, 5, 5, 5, 5, 5, 5},
-      {175, 175, 175, 175, 175, 175, 175, 175}
-};
-
-*/
 
 
 
