@@ -37,7 +37,7 @@ uint8_t getThreshold(Phase phase);
 
 
 
-static const uint8_t dataGn[8][8]= {
+static const ImageData dataGn= {
 	255, 255, 170, 170, 85, 85, 0, 0,
 	255, 255, 170, 170, 85, 85, 0, 0,
 	255, 255, 170, 170, 85, 85, 0, 0,
@@ -48,7 +48,7 @@ static const uint8_t dataGn[8][8]= {
 	0, 0, 85, 85, 170, 170, 255, 255
 };
 
-static const uint8_t dataRd[8][8]= {
+static const ImageData dataRd= {
 	250, 250, 250, 250, 250, 250, 250, 250,
 	80, 80, 80, 80, 80, 80, 80, 80,
 	5, 5, 5, 5, 5, 5, 5, 5,
@@ -156,9 +156,6 @@ void ImageLatch(ImageHandle *hImage){
 
 
 
-
-
-
 void ChannelInit(ChannelHandle *hChannel, Color color){
 
 	SPIInit(&hChannel->hSPI, color);
@@ -190,8 +187,8 @@ void sentToBufferOnPhase(ChannelHandle* hChannel, Phase phase) {
 	
   uint8_t threshold = getThreshold(phase);
 	
-  for (col = 0; col < 8; col++) {
-		for (row = 0; row < 8; row++) {
+  for (col = 0; col < COLUMN_LEN; col++) {
+		for (row = 0; row < ROW_LEN; row++) {
       for (j = 0; j < 4; j++) {
         flag = ((hChannel->data[row][col] & ((1 << (8 - j * 2)) - 1)) >> (6 - j * 2)) >= threshold;
         data = (data << 1) + flag;

@@ -9,28 +9,14 @@
 
 
 #define COLUMN_LEN 8U
+#define ROW_LEN 8U
 typedef _GPIOConfig Column[COLUMN_LEN];
+typedef uint8_t ImageData[ROW_LEN][COLUMN_LEN];
 
-
-typedef enum {
-	phase0 = 0, 
-	phase1,
-	phase2,
-	phase3 
-} Phase;
-
-
-
-/*
-typedef struct uint8_t Image[8][8];
-
-
-
-*/
 
 typedef struct{
 	SPIHandle hSPI;
-	uint8_t data[8][8];
+	ImageData data;
 	Queue buffer;
 }ChannelHandle;
 
@@ -42,6 +28,12 @@ typedef struct{
 }ImageHandle;
 
 
+typedef enum {
+	phase0 = 0, 
+	phase1,
+	phase2,
+	phase3 
+} Phase;
 
 
 void ImageInit(ImageHandle *hImage);
