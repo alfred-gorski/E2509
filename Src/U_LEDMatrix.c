@@ -10,8 +10,11 @@
 
 
 int volatile timer2Flag;
-int count = 0;
-int previous;
+/*
+int cur = 0;
+int pre;
+*/
+uint32_t cur = 0;
 
 
 
@@ -87,7 +90,13 @@ void ImageInit(ImageHandle *hImage){
 	}
 }
 
+uint8_t getCur(){
+	return cur & ((1<<3)-1);
+}
 
+uint8_t getPre(){
+	return (cur - 1) & ((1<<3)-1);
+}
 
 
 void ScreenOn(ImageHandle *hImage){
@@ -96,26 +105,16 @@ void ScreenOn(ImageHandle *hImage){
 		timer2Flag =0;
 
 		ImageOutEnOff(hImage);
-
-		LEDOnAtCol(hImage,count);
-		previous = count-1;
-		if(count == 0){
-			previous = 7;
-		}
-
-		LEDOffAtCol(hImage,previous);
-		count++;
-		if (count == 8){
-			count = 0;
-		}
 		
+		LEDOnAtCol(hImage,getCur());
+		LEDOffAtCol(hImage,getPre());
+		cur++;
+
 		if(isEmpty(&hImage->hChannelGn.buffer)){
 			fillBuffer(&hImage->hChannelGn);
-		}
-		
-		if(isEmpty(&hImage->hChannelRd.buffer)){
 			fillBuffer(&hImage->hChannelRd);
 		}
+		
 
 		ColDataSend(hImage);
 		ImageLatch(hImage);
