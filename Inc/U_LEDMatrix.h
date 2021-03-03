@@ -16,7 +16,7 @@ typedef uint8_t ImageData[ROW_LEN][COLUMN_LEN];
 
 typedef struct{
 	SPIHandle hSPI;
-	ImageData data;
+	const ImageData* data;
 	Queue buffer;
 }ChannelHandle;
 

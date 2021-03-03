@@ -161,10 +161,13 @@ void ChannelInit(ChannelHandle *hChannel, Color color){
 	QueueInit(&hChannel->buffer);
 	switch (color) {
 		case Gn:
-			memcpy(hChannel->data, dataGn,sizeof(dataGn));
+			//memcpy(hChannel->data, dataGn,sizeof(dataGn));
+			hChannel->data = &dataGn;
 			break;
 		case Rd:
-			memcpy(hChannel->data, dataRd,sizeof(dataRd));
+			//memcpy(hChannel->data, dataRd,sizeof(dataRd));
+			hChannel->data = &dataRd;
+			break;
 	}
 }
 
@@ -189,7 +192,7 @@ void sentToBufferOnPhase(ChannelHandle* hChannel, Phase phase) {
   for (col = 0; col < COLUMN_LEN; col++) {
 		for (row = 0; row < ROW_LEN; row++) {
       for (j = 0; j < 4; j++) {
-        flag = ((hChannel->data[row][col] & ((1 << (8 - j * 2)) - 1)) >> (6 - j * 2)) >= threshold;
+        flag = (((*hChannel->data)[row][col] & ((1 << (8 - j * 2)) - 1)) >> (6 - j * 2)) >= threshold;
         data = (data << 1) + flag;
       }
 		}
