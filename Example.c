@@ -32,9 +32,7 @@ ChannelHandle hChannelRd;
 extern TimerHandle Timer2;
 extern TimerHandle Timer3;
 
-int volatile timer2Flag;
-int count = 0;
-int previous;
+
 
 
 
@@ -152,8 +150,8 @@ static void TestFsm(TestContextType * context)
 
 static void MainLoop(void){
 	
-	//screenOn(hScreen, &hSPIGn, &hSPIRd);
-	
+	screenOn(&hChannelGn,&hChannelRd);
+	/*
 	while(timer2Flag == 1){
 		
 		timer2Flag =0;
@@ -184,7 +182,7 @@ static void MainLoop(void){
 		
 	
 	}
-	
+	*/
 	
   __wfi();
 }

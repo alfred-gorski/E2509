@@ -57,6 +57,7 @@ void AnTOffAt(uint8_t index);
 
 void ChannelInitGn(ChannelHandle* hChannel);
 void ChannelInitRd(ChannelHandle* hChannel);
+void screenOn(ChannelHandle* hChannelGn, ChannelHandle *hChannelRd);
 
 void sentToBufferOnPhase(ChannelHandle* hChannel, Phase phase);
 uint8_t getThreshold(Phase phase);
