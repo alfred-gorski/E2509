@@ -15,8 +15,14 @@ int previous;
 
 
 
+void AnTOnAt(uint8_t index);
+void AnTOffAt(uint8_t index);
 
+void ChannelInit(ChannelHandle *hChannel, Color color);
 void fillBuffer(ChannelHandle* hChannel);
+void sentToBufferOnPhase(ChannelHandle* hChannel, Phase phase);
+uint8_t getThreshold(Phase phase);
+
 
 
 
@@ -24,16 +30,42 @@ void fillBuffer(ChannelHandle* hChannel);
 
 
 static const AnTType AnT = {
-//static const _GPIOConfig AnT[] = {
-															{&GPIOA, 12}, //antr1
-															{&GPIOA, 11}, //antr2
-															{&GPIOA, 10}, //antr3
-															{&GPIOA, 9 }, //antr4
-															{&GPIOA, 8 }, //antr5
-															{&GPIOC, 9 }, //antr6
-															{&GPIOC, 8 }, //antr7
-															{&GPIOC, 7 }, //antr8
+	{&GPIOA, 12}, //antr1
+	{&GPIOA, 11}, //antr2
+	{&GPIOA, 10}, //antr3
+	{&GPIOA, 9 }, //antr4
+	{&GPIOA, 8 }, //antr5
+	{&GPIOC, 9 }, //antr6
+	{&GPIOC, 8 }, //antr7
+	{&GPIOC, 7 }, //antr8
 };
+
+static const uint8_t dataGn[8][8]= {
+	255, 255, 170, 170, 85, 85, 0, 0,
+	255, 255, 170, 170, 85, 85, 0, 0,
+	255, 255, 170, 170, 85, 85, 0, 0,
+	255, 255, 170, 170, 85, 85, 0, 0,
+	0, 0, 85, 85, 170, 170, 255, 255, 
+	0, 0, 85, 85, 170, 170, 255, 255,
+	0, 0, 85, 85, 170, 170, 255, 255,
+	0, 0, 85, 85, 170, 170, 255, 255
+};
+
+static const uint8_t dataRd[8][8]= {
+	250, 250, 250, 250, 250, 250, 250, 250,
+	80, 80, 80, 80, 80, 80, 80, 80,
+	5, 5, 5, 5, 5, 5, 5, 5,
+	175, 175, 175, 175, 175, 175, 175, 175,
+	250, 250, 250, 250, 250, 250, 250, 250,
+	80, 80, 80, 80, 80, 80, 80, 80,
+	5, 5, 5, 5, 5, 5, 5, 5,
+	175, 175, 175, 175, 175, 175, 175, 175
+};	
+
+
+
+
+
 
 void AnTInit(void){
 	int i=0;
@@ -44,55 +76,11 @@ void AnTInit(void){
 }
 
 
-void AnTOnAt(uint8_t index){
-	resetGPIOPin(AnT[index]);
-}
-
-void AnTOffAt(uint8_t index){
-	setGPIOPin(AnT[index]);
-}
-
-
-
-void ChannelInit(ChannelHandle *hChannel, Color color){
-	const uint8_t dataGn[8][8]= {
-		255, 255, 170, 170, 85, 85, 0, 0,
-		255, 255, 170, 170, 85, 85, 0, 0,
-		255, 255, 170, 170, 85, 85, 0, 0,
-		255, 255, 170, 170, 85, 85, 0, 0,
-		0, 0, 85, 85, 170, 170, 255, 255, 
-		0, 0, 85, 85, 170, 170, 255, 255,
-		0, 0, 85, 85, 170, 170, 255, 255,
-		0, 0, 85, 85, 170, 170, 255, 255
-	};
-	const uint8_t dataRd[8][8]= {
-		250, 250, 250, 250, 250, 250, 250, 250,
-		80, 80, 80, 80, 80, 80, 80, 80,
-		5, 5, 5, 5, 5, 5, 5, 5,
-		175, 175, 175, 175, 175, 175, 175, 175,
-		250, 250, 250, 250, 250, 250, 250, 250,
-		80, 80, 80, 80, 80, 80, 80, 80,
-		5, 5, 5, 5, 5, 5, 5, 5,
-		175, 175, 175, 175, 175, 175, 175, 175
-	};	
-	
-	SPIInit(&hChannel->hSPI, color);
-	init(&hChannel->buffer);
-	switch (color) {
-		case Gn:
-			memcpy(hChannel->data, dataGn,64);
-			break;
-		case Rd:
-			memcpy(hChannel->data, dataRd,64);
-	}
-}
-
-
-
 void ImageInit(ImageHandle *hImage){
 	ChannelInit(&hImage->hChannelGn,Gn);
 	ChannelInit(&hImage->hChannelRd,Rd);
 }
+
 
 void ScreenOn(ImageHandle *hImage){
 	while(timer2Flag == 1){
@@ -129,14 +117,43 @@ void ScreenOn(ImageHandle *hImage){
 		
 		SPIOutEn(&hImage->hChannelGn.hSPI);
 		SPIOutEn(&hImage->hChannelRd.hSPI);
-		
-	
 	}
-	
-	
 }
 
 
+
+
+
+
+
+
+
+
+
+void AnTOnAt(uint8_t index){
+	resetGPIOPin(AnT[index]);
+}
+
+void AnTOffAt(uint8_t index){
+	setGPIOPin(AnT[index]);
+}
+
+
+
+
+
+void ChannelInit(ChannelHandle *hChannel, Color color){
+
+	SPIInit(&hChannel->hSPI, color);
+	init(&hChannel->buffer);
+	switch (color) {
+		case Gn:
+			memcpy(hChannel->data, dataGn,64);
+			break;
+		case Rd:
+			memcpy(hChannel->data, dataRd,64);
+	}
+}
 
 
 void fillBuffer(ChannelHandle* hChannel) {
@@ -156,7 +173,6 @@ void sentToBufferOnPhase(ChannelHandle* hChannel, Phase phase) {
 	
   uint8_t threshold = getThreshold(phase);
 	
-
   for (col = 0; col < 8; col++) {
 		for (row = 0; row < 8; row++) {
       for (j = 0; j < 4; j++) {
@@ -168,6 +184,7 @@ void sentToBufferOnPhase(ChannelHandle* hChannel, Phase phase) {
 		data = 0;
    }
  }
+
 
 uint8_t getThreshold(Phase phase) {
   uint8_t threshold;

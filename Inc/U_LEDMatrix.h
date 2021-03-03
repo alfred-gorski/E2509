@@ -42,18 +42,12 @@ typedef struct{
 }ImageHandle;
 
 
+
 void AnTInit(void);
-void AnTOnAt(uint8_t index);
-void AnTOffAt(uint8_t index);
-
 void ImageInit(ImageHandle *hImage);
-void ChannelInit(ChannelHandle *hChannel, Color color);
-
-
 void ScreenOn(ImageHandle *hImage);
 
-void sentToBufferOnPhase(ChannelHandle* hChannel, Phase phase);
-uint8_t getThreshold(Phase phase);
+
 
 
 
