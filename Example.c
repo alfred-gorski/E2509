@@ -25,8 +25,7 @@ bool volatile runApplication = true;
 
 
 
-ChannelHandle hChannelGn;
-ChannelHandle hChannelRd;
+ImageHandle hImage;
 
 
 extern TimerHandle Timer2;
@@ -89,10 +88,7 @@ static void MainInit(void)
 	AnTInit();
 	
 	//GPIO and RCC for SPI
-	
-
-	ChannelInitGn(&hChannelGn);
-	ChannelInitRd(&hChannelRd);
+	ImageInit(&hImage);
 	
 	
 	timerInit(&Timer2);
@@ -150,7 +146,8 @@ static void TestFsm(TestContextType * context)
 
 static void MainLoop(void){
 	
-	screenOn(&hChannelGn,&hChannelRd);
+
+	testScreenOn(&hImage);
 	
   __wfi();
 }

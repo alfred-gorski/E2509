@@ -86,18 +86,20 @@ void ChannelInitRd(ChannelHandle* hChannel){
 	SPIInit(&hChannel->hSPI, Rd);
 	init(&hChannel->buffer);
 	memcpy(hChannel->data, data,64);
-	
-	
 }
 
+void ImageInit(ImageHandle *hImage){
+	ChannelInitGn(&hImage->hChannelGn);
+	ChannelInitRd(&hImage->hChannelRd);
+}
 
-void screenOn(ChannelHandle* hChannelGn, ChannelHandle *hChannelRd){
-		while(timer2Flag == 1){
+void testScreenOn(ImageHandle *hImage){
+	while(timer2Flag == 1){
 		
 		timer2Flag =0;
 		
-		SPIOutEnOff(&hChannelGn->hSPI);
-		SPIOutEnOff(&hChannelRd->hSPI);
+		SPIOutEnOff(&hImage->hChannelGn.hSPI);
+		SPIOutEnOff(&hImage->hChannelRd.hSPI);
 		
 		AnTOnAt(count);
 		previous = count-1;
@@ -110,28 +112,30 @@ void screenOn(ChannelHandle* hChannelGn, ChannelHandle *hChannelRd){
 			count = 0;
 		}
 		
-		if(isEmpty(&hChannelGn->buffer)){
-			fillBuffer(hChannelGn);
+		if(isEmpty(&hImage->hChannelGn.buffer)){
+			fillBuffer(&hImage->hChannelGn);
 		}
 		
-		if(isEmpty(&hChannelRd->buffer)){
-			fillBuffer(hChannelRd);
+		if(isEmpty(&hImage->hChannelRd.buffer)){
+			fillBuffer(&hImage->hChannelRd);
 		}
 
-		SPIEmit(&hChannelGn->hSPI,pop(&hChannelGn->buffer));
-		SPIEmit(&hChannelRd->hSPI,pop(&hChannelRd->buffer));
+		SPIEmit(&hImage->hChannelGn.hSPI,pop(&hImage->hChannelGn.buffer));
+		SPIEmit(&hImage->hChannelRd.hSPI,pop(&hImage->hChannelRd.buffer));
 		
-		SPILatch(&hChannelGn->hSPI);
-		SPILatch(&hChannelRd->hSPI);
+		SPILatch(&hImage->hChannelGn.hSPI);
+		SPILatch(&hImage->hChannelRd.hSPI);
 		
-		SPIOutEn(&hChannelGn->hSPI);
-		SPIOutEn(&hChannelRd->hSPI);
+		SPIOutEn(&hImage->hChannelGn.hSPI);
+		SPIOutEn(&hImage->hChannelRd.hSPI);
 		
 	
 	}
 	
 	
 }
+
+
 
 
 void fillBuffer(ChannelHandle* hChannel) {

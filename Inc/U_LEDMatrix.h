@@ -27,17 +27,6 @@ typedef struct uint8_t Image[8][8];
 
 
 
-typedef struct{
-	Queue buffer;
-	Image* image;
-}ImageHandle;
-
-
-typedef struct{
-	ImageHandle *hImageGn;
-	ImageHandle *hImageRd;
-}ScreenHandle;
-
 */
 
 typedef struct{
@@ -47,17 +36,23 @@ typedef struct{
 }ChannelHandle;
 
 
+typedef struct{
+	ChannelHandle hChannelGn;
+	ChannelHandle hChannelRd;
+}ImageHandle;
 
 
 void AnTInit(void);
 void AnTOnAt(uint8_t index);
 void AnTOffAt(uint8_t index);
 
-
+void ImageInit(ImageHandle *hImage);
 
 void ChannelInitGn(ChannelHandle* hChannel);
 void ChannelInitRd(ChannelHandle* hChannel);
-void screenOn(ChannelHandle* hChannelGn, ChannelHandle *hChannelRd);
+
+
+void testScreenOn(ImageHandle *hImage);
 
 void sentToBufferOnPhase(ChannelHandle* hChannel, Phase phase);
 uint8_t getThreshold(Phase phase);
