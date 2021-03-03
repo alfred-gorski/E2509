@@ -158,9 +158,9 @@ void sentToBufferOnPhase(ChannelHandle* hChannel, Phase phase) {
         flag = ((hChannel->data[row][col] & ((1 << (8 - j * 2)) - 1)) >> (6 - j * 2)) >= threshold;
         data = (data << 1) + flag;
       }
-      push(&hChannel->buffer, data);
-      data = 0;
-     }
+		}
+		push(&hChannel->buffer, data);
+		data = 0;
    }
  }
 

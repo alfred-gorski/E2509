@@ -151,38 +151,6 @@ static void TestFsm(TestContextType * context)
 static void MainLoop(void){
 	
 	screenOn(&hChannelGn,&hChannelRd);
-	/*
-	while(timer2Flag == 1){
-		
-		timer2Flag =0;
-		
-		SPIOutEnOff(&hChannelGn.hSPI);
-		SPIOutEnOff(&hChannelRd.hSPI);
-		
-		AnTOnAt(count);
-		previous = count-1;
-		if(count == 0){
-			previous = 7;
-		}
-		AnTOffAt(previous);
-		count++;
-		if (count == 8){
-			count = 0;
-		}
-		
-
-		SPIEmit(&hChannelGn.hSPI,0x12345678);
-		SPIEmit(&hChannelRd.hSPI,0xABCDEF12);
-		
-		SPILatch(&hChannelGn.hSPI);
-		SPILatch(&hChannelRd.hSPI);
-		
-		SPIOutEn(&hChannelGn.hSPI);
-		SPIOutEn(&hChannelRd.hSPI);
-		
-	
-	}
-	*/
 	
   __wfi();
 }

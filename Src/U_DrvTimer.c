@@ -22,7 +22,7 @@ TimerHandle Timer2 = {
 	&TIM2,
 	RCC_TIM2,
 	NVIC_TIM2,
-	36-1,
+	72-1,
 	100-1,
 	&Timer2Callback
 };
