@@ -17,11 +17,11 @@ typedef struct {
   uint32_t buffer[QUEUE_CAPACITY];
 } Queue;
 
-void init(Queue *const p);
-int isEmpty(const Queue *const p);
-int isFull(const Queue *const p);
-uint32_t pop(Queue *const p);
-void push(Queue *const p, uint32_t data);
+void QueueInit(Queue *const hQueue);
+int isEmpty(const Queue *const hQueue);
+int isFull(const Queue *const hQueue);
+uint32_t pop(Queue *const hQueue);
+void push(Queue *const hQueue, uint32_t data);
 
 
 

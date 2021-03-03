@@ -145,7 +145,7 @@ void AnTOffAt(uint8_t index){
 void ChannelInit(ChannelHandle *hChannel, Color color){
 
 	SPIInit(&hChannel->hSPI, color);
-	init(&hChannel->buffer);
+	QueueInit(&hChannel->buffer);
 	switch (color) {
 		case Gn:
 			memcpy(hChannel->data, dataGn,64);
