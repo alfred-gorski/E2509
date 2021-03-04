@@ -50,6 +50,9 @@ void timerInit(TimerHandle * const hTimer){
 	hTimer->instance->ARR = hTimer->arrValue;
 	hTimer->instance->DIER |= MASK_TIM_DIER_UIE;
 	hTimer->instance->SR &= ~MASK_TIM_SR_UIF;
+	
+	timerEn(hTimer);
+	timerStart(hTimer);
 }
 
 void timerEn(TimerHandle * hTimer){

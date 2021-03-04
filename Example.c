@@ -68,12 +68,7 @@ static void MainInit(void)
 	
 	timerInit(&Timer2);
 	timerInit(&Timer3);
-	timerEn(&Timer2);
-	timerEn(&Timer3);
-	timerStart(&Timer2);
-	timerStart(&Timer3);
-	
-	
+
 	
   /// Das PRIMASK-Register ist im Start-up-Code auf 1 eingestellt worden. Damit kann kein IRQ aktiv werden. 
   /// Erst mit dem Auruf der nachfolgenden Funktion können alle IRQs aktiv werden.
