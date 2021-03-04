@@ -40,7 +40,7 @@ typedef enum {
 
 void ImageInit(ImageHandle *hImage);
 void ScreenOn(ImageHandle *hImage);
-
+void ImageOutEnOff(ImageHandle *hImage);
 
 
 

@@ -6,9 +6,11 @@
 #include <RB_NVIC.h>
 
 #include <U_DrvTimer.h>
+#include <U_LEDMatrix.h>
 
 extern uint8_t volatile colSwitch;
 extern uint8_t volatile imageSwitch;
+extern ImageHandle hImage;
 
 void Timer2Callback(void){
 	colSwitch = 1;
@@ -19,7 +21,9 @@ void Timer3Callback(void){
 	imageSwitch = (~imageSwitch) & 1;
 }
 
-
+void Timer4Callback(void){
+	ImageOutEnOff(&hImage);
+}
 
 TimerHandle Timer2 = {
 	&TIM2,
@@ -39,7 +43,14 @@ TimerHandle Timer3 = {
 	&Timer3Callback
 };
 
-
+TimerHandle Timer4 = {
+	&TIM2,
+	RCC_TIM2,
+	NVIC_TIM2,
+	72-1,
+	GLOBAL_BRIGHTNESS_PERCENT-1,
+	&Timer4Callback
+};
 
 
 

@@ -24,7 +24,6 @@ void LEDOffAtCol(ImageHandle *hImage,uint8_t index);
 
 
 void ImageOutEn		(ImageHandle *hImage);
-void ImageOutEnOff(ImageHandle *hImage);
 void ColDataSend	(ImageHandle *hImage);
 void ImageLatch		(ImageHandle *hImage);
 

@@ -7,6 +7,9 @@
 #include <HW_NVIC.h>
 #include <HW_TIM.h>
 
+
+#define GLOBAL_BRIGHTNESS_PERCENT 10
+
 typedef void (* Callback)(void); 
 
 

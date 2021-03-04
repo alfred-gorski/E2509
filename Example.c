@@ -28,6 +28,7 @@ bool volatile runApplication = true;
 ImageHandle hImage;
 extern TimerHandle Timer2;
 extern TimerHandle Timer3;
+extern TimerHandle Timer4;
 
 
 
@@ -68,6 +69,7 @@ static void MainInit(void)
 	
 	timerInit(&Timer2);
 	timerInit(&Timer3);
+	timerInit(&Timer4);
 
 	
   /// Das PRIMASK-Register ist im Start-up-Code auf 1 eingestellt worden. Damit kann kein IRQ aktiv werden. 
