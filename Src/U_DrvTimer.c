@@ -8,14 +8,18 @@
 #include <U_DrvTimer.h>
 #include <U_LEDMatrix.h>
 
+
+
 extern uint8_t volatile colSwitch;
 extern uint8_t volatile imageSwitch;
 extern ImageHandle hImage;
 
+void timerEn(TimerHandle * hTimer);
+void timerStart(TimerHandle * hTimer);
+
 void Timer2Callback(void){
 	colSwitch = 1;
 }
-
 
 void Timer3Callback(void){
 	imageSwitch = (~imageSwitch) & 1;
@@ -24,6 +28,8 @@ void Timer3Callback(void){
 void Timer4Callback(void){
 	ImageOutEnOff(&hImage);
 }
+
+
 
 TimerHandle Timer2 = {
 	&TIM2,
@@ -44,9 +50,9 @@ TimerHandle Timer3 = {
 };
 
 TimerHandle Timer4 = {
-	&TIM2,
-	RCC_TIM2,
-	NVIC_TIM2,
+	&TIM4,
+	RCC_TIM4,
+	NVIC_TIM4,
 	72-1,
 	GLOBAL_BRIGHTNESS_PERCENT-1,
 	&Timer4Callback
@@ -64,6 +70,7 @@ void timerInit(TimerHandle * const hTimer){
 	
 	timerEn(hTimer);
 	timerStart(hTimer);
+	
 }
 
 void timerEn(TimerHandle * hTimer){
@@ -83,16 +90,16 @@ void timerInterruptHandler(TimerHandle * hTimer){
 }
 
 void IRQ_TIM2(void){
-	timerInterruptHandler(&Timer2);
-		
+	timerInterruptHandler(&Timer2);	
 }
 
 void IRQ_TIM3(void){
 	timerInterruptHandler(&Timer3);
 }
 
-
-
+void IRQ_TIM4(void){
+	timerInterruptHandler(&Timer4);
+}
 
 
 

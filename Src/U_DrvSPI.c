@@ -67,14 +67,13 @@ void SPIInit(SPIHandle* hSPI, Color color){
 
 
 int SPIEmit(SPIHandle *hSPI,uint32_t data){
-	BYTE TxCount = 0;
-	BYTE TimeOutCount = 0;
-	BYTE pick = 0;
+	uint8_t TxCount = 0;
+	uint8_t TimeOutCount = 0;
+	uint8_t pick = 0;
 	
 	hSPI->status = BUSY;
 	while(TxCount < 4 && TimeOutCount < TIMEOUT_THRESHOLD ){
 		if((hSPI->instance->SR&MASK_SPI_SR_TXE)==MASK_SPI_SR_TXE){
-			
 			pick = data & SIZE_8_MASK;
 			data = data >> 8;
 			hSPI->instance->DR=pick;

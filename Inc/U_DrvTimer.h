@@ -8,7 +8,7 @@
 #include <HW_TIM.h>
 
 
-#define GLOBAL_BRIGHTNESS_PERCENT 10
+#define GLOBAL_BRIGHTNESS_PERCENT 50
 
 typedef void (* Callback)(void); 
 
@@ -24,8 +24,7 @@ typedef struct{
 
 
 void timerInit(TimerHandle * const hTimer);
-void timerEn(TimerHandle * hTimer);
-void timerStart(TimerHandle * hTimer);
+
 
 
 	

@@ -1,7 +1,7 @@
 #include <U_Queue.h>
+#include <stdint.h>
 
-
-unsigned len(const Queue *const hQueue);
+uint32_t len(const Queue *const hQueue);
 
 
 void QueueInit(Queue *const hQueue) {
@@ -30,6 +30,6 @@ void push(Queue *const hQueue, uint32_t data) {
 }
 
 
-unsigned len(const Queue *const hQueue) { 
+uint32_t len(const Queue *const hQueue) { 
 	return hQueue->wcntr - hQueue->rcntr; 
 }

@@ -14,7 +14,6 @@ typedef struct{
 
 
 void GPIOConfig(_GPIOConfig gpioconfig, uint8_t value);
-
 void setGPIOPin(_GPIOConfig gpioconfig);
 void resetGPIOPin(_GPIOConfig gpioconfig);
 

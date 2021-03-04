@@ -14,6 +14,7 @@ void setGPIOPin(_GPIOConfig gpioconfig){
 }
 
 
+
 void resetGPIOPin(_GPIOConfig gpioconfig){
 	gpioconfig.gpio->BRR |= (1 << gpioconfig.pin);
 }

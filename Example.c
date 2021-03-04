@@ -18,7 +18,6 @@
 #include <U_LEDMatrix.h>
 #include <U_Queue.h>
 
-#define COUNT_MASK (1<<3)-1
 
 unsigned volatile tickCounter = 0U;
 bool volatile runApplication = true; 
@@ -70,6 +69,7 @@ static void MainInit(void)
 	timerInit(&Timer2);
 	timerInit(&Timer3);
 	timerInit(&Timer4);
+
 
 	
   /// Das PRIMASK-Register ist im Start-up-Code auf 1 eingestellt worden. Damit kann kein IRQ aktiv werden. 

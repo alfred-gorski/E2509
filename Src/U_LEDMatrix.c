@@ -5,7 +5,7 @@
 #include <U_GPIOConfig.h>
 #include <U_DrvSPI.h>
 #include <U_Queue.h>
-
+#include <U_DrvTimer.h>
 
 
 
@@ -116,6 +116,7 @@ void ScreenOn(ImageHandle *hImage){
 
 		LEDOnAtCol(hImage,getCur());
 		
+		
 		cur++;
 		
 		if ((imageSwitch != prevImage)&&(0==getCur())){
@@ -221,7 +222,7 @@ void sentToBufferOnPhase(ChannelHandle* hChannel, Phase phase) {
 
 
 uint8_t getThreshold(Phase phase) {
-  uint8_t threshold;
+  uint8_t threshold=0;
   switch (phase) {
   case phase0:
     threshold = 1;
