@@ -9,11 +9,10 @@
 #include <string.h>
 
 
-int volatile timer2Flag;
-/*
-int cur = 0;
-int pre;
-*/
+uint8_t volatile colSwitch=0;
+uint8_t volatile imageSwitch=0;
+uint8_t prevImage=0;
+
 uint32_t cur = 0;
 
 
@@ -35,7 +34,7 @@ void sentToBufferOnPhase(ChannelHandle* hChannel, Phase phase);
 uint8_t getThreshold(Phase phase);
 
 
-
+void ImageReinit(ImageHandle *hImage, int image);
 
 
 
@@ -100,12 +99,10 @@ uint8_t getPre(){
 
 
 void ScreenOn(ImageHandle *hImage){
-	while(timer2Flag == 1){
+	while(colSwitch == 1){
+		colSwitch =0;
 		
-		timer2Flag =0;
-
 		ImageOutEnOff(hImage);
-		
 		LEDOnAtCol(hImage,getCur());
 		LEDOffAtCol(hImage,getPre());
 		cur++;
@@ -119,10 +116,31 @@ void ScreenOn(ImageHandle *hImage){
 		ColDataSend(hImage);
 		ImageLatch(hImage);
 		ImageOutEn(hImage);
+		
+		if ((imageSwitch != prevImage)&&(7==getCur())){
+			prevImage = (~prevImage) & 1;
+			ImageReinit(hImage,prevImage);
+		}
+		
 	}
 }
 
+void ImageReinit(ImageHandle *hImage, int image){
+	QueueInit(&hImage->hChannelGn.buffer);
+	QueueInit(&hImage->hChannelRd.buffer);
+	switch (image) {
+		case 0:
+			hImage->hChannelGn.data = &dataGn;
+			hImage->hChannelRd.data = &dataRd;
+			break;
+		case 1:
+			hImage->hChannelGn.data = &dataRd;
+			hImage->hChannelRd.data = &dataGn;
+			break;
+	}
+	
 
+}
 
 
 void LEDOnAtCol(ImageHandle *hImage,uint8_t index){
@@ -161,11 +179,9 @@ void ChannelInit(ChannelHandle *hChannel, Color color){
 	QueueInit(&hChannel->buffer);
 	switch (color) {
 		case Gn:
-			//memcpy(hChannel->data, dataGn,sizeof(dataGn));
 			hChannel->data = &dataGn;
 			break;
 		case Rd:
-			//memcpy(hChannel->data, dataRd,sizeof(dataRd));
 			hChannel->data = &dataRd;
 			break;
 	}

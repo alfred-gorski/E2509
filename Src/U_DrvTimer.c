@@ -7,16 +7,19 @@
 
 #include <U_DrvTimer.h>
 
-extern int volatile timer2Flag;
+extern uint8_t volatile colSwitch;
+extern uint8_t volatile imageSwitch;
 
 void Timer2Callback(void){
-	timer2Flag = 1;
+	colSwitch = 1;
 }
 
 
 void Timer3Callback(void){
-	// timer2Flag = 1;
+	imageSwitch = (~imageSwitch) & 1;
 }
+
+
 
 TimerHandle Timer2 = {
 	&TIM2,
