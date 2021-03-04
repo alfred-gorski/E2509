@@ -74,6 +74,7 @@ int SPIEmit(SPIHandle *hSPI,uint32_t data){
 	hSPI->status = BUSY;
 	while(TxCount < 4 && TimeOutCount < TIMEOUT_THRESHOLD ){
 		if((hSPI->instance->SR&MASK_SPI_SR_TXE)==MASK_SPI_SR_TXE){
+			
 			pick = data & SIZE_8_MASK;
 			data = data >> 8;
 			hSPI->instance->DR=pick;

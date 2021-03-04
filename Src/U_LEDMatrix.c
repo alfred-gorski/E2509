@@ -103,24 +103,27 @@ void ScreenOn(ImageHandle *hImage){
 		colSwitch =0;
 		
 		ImageOutEnOff(hImage);
-		LEDOnAtCol(hImage,getCur());
 		LEDOffAtCol(hImage,getPre());
-		cur++;
-
+		
 		if(isEmpty(&hImage->hChannelGn.buffer)){
 			fillBuffer(&hImage->hChannelGn);
 			fillBuffer(&hImage->hChannelRd);
 		}
 		
-
 		ColDataSend(hImage);
 		ImageLatch(hImage);
 		ImageOutEn(hImage);
 		
-		if ((imageSwitch != prevImage)&&(7==getCur())){
-			prevImage = (~prevImage) & 1;
+
+		LEDOnAtCol(hImage,getCur());
+		
+		cur++;
+		
+		if ((imageSwitch != prevImage)&&(0==getCur())){
+			prevImage = imageSwitch;
 			ImageReinit(hImage,prevImage);
 		}
+		
 		
 	}
 }
