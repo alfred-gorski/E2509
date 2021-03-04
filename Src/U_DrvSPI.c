@@ -1,20 +1,12 @@
-
 #include <HW_GPIO.h>
 #include <HW_SPI.h>
 #include <HW_RCC.h>
 #include <Compiler.h>
 
 
-
 #include <U_DrvSPI.h>
 #include <U_Queue.h>
 #include <U_GPIOConfig.h>
-
-
-
-
-
-
 
 
 

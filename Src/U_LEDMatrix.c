@@ -1,12 +1,12 @@
 #include <Compiler.h>
-
+#include <string.h>
 
 #include <U_LEDMatrix.h>
 #include <U_GPIOConfig.h>
 #include <U_DrvSPI.h>
 #include <U_Queue.h>
 
-#include <string.h>
+
 
 
 uint8_t volatile colSwitch=0;

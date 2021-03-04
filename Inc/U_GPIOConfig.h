@@ -2,7 +2,7 @@
 #define U_GPIOCONFIG_H
 
 #include <HW_GPIO.h>
-
+#include <stdint.h>
 
 
 

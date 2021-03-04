@@ -8,7 +8,7 @@
 #include <STM32F10xxx.h>
 #include <Reset.h>
 
-#include <DrvUSART.h>
+
 
 #include <RB_SPI.h>
 #include <HW_RCC.h>
@@ -26,8 +26,6 @@ bool volatile runApplication = true;
 
 
 ImageHandle hImage;
-
-
 extern TimerHandle Timer2;
 extern TimerHandle Timer3;
 
@@ -36,24 +34,7 @@ extern TimerHandle Timer3;
 
 
 
-
-typedef enum 
-{
-  testIdle, 
-  testBusy
-} TestStateType;
-
-typedef struct
-{
-  TestStateType state;
-  BYTE data;
-  UsartHandleType handle;
-} TestContextType;  
-
-static TestContextType context = { testIdle, 0 };
-
-static void SetCONTROL(WORD const controlVal)
-{
+static void SetCONTROL(WORD const controlVal){
   register WORD controlReg __asm("control");
 
   DEBUG_PRINT("CONTROL=%x", controlVal);
@@ -61,8 +42,7 @@ static void SetCONTROL(WORD const controlVal)
 	controlReg = controlVal;
 }
 
-static void SetPRIMASK(WORD const primaskVal)
-{
+static void SetPRIMASK(WORD const primaskVal){
   register WORD primaskReg __asm("primask");
 	
   DEBUG_PRINT("PRIMASK=%x", primaskVal);
@@ -100,7 +80,7 @@ static void MainInit(void)
 	SetPRIMASK(0U);
 
 	
-	 /// Indem Bit #0 im CONTROL-Register des Cortex-M3 gesetzt wird, wird der Prozessor in den non-priviliegierten Modus gesetzt.
+	/// Indem Bit #0 im CONTROL-Register des Cortex-M3 gesetzt wird, wird der Prozessor in den non-priviliegierten Modus gesetzt.
   /// Damit können diverse, wichtige Einstellungen nicht mehr versehentlich überschrieben werden.
   /// Aber Achtung: Der Exception-Modus ist immer privilegiert, unabhängig von CONTROL[0].
 	SetCONTROL(1U);
@@ -118,27 +98,9 @@ static void MainExit(void)
 	ResetController();
 }
 
-static void TestFsm(TestContextType * context)
-{
-  switch(context->state)
-  {
-    case testIdle:
-    if ( UsartRecv(context->handle, &context->data) == usartSuccess ) 
-      context->state = testBusy;
-    break;
-    
-    case testBusy:
-    if ( UsartSend(context->handle, context->data) == usartSuccess ) 
-      context->state = testIdle;
-    break;
-  }
-}
+
 
 /// Routine, die im Hauprprogramm zyklisch aufgerufen wird.
-
-
-
-
 static void MainLoop(void){
 	
 
@@ -148,6 +110,8 @@ static void MainLoop(void){
 }
 
 __declspec(noreturn) 
+
+
 int main(){
 
 	
@@ -159,6 +123,8 @@ int main(){
 	
 	MainExit();
 }
+
+
 
 void IRQ_SysTick(void)
 {

@@ -2,7 +2,7 @@
 #define U_QUEUE_H
 
 #include <stdint.h>
-#include <stdio.h>
+
 
 
 #define QUEUE_LOG2_CAPACITY 5U

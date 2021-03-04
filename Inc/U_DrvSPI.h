@@ -4,6 +4,7 @@
 #include <HW_GPIO.h>
 #include <HW_SPI.h>
 #include <Compiler.h>
+#include <stdint.h>
 #include <U_GPIOConfig.h>
 
 
