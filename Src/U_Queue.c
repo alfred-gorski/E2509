@@ -1,7 +1,16 @@
+/**
+ * @file 				U_Queue.c
+ * @brief  	    Configurations of all used GPIO
+ * @details     
+ * @version 		1.0.0
+ */
+
+
 #include <U_Queue.h>
 #include <stdint.h>
 
 uint32_t len(const Queue *const hQueue);
+
 
 
 void QueueInit(Queue *const hQueue) {
