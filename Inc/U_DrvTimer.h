@@ -12,7 +12,7 @@
 
 typedef void (* Callback)(void); 
 
-
+/// \brief Handle of the time
 typedef struct{
 	RegisterBankTIM	volatile *instance;
 	const uint32_t RCC;

@@ -1,3 +1,12 @@
+/**
+ * @file 				U_DrvTimer.c
+ * @brief  	    Timer call with TIM2,TIM3
+ * @details     use callback-function with the help of TIM2&TIM3, Setting the key for the function im Example.c 
+ * @version 		1.2.0
+ */
+
+
+
 #include <Compiler.h>
 
 #include <HW_STK.h>
@@ -10,6 +19,8 @@
 
 
 
+
+
 extern uint8_t volatile colSwitch;
 extern uint8_t volatile imageSwitch;
 extern ImageHandle hImage;
@@ -17,17 +28,31 @@ extern ImageHandle hImage;
 void timerEn(TimerHandle * hTimer);
 void timerStart(TimerHandle * hTimer);
 
+/// \brief callbackfunction of Timer2
 void Timer2Callback(void){
 	colSwitch = 1;
 }
 
+/// \brief callbackfunction of Timer3
 void Timer3Callback(void){
 	imageSwitch = (~imageSwitch) & 1;
 }
 
+/// \brief callbackfunction of Timer4
 void Timer4Callback(void){
 	ImageOutEnOff(&hImage);
 }
+
+
+/*
+	Structure of TimerHandle
+    RCC;
+    irq;
+    pscValue;
+    arrValue;
+    onTimeUpdateEvent(function pointer);
+*/
+
 
 
 
@@ -60,6 +85,8 @@ TimerHandle Timer4 = {
 
 
 
+/// \brief RCC Enable of the chosen TIM
+
 void timerInit(TimerHandle * const hTimer){
 	PeripheryEnable(hTimer->RCC);
 	
@@ -73,14 +100,19 @@ void timerInit(TimerHandle * const hTimer){
 	
 }
 
+
+/// \brief Enable Timer X 
 void timerEn(TimerHandle * hTimer){
 	hTimer->instance->CR1 |=MASK_TIM_CR1_CEN;
 }
 
+/// \brief IRQ Enable Timer X
 void timerStart(TimerHandle * hTimer){
 	InterruptEnable(hTimer->irq);
 }
 
+
+/// \brief configuration of the interrupt during the TIM 
 void timerInterruptHandler(TimerHandle * hTimer){
 	hTimer->instance->CR1 &= ~MASK_TIM_CR1_CEN;
 	hTimer->instance->CNT = 0;
@@ -89,14 +121,22 @@ void timerInterruptHandler(TimerHandle * hTimer){
 	hTimer->instance->CR1 |= MASK_TIM_CR1_CEN;
 }
 
+
+
+/// \brief interrupt reques of TIM3
 void IRQ_TIM2(void){
 	timerInterruptHandler(&Timer2);	
 }
 
+
+
+/// \brief interrupt reques of TIM3
 void IRQ_TIM3(void){
 	timerInterruptHandler(&Timer3);
 }
 
+
+/// \brief interrupt reques of TIM4
 void IRQ_TIM4(void){
 	timerInterruptHandler(&Timer4);
 }
