@@ -8,18 +8,17 @@
 #include <U_GPIOConfig.h>
 #include <U_Queue.h>
 
+/// SPI GPIO config data.
+static const _SPIGPIOs SPIGPIOsGn = {
+	{&GPIOA, 4}, {&GPIOA, 5}, {&GPIOA, 6}, {&GPIOA, 7}, {&GPIOC, 4},
+};
+
+static const _SPIGPIOs SPIGPIOsRd = {
+	{&GPIOB, 12}, {&GPIOB, 13}, {&GPIOB, 14}, {&GPIOB, 15}, {&GPIOC, 6},
+};
+
 void SPIInit(SPIHandle *hSPI, Color color) {
   _SPIGPIOs gpios;
-
-  /// SPI GPIO config data.
-  // TODO: extract as global variable.
-  const _SPIGPIOs SPIGPIOsGn = {
-      {&GPIOA, 4}, {&GPIOA, 5}, {&GPIOA, 6}, {&GPIOA, 7}, {&GPIOC, 4},
-  };
-
-  const _SPIGPIOs SPIGPIOsRd = {
-      {&GPIOB, 12}, {&GPIOB, 13}, {&GPIOB, 14}, {&GPIOB, 15}, {&GPIOC, 6},
-  };
 
   switch (color) {
   case Gn:

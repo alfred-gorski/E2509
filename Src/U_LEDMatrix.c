@@ -27,12 +27,15 @@ void ColDataSend(ImageHandle *hImage);
 void ImageLatch(ImageHandle *hImage);
 
 void ChannelInit(ChannelHandle *hChannel, Color color);
-void fillBuffer(ChannelHandle *hChannel);
-void refillBuffer(ChannelHandle *hChannel);
+void BufferFill(ChannelHandle *hChannel);
+void BufferRefill(ChannelHandle *hChannel);
 void sentToBufferOnPhase(ChannelHandle *hChannel, Phase phase);
-uint8_t getThreshold(Phase phase);
+uint8_t Threshold(Phase phase);
 
 void ImageReinit(ImageHandle *hImage, int image);
+
+uint8_t getCur(void);
+uint8_t getPre(void);
 
 static const ImageData dataGn = {
     255, 255, 170, 170, 85,  85,  0,   0,   255, 255, 170, 170, 85,
@@ -67,8 +70,8 @@ void ScreenOn(ImageHandle *hImage) {
       prevImage = imageSwitch;
       ImageReinit(hImage, prevImage);
     } else {
-      refillBuffer(&hImage->hChannelGn);
-      refillBuffer(&hImage->hChannelRd);
+      BufferRefill(&hImage->hChannelGn);
+      BufferRefill(&hImage->hChannelRd);
     }
   }
 
@@ -97,13 +100,13 @@ void ImageInit(ImageHandle *hImage) {
     GPIOConfig(hImage->hColumn[i], GPIO_O_STD_PP_02MHZ);
     LEDOffAtCol(hImage, i);
   }
-  fillBuffer(&hImage->hChannelGn);
-  fillBuffer(&hImage->hChannelRd);
+  BufferFill(&hImage->hChannelGn);
+  BufferFill(&hImage->hChannelRd);
 }
 
-uint8_t getCur() { return cur & ((1 << 3) - 1); }
+uint8_t getCur(void) { return cur & ((1 << 3) - 1); }
 
-uint8_t getPre() { return (cur - 1) & ((1 << 3) - 1); }
+uint8_t getPre(void) { return (cur - 1) & ((1 << 3) - 1); }
 
 void ImageReinit(ImageHandle *hImage, int image) {
   QueueInit(&hImage->hChannelGn.buffer);
@@ -118,8 +121,8 @@ void ImageReinit(ImageHandle *hImage, int image) {
     hImage->hChannelRd.data = &dataGn;
     break;
   }
-  fillBuffer(&hImage->hChannelGn);
-  fillBuffer(&hImage->hChannelRd);
+  BufferFill(&hImage->hChannelGn);
+  BufferFill(&hImage->hChannelRd);
 }
 
 void LEDOnAtCol(ImageHandle *hImage, uint8_t index) {
@@ -163,11 +166,11 @@ void ChannelInit(ChannelHandle *hChannel, Color color) {
     break;
   }
 }
-//TODO: rename to BufferRefill
-void refillBuffer(ChannelHandle *hChannel) { refill(&hChannel->buffer); }
 
-//TODO: rename to BufferFill
-void fillBuffer(ChannelHandle *hChannel) {
+void BufferRefill(ChannelHandle *hChannel) { refill(&hChannel->buffer); }
+
+
+void BufferFill(ChannelHandle *hChannel) {
   sentToBufferOnPhase(hChannel, phase0);
   sentToBufferOnPhase(hChannel, phase1);
   sentToBufferOnPhase(hChannel, phase2);
@@ -181,7 +184,7 @@ void sentToBufferOnPhase(ChannelHandle *hChannel, Phase phase) {
   size_t row;
   size_t j;
 
-  uint8_t threshold = getThreshold(phase);
+  uint8_t threshold = Threshold(phase);
 	//TODO: Not CPU Cache friendly, need to change ImageData definition.
   for (col = 0; col < COLUMN_LEN; col++) {
     for (row = 0; row < ROW_LEN; row++) {
@@ -196,8 +199,8 @@ void sentToBufferOnPhase(ChannelHandle *hChannel, Phase phase) {
   }
 }
 
-//TODO: rename to Threshold
-uint8_t getThreshold(Phase phase) {
+
+uint8_t Threshold(Phase phase) {
   uint8_t threshold = 0;
   switch (phase) {
   case phase0:

@@ -30,11 +30,11 @@ void Timer4Callback(void) { ImageOutEnOff(&hImage); }
 
 /// Timer configurations
 TimerHandle Timer2 = {&TIM2,  RCC_TIM2, NVIC_TIM2,
-                      72 - 1, 100 - 1,  &Timer2Callback};
+                      36 - 1, 100 - 1,  &Timer2Callback};
 TimerHandle Timer3 = {&TIM3,    RCC_TIM3,  NVIC_TIM3,
                       7200 - 1, 10000 - 1, &Timer3Callback};
 TimerHandle Timer4 = {
-    &TIM4,          RCC_TIM4, NVIC_TIM4, 72 - 1, GLOBAL_BRIGHTNESS_PERCENT - 1,
+    &TIM4,          RCC_TIM4, NVIC_TIM4, 36 - 1, GLOBAL_BRIGHTNESS_PERCENT - 1,
     &Timer4Callback};
 
 void timerInit(TimerHandle *const hTimer) {
