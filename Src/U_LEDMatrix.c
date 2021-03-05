@@ -1,230 +1,204 @@
 #include <Compiler.h>
 #include <string.h>
 
-#include <U_LEDMatrix.h>
-#include <U_GPIOConfig.h>
 #include <U_DrvSPI.h>
-#include <U_Queue.h>
 #include <U_DrvTimer.h>
+#include <U_GPIOConfig.h>
+#include <U_LEDMatrix.h>
+#include <U_Queue.h>
 
+/// colSwitch is setted by Timer2 when LED matrix should light next column.
+uint8_t volatile colSwitch = 0;
+/// imageSwitch is setted by Timer3 when LED matrix should show next image.
+uint8_t volatile imageSwitch = 0;
 
+/// prevImage is a intermediate variable help know if imageSwitch changed.
+uint8_t prevImage = 0;
 
-uint8_t volatile colSwitch=0;
-uint8_t volatile imageSwitch=0;
-uint8_t prevImage=0;
-
+/// cur describes the current column index. we use bit operation, mask to
+/// simulate a 3 bit counter
 uint32_t cur = 0;
 
+void LEDOnAtCol(ImageHandle *hImage, uint8_t index);
+void LEDOffAtCol(ImageHandle *hImage, uint8_t index);
 
-
-
-
-void LEDOnAtCol(ImageHandle *hImage,uint8_t index);
-void LEDOffAtCol(ImageHandle *hImage,uint8_t index);
-
-
-void ImageOutEn		(ImageHandle *hImage);
-void ColDataSend	(ImageHandle *hImage);
-void ImageLatch		(ImageHandle *hImage);
+void ImageOutEn(ImageHandle *hImage);
+void ColDataSend(ImageHandle *hImage);
+void ImageLatch(ImageHandle *hImage);
 
 void ChannelInit(ChannelHandle *hChannel, Color color);
-void fillBuffer(ChannelHandle* hChannel);
-void refillBuffer(ChannelHandle* hChannel);
-void sentToBufferOnPhase(ChannelHandle* hChannel, Phase phase);
+void fillBuffer(ChannelHandle *hChannel);
+void refillBuffer(ChannelHandle *hChannel);
+void sentToBufferOnPhase(ChannelHandle *hChannel, Phase phase);
 uint8_t getThreshold(Phase phase);
-
 
 void ImageReinit(ImageHandle *hImage, int image);
 
+static const ImageData dataGn = {
+    255, 255, 170, 170, 85,  85,  0,   0,   255, 255, 170, 170, 85,
+    85,  0,   0,   255, 255, 170, 170, 85,  85,  0,   0,   255, 255,
+    170, 170, 85,  85,  0,   0,   0,   0,   85,  85,  170, 170, 255,
+    255, 0,   0,   85,  85,  170, 170, 255, 255, 0,   0,   85,  85,
+    170, 170, 255, 255, 0,   0,   85,  85,  170, 170, 255, 255};
 
-
-
-static const ImageData dataGn= {
-	255, 255, 170, 170, 85, 85, 0, 0,
-	255, 255, 170, 170, 85, 85, 0, 0,
-	255, 255, 170, 170, 85, 85, 0, 0,
-	255, 255, 170, 170, 85, 85, 0, 0,
-	0, 0, 85, 85, 170, 170, 255, 255, 
-	0, 0, 85, 85, 170, 170, 255, 255,
-	0, 0, 85, 85, 170, 170, 255, 255,
-	0, 0, 85, 85, 170, 170, 255, 255
-};
-
-static const ImageData dataRd= {
-	250, 250, 250, 250, 250, 250, 250, 250,
-	80, 80, 80, 80, 80, 80, 80, 80,
-	5, 5, 5, 5, 5, 5, 5, 5,
-	175, 175, 175, 175, 175, 175, 175, 175,
-	250, 250, 250, 250, 250, 250, 250, 250,
-	80, 80, 80, 80, 80, 80, 80, 80,
-	5, 5, 5, 5, 5, 5, 5, 5,
-	175, 175, 175, 175, 175, 175, 175, 175
-};	
+static const ImageData dataRd = {
+    250, 250, 250, 250, 250, 250, 250, 250, 80,  80,  80,  80,  80,
+    80,  80,  80,  5,   5,   5,   5,   5,   5,   5,   5,   175, 175,
+    175, 175, 175, 175, 175, 175, 250, 250, 250, 250, 250, 250, 250,
+    250, 80,  80,  80,  80,  80,  80,  80,  80,  5,   5,   5,   5,
+    5,   5,   5,   5,   175, 175, 175, 175, 175, 175, 175, 175};
 
 static const Column columnConfig = {
-	{&GPIOA, 12}, //antr1
-	{&GPIOA, 11}, //antr2
-	{&GPIOA, 10}, //antr3
-	{&GPIOA, 9 }, //antr4
-	{&GPIOA, 8 }, //antr5
-	{&GPIOC, 9 }, //antr6
-	{&GPIOC, 8 }, //antr7
-	{&GPIOC, 7 }, //antr8
+    {&GPIOA, 12}, // antr1
+    {&GPIOA, 11}, // antr2
+    {&GPIOA, 10}, // antr3
+    {&GPIOA, 9},  // antr4
+    {&GPIOA, 8},  // antr5
+    {&GPIOC, 9},  // antr6
+    {&GPIOC, 8},  // antr7
+    {&GPIOC, 7},  // antr8
 };
 
+/** @brief the main controll function.
+ */
+void ScreenOn(ImageHandle *hImage) {
+  if (isEmpty(&hImage->hChannelGn.buffer)) {
+    if (imageSwitch != prevImage) {
+      prevImage = imageSwitch;
+      ImageReinit(hImage, prevImage);
+    } else {
+      refillBuffer(&hImage->hChannelGn);
+      refillBuffer(&hImage->hChannelRd);
+    }
+  }
 
+  if (colSwitch == 1) {
+    colSwitch = 0;
 
+    ImageOutEnOff(hImage);
+    ColDataSend(hImage);
+    ImageLatch(hImage);
+    ImageOutEn(hImage);
 
+    LEDOffAtCol(hImage, getPre());
+    LEDOnAtCol(hImage, getCur());
 
-
-void ImageInit(ImageHandle *hImage){
-	int i=0;
-	ChannelInit(&hImage->hChannelGn,Gn);
-	ChannelInit(&hImage->hChannelRd,Rd);
-	memcpy(hImage->hColumn,columnConfig,sizeof(columnConfig));
-
-	for(i=0;i<COLUMN_LEN;i++){
-		GPIOConfig(hImage->hColumn[i],GPIO_O_STD_PP_02MHZ);
-		LEDOffAtCol(hImage,i);
-	}
-	fillBuffer(&hImage->hChannelGn);
-	fillBuffer(&hImage->hChannelRd);
+    cur++;
+  }
 }
 
-uint8_t getCur(){
-	return cur & ((1<<3)-1);
+void ImageInit(ImageHandle *hImage) {
+  int i = 0;
+  ChannelInit(&hImage->hChannelGn, Gn);
+  ChannelInit(&hImage->hChannelRd, Rd);
+  memcpy(hImage->hColumn, columnConfig, sizeof(columnConfig));
+
+  for (i = 0; i < COLUMN_LEN; i++) {
+    GPIOConfig(hImage->hColumn[i], GPIO_O_STD_PP_02MHZ);
+    LEDOffAtCol(hImage, i);
+  }
+  fillBuffer(&hImage->hChannelGn);
+  fillBuffer(&hImage->hChannelRd);
 }
 
-uint8_t getPre(){
-	return (cur - 1) & ((1<<3)-1);
+uint8_t getCur() { return cur & ((1 << 3) - 1); }
+
+uint8_t getPre() { return (cur - 1) & ((1 << 3) - 1); }
+
+void ImageReinit(ImageHandle *hImage, int image) {
+  QueueInit(&hImage->hChannelGn.buffer);
+  QueueInit(&hImage->hChannelRd.buffer);
+  switch (image) {
+  case 0:
+    hImage->hChannelGn.data = &dataGn;
+    hImage->hChannelRd.data = &dataRd;
+    break;
+  case 1:
+    hImage->hChannelGn.data = &dataRd;
+    hImage->hChannelRd.data = &dataGn;
+    break;
+  }
+  fillBuffer(&hImage->hChannelGn);
+  fillBuffer(&hImage->hChannelRd);
 }
 
-
-void ScreenOn(ImageHandle *hImage){
-	if(isEmpty(&hImage->hChannelGn.buffer)){
-		if(imageSwitch != prevImage){
-			prevImage = imageSwitch;
-			ImageReinit(hImage,prevImage);
-		}else{
-			refillBuffer(&hImage->hChannelGn);
-			refillBuffer(&hImage->hChannelRd);
-		}
-	}
-	
-	if(colSwitch == 1){
-		colSwitch =0;
-		
-		ImageOutEnOff(hImage);
-		ColDataSend(hImage);
-		ImageLatch(hImage);
-		ImageOutEn(hImage);
-		
-		LEDOffAtCol(hImage,getPre());
-		LEDOnAtCol(hImage,getCur());
-		
-		cur++;
-	}
+void LEDOnAtCol(ImageHandle *hImage, uint8_t index) {
+  resetGPIOPin(hImage->hColumn[index]);
 }
 
-void ImageReinit(ImageHandle *hImage, int image){
-	QueueInit(&hImage->hChannelGn.buffer);
-	QueueInit(&hImage->hChannelRd.buffer);
-	switch (image) {
-		case 0:
-			hImage->hChannelGn.data = &dataGn;
-			hImage->hChannelRd.data = &dataRd;
-			break;
-		case 1:
-			hImage->hChannelGn.data = &dataRd;
-			hImage->hChannelRd.data = &dataGn;
-			break;
-	}
-	fillBuffer(&hImage->hChannelGn);
-	fillBuffer(&hImage->hChannelRd);
-
+void LEDOffAtCol(ImageHandle *hImage, uint8_t index) {
+  setGPIOPin(hImage->hColumn[index]);
 }
 
-
-void LEDOnAtCol(ImageHandle *hImage,uint8_t index){
-	resetGPIOPin(hImage->hColumn[index]);
+void ImageOutEn(ImageHandle *hImage) {
+  SPIOutEn(&hImage->hChannelGn.hSPI);
+  SPIOutEn(&hImage->hChannelRd.hSPI);
 }
 
-void LEDOffAtCol(ImageHandle *hImage,uint8_t index){
-	setGPIOPin(hImage->hColumn[index]);
+void ImageOutEnOff(ImageHandle *hImage) {
+  SPIOutEnOff(&hImage->hChannelGn.hSPI);
+  SPIOutEnOff(&hImage->hChannelRd.hSPI);
 }
 
-void ImageOutEn(ImageHandle *hImage){
-	SPIOutEn(&hImage->hChannelGn.hSPI);
-	SPIOutEn(&hImage->hChannelRd.hSPI);
+void ColDataSend(ImageHandle *hImage) {
+  SPIEmit(&hImage->hChannelGn.hSPI, pop(&hImage->hChannelGn.buffer));
+  SPIEmit(&hImage->hChannelRd.hSPI, pop(&hImage->hChannelRd.buffer));
 }
 
-void ImageOutEnOff(ImageHandle *hImage){
-	SPIOutEnOff(&hImage->hChannelGn.hSPI);
-	SPIOutEnOff(&hImage->hChannelRd.hSPI);
+void ImageLatch(ImageHandle *hImage) {
+  SPILatch(&hImage->hChannelGn.hSPI);
+  SPILatch(&hImage->hChannelRd.hSPI);
 }
 
-void ColDataSend(ImageHandle *hImage){
-	SPIEmit(&hImage->hChannelGn.hSPI,pop(&hImage->hChannelGn.buffer));
-	SPIEmit(&hImage->hChannelRd.hSPI,pop(&hImage->hChannelRd.buffer));
+void ChannelInit(ChannelHandle *hChannel, Color color) {
+
+  SPIInit(&hChannel->hSPI, color);
+  QueueInit(&hChannel->buffer);
+  switch (color) {
+  case Gn:
+    hChannel->data = &dataGn;
+    break;
+  case Rd:
+    hChannel->data = &dataRd;
+    break;
+  }
 }
+//TODO: rename to BufferRefill
+void refillBuffer(ChannelHandle *hChannel) { refill(&hChannel->buffer); }
 
-void ImageLatch(ImageHandle *hImage){
-	SPILatch(&hImage->hChannelGn.hSPI);
-	SPILatch(&hImage->hChannelRd.hSPI);
-}
-
-
-
-void ChannelInit(ChannelHandle *hChannel, Color color){
-
-	SPIInit(&hChannel->hSPI, color);
-	QueueInit(&hChannel->buffer);
-	switch (color) {
-		case Gn:
-			hChannel->data = &dataGn;
-			break;
-		case Rd:
-			hChannel->data = &dataRd;
-			break;
-	}
-}
-
-void refillBuffer(ChannelHandle* hChannel){
-	refill(&hChannel->buffer);
-}
-
-void fillBuffer(ChannelHandle* hChannel) {
+//TODO: rename to BufferFill
+void fillBuffer(ChannelHandle *hChannel) {
   sentToBufferOnPhase(hChannel, phase0);
   sentToBufferOnPhase(hChannel, phase1);
   sentToBufferOnPhase(hChannel, phase2);
   sentToBufferOnPhase(hChannel, phase3);
 }
 
-
-void sentToBufferOnPhase(ChannelHandle* hChannel, Phase phase) {
-	uint32_t data = 0;
+void sentToBufferOnPhase(ChannelHandle *hChannel, Phase phase) {
+  uint32_t data = 0;
   uint32_t flag = 0;
-	size_t col;
-	size_t row;
-	size_t j;
-	
+  size_t col;
+  size_t row;
+  size_t j;
+
   uint8_t threshold = getThreshold(phase);
-	
+	//TODO: Not CPU Cache friendly, need to change ImageData definition.
   for (col = 0; col < COLUMN_LEN; col++) {
-		for (row = 0; row < ROW_LEN; row++) {
+    for (row = 0; row < ROW_LEN; row++) {
       for (j = 0; j < 4; j++) {
-        flag = (((*hChannel->data)[row][col] & ((1 << (8 - j * 2)) - 1)) >> (6 - j * 2)) >= threshold;
+        flag = (((*hChannel->data)[row][col] & ((1 << (8 - j * 2)) - 1)) >>
+                (6 - j * 2)) >= threshold;
         data = (data << 1) + flag;
       }
-		}
-		push(&hChannel->buffer, data);
-		data = 0;
-   }
- }
+    }
+    push(&hChannel->buffer, data);
+    data = 0;
+  }
+}
 
-
+//TODO: rename to Threshold
 uint8_t getThreshold(Phase phase) {
-  uint8_t threshold=0;
+  uint8_t threshold = 0;
   switch (phase) {
   case phase0:
     threshold = 1;
@@ -241,19 +215,3 @@ uint8_t getThreshold(Phase phase) {
   }
   return threshold;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
