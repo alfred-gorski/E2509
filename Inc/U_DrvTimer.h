@@ -8,7 +8,7 @@
 #include <HW_TIM.h>
 
 
-#define GLOBAL_BRIGHTNESS_PERCENT 50
+#define GLOBAL_BRIGHTNESS_PERCENT 90
 
 typedef void (* Callback)(void); 
 

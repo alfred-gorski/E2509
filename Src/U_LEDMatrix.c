@@ -29,6 +29,7 @@ void ImageLatch		(ImageHandle *hImage);
 
 void ChannelInit(ChannelHandle *hChannel, Color color);
 void fillBuffer(ChannelHandle* hChannel);
+void refillBuffer(ChannelHandle* hChannel);
 void sentToBufferOnPhase(ChannelHandle* hChannel, Phase phase);
 uint8_t getThreshold(Phase phase);
 
@@ -86,6 +87,8 @@ void ImageInit(ImageHandle *hImage){
 		GPIOConfig(hImage->hColumn[i],GPIO_O_STD_PP_02MHZ);
 		LEDOffAtCol(hImage,i);
 	}
+	fillBuffer(&hImage->hChannelGn);
+	fillBuffer(&hImage->hChannelRd);
 }
 
 uint8_t getCur(){
@@ -98,33 +101,28 @@ uint8_t getPre(){
 
 
 void ScreenOn(ImageHandle *hImage){
-	while(colSwitch == 1){
+	if(isEmpty(&hImage->hChannelGn.buffer)){
+		if(imageSwitch != prevImage){
+			prevImage = imageSwitch;
+			ImageReinit(hImage,prevImage);
+		}else{
+			refillBuffer(&hImage->hChannelGn);
+			refillBuffer(&hImage->hChannelRd);
+		}
+	}
+	
+	if(colSwitch == 1){
 		colSwitch =0;
 		
 		ImageOutEnOff(hImage);
-		LEDOffAtCol(hImage,getPre());
-		
-		if(isEmpty(&hImage->hChannelGn.buffer)){
-			fillBuffer(&hImage->hChannelGn);
-			fillBuffer(&hImage->hChannelRd);
-		}
-		
 		ColDataSend(hImage);
 		ImageLatch(hImage);
 		ImageOutEn(hImage);
 		
-
+		LEDOffAtCol(hImage,getPre());
 		LEDOnAtCol(hImage,getCur());
 		
-		
 		cur++;
-		
-		if ((imageSwitch != prevImage)&&(0==getCur())){
-			prevImage = imageSwitch;
-			ImageReinit(hImage,prevImage);
-		}
-		
-		
 	}
 }
 
@@ -141,7 +139,8 @@ void ImageReinit(ImageHandle *hImage, int image){
 			hImage->hChannelRd.data = &dataGn;
 			break;
 	}
-	
+	fillBuffer(&hImage->hChannelGn);
+	fillBuffer(&hImage->hChannelRd);
 
 }
 
@@ -190,6 +189,9 @@ void ChannelInit(ChannelHandle *hChannel, Color color){
 	}
 }
 
+void refillBuffer(ChannelHandle* hChannel){
+	refill(&hChannel->buffer);
+}
 
 void fillBuffer(ChannelHandle* hChannel) {
   sentToBufferOnPhase(hChannel, phase0);

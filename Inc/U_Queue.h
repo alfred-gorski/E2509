@@ -22,7 +22,7 @@ int isEmpty(const Queue *const hQueue);
 int isFull(const Queue *const hQueue);
 uint32_t pop(Queue *const hQueue);
 void push(Queue *const hQueue, uint32_t data);
-
+void refill(Queue *const hQueue);
 
 
 

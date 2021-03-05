@@ -42,3 +42,7 @@ void push(Queue *const hQueue, uint32_t data) {
 uint32_t len(const Queue *const hQueue) { 
 	return hQueue->wcntr - hQueue->rcntr; 
 }
+
+void refill(Queue *const hQueue){
+	hQueue->rcntr = 0;
+}
