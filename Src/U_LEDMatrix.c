@@ -19,20 +19,20 @@ uint8_t prevImage = 0;
 /// simulate a 3 bit counter
 uint32_t cur = 0;
 
-void LEDOnAtCol(ImageHandle *hImage, uint8_t index);
-void LEDOffAtCol(ImageHandle *hImage, uint8_t index);
+void LEDOnAtCol(const ImageHandle *hImage,const uint8_t index);
+void LEDOffAtCol(const ImageHandle *hImage,const uint8_t index);
 
-void ImageOutEn(ImageHandle *hImage);
-void ColDataSend(ImageHandle *hImage);
-void ImageLatch(ImageHandle *hImage);
+void ImageOutEn(const ImageHandle *const hImage);
+void ColDataSend(ImageHandle *const hImage);
+void ImageLatch(const ImageHandle *const hImage);
 
-void ChannelInit(ChannelHandle *hChannel, Color color);
-void BufferFill(ChannelHandle *hChannel);
-void BufferRefill(ChannelHandle *hChannel);
-void sentToBufferOnPhase(ChannelHandle *hChannel, Phase phase);
-uint8_t Threshold(Phase phase);
+void ChannelInit(ChannelHandle *hChannel, const Color color);
+void BufferFill(ChannelHandle *const hChannel);
+void BufferRefill(ChannelHandle *const hChannel);
+void sentToBufferOnPhase(ChannelHandle *const hChannel,const Phase phase);
+uint8_t Threshold(const Phase phase);
 
-void ImageReinit(ImageHandle *hImage, int image);
+void ImageReinit(ImageHandle *hImage,const int image);
 
 uint8_t getCur(void);
 uint8_t getPre(void);
@@ -64,7 +64,7 @@ static const Column columnConfig = {
 
 /** @brief the main controll function.
  */
-void ScreenOn(ImageHandle *hImage) {
+void ScreenOn(ImageHandle *const hImage) {
   if (isEmpty(&hImage->hChannelGn.buffer)) {
     if (imageSwitch != prevImage) {
       prevImage = imageSwitch;
@@ -90,7 +90,7 @@ void ScreenOn(ImageHandle *hImage) {
   }
 }
 
-void ImageInit(ImageHandle *hImage) {
+void ImageInit(ImageHandle *const hImage) {
   int i = 0;
   ChannelInit(&hImage->hChannelGn, Gn);
   ChannelInit(&hImage->hChannelRd, Rd);
@@ -108,7 +108,7 @@ uint8_t getCur(void) { return cur & ((1 << 3) - 1); }
 
 uint8_t getPre(void) { return (cur - 1) & ((1 << 3) - 1); }
 
-void ImageReinit(ImageHandle *hImage, int image) {
+void ImageReinit(ImageHandle *const hImage, const int image) {
   QueueInit(&hImage->hChannelGn.buffer);
   QueueInit(&hImage->hChannelRd.buffer);
   switch (image) {
@@ -125,35 +125,35 @@ void ImageReinit(ImageHandle *hImage, int image) {
   BufferFill(&hImage->hChannelRd);
 }
 
-void LEDOnAtCol(ImageHandle *hImage, uint8_t index) {
+void LEDOnAtCol(const ImageHandle *const hImage, const uint8_t index) {
   resetGPIOPin(hImage->hColumn[index]);
 }
 
-void LEDOffAtCol(ImageHandle *hImage, uint8_t index) {
+void LEDOffAtCol(const ImageHandle *const hImage,const  uint8_t index) {
   setGPIOPin(hImage->hColumn[index]);
 }
 
-void ImageOutEn(ImageHandle *hImage) {
+void ImageOutEn(const ImageHandle *const hImage) {
   SPIOutEn(&hImage->hChannelGn.hSPI);
   SPIOutEn(&hImage->hChannelRd.hSPI);
 }
 
-void ImageOutEnOff(ImageHandle *hImage) {
+void ImageOutEnOff(const ImageHandle *const hImage) {
   SPIOutEnOff(&hImage->hChannelGn.hSPI);
   SPIOutEnOff(&hImage->hChannelRd.hSPI);
 }
 
-void ColDataSend(ImageHandle *hImage) {
+void ColDataSend(ImageHandle *const hImage) {
   SPIEmit(&hImage->hChannelGn.hSPI, pop(&hImage->hChannelGn.buffer));
   SPIEmit(&hImage->hChannelRd.hSPI, pop(&hImage->hChannelRd.buffer));
 }
 
-void ImageLatch(ImageHandle *hImage) {
+void ImageLatch(const ImageHandle *const hImage) {
   SPILatch(&hImage->hChannelGn.hSPI);
   SPILatch(&hImage->hChannelRd.hSPI);
 }
 
-void ChannelInit(ChannelHandle *hChannel, Color color) {
+void ChannelInit(ChannelHandle *const hChannel, const Color color) {
 
   SPIInit(&hChannel->hSPI, color);
   QueueInit(&hChannel->buffer);
@@ -167,17 +167,17 @@ void ChannelInit(ChannelHandle *hChannel, Color color) {
   }
 }
 
-void BufferRefill(ChannelHandle *hChannel) { refill(&hChannel->buffer); }
+void BufferRefill(ChannelHandle *const hChannel) { refill(&hChannel->buffer); }
 
 
-void BufferFill(ChannelHandle *hChannel) {
+void BufferFill(ChannelHandle *const hChannel) {
   sentToBufferOnPhase(hChannel, phase0);
   sentToBufferOnPhase(hChannel, phase1);
   sentToBufferOnPhase(hChannel, phase2);
   sentToBufferOnPhase(hChannel, phase3);
 }
 
-void sentToBufferOnPhase(ChannelHandle *hChannel, Phase phase) {
+void sentToBufferOnPhase(ChannelHandle *hChannel, const Phase phase) {
   uint32_t data = 0;
   uint32_t flag = 0;
   size_t col;
@@ -200,7 +200,7 @@ void sentToBufferOnPhase(ChannelHandle *hChannel, Phase phase) {
 }
 
 
-uint8_t Threshold(Phase phase) {
+uint8_t Threshold(const Phase phase) {
   uint8_t threshold = 0;
   switch (phase) {
   case phase0:

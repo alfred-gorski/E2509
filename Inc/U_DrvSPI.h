@@ -51,10 +51,10 @@ typedef struct {
   Color color;
 } SPIHandle;
 
-void SPIInit(SPIHandle *hSPI, Color color);
-int SPIEmit(SPIHandle *hSPI, uint32_t data);
-void SPILatch(SPIHandle *hSPI);
-void SPIOutEn(SPIHandle *hSPI);
-void SPIOutEnOff(SPIHandle *hSPI);
+void SPIInit(SPIHandle *const hSPI,const Color color);
+int SPIEmit(SPIHandle *const hSPI, const uint32_t data);
+void SPILatch(const SPIHandle *const hSPI);
+void SPIOutEn(const SPIHandle *const hSPI);
+void SPIOutEnOff(const SPIHandle *const hSPI);
 
 #endif

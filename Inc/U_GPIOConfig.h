@@ -12,8 +12,8 @@ typedef struct {
   uint8_t pin;
 } _GPIOConfig;
 
-void GPIOConfig(_GPIOConfig gpioconfig, uint8_t value);
-void setGPIOPin(_GPIOConfig gpioconfig);
-void resetGPIOPin(_GPIOConfig gpioconfig);
+void GPIOConfig(const _GPIOConfig gpioconfig, const uint8_t value);
+void setGPIOPin(const _GPIOConfig gpioconfig);
+void resetGPIOPin(const _GPIOConfig gpioconfig);
 
 #endif

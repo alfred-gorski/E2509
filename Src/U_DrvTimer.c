@@ -20,8 +20,8 @@ extern uint8_t volatile colSwitch;
 extern uint8_t volatile imageSwitch;
 extern ImageHandle hImage;
 
-void timerEn(TimerHandle *hTimer);
-void timerStart(TimerHandle *hTimer);
+void timerEn(const TimerHandle *const hTimer);
+void timerStart(const TimerHandle *const hTimer);
 
 /// @brief Timer callback functions definition
 void Timer2Callback(void) { colSwitch = 1; }
@@ -29,15 +29,15 @@ void Timer3Callback(void) { imageSwitch = (~imageSwitch) & 1; }
 void Timer4Callback(void) { ImageOutEnOff(&hImage); }
 
 /// Timer configurations
-TimerHandle Timer2 = {&TIM2,  RCC_TIM2, NVIC_TIM2,
+const TimerHandle Timer2 = {&TIM2,  RCC_TIM2, NVIC_TIM2,
                       36 - 1, 100 - 1,  &Timer2Callback};
-TimerHandle Timer3 = {&TIM3,    RCC_TIM3,  NVIC_TIM3,
+const TimerHandle Timer3 = {&TIM3,    RCC_TIM3,  NVIC_TIM3,
                       7200 - 1, 10000 - 1, &Timer3Callback};
-TimerHandle Timer4 = {
+const TimerHandle Timer4 = {
     &TIM4,          RCC_TIM4, NVIC_TIM4, 36 - 1, GLOBAL_BRIGHTNESS_PERCENT - 1,
     &Timer4Callback};
 
-void timerInit(TimerHandle *const hTimer) {
+void timerInit(const TimerHandle *const hTimer) {
   /// Enable RCC
   PeripheryEnable(hTimer->RCC);
 
@@ -50,13 +50,13 @@ void timerInit(TimerHandle *const hTimer) {
   timerStart(hTimer);
 }
 
-void timerEn(TimerHandle *hTimer) { hTimer->instance->CR1 |= MASK_TIM_CR1_CEN; }
+void timerEn(const TimerHandle *const hTimer) { hTimer->instance->CR1 |= MASK_TIM_CR1_CEN; }
 
 /// @brief IRQ Enable
-void timerStart(TimerHandle *hTimer) { InterruptEnable(hTimer->irq); }
+void timerStart(const TimerHandle *const hTimer) { InterruptEnable(hTimer->irq); }
 
 /// @brief when time out, configure Timer and call the handler.
-void timerInterruptHandler(TimerHandle *hTimer) {
+void timerInterruptHandler(const TimerHandle *const hTimer) {
   hTimer->instance->CR1 &= ~MASK_TIM_CR1_CEN;
   hTimer->instance->CNT = 0;
   hTimer->instance->SR &= ~MASK_TIM_SR_UIF;

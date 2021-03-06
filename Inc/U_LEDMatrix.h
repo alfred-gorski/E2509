@@ -43,6 +43,6 @@ typedef struct {
  */
 typedef enum { phase0 = 0, phase1, phase2, phase3 } Phase;
 
-void ImageInit(ImageHandle *hImage);
-void ScreenOn(ImageHandle *hImage);
-void ImageOutEnOff(ImageHandle *hImage);
+void ImageInit(ImageHandle *const hImage);
+void ScreenOn(ImageHandle *const hImage);
+void ImageOutEnOff(const ImageHandle *const hImage);

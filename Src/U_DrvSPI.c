@@ -17,7 +17,7 @@ static const _SPIGPIOs SPIGPIOsRd = {
 	{&GPIOB, 12}, {&GPIOB, 13}, {&GPIOB, 14}, {&GPIOB, 15}, {&GPIOC, 6},
 };
 
-void SPIInit(SPIHandle *hSPI, Color color) {
+void SPIInit(SPIHandle *const hSPI,const Color color) {
   _SPIGPIOs gpios;
 
   switch (color) {
@@ -55,17 +55,18 @@ void SPIInit(SPIHandle *hSPI, Color color) {
 }
 
 /// \brief send given data to SPI
-int SPIEmit(SPIHandle *hSPI, uint32_t data) {
+int SPIEmit(SPIHandle *const hSPI,const uint32_t data) {
   uint8_t TxCount = 0;
   uint8_t TimeOutCount = 0;
   uint8_t pick = 0;
+	uint32_t tmpdata=data;
 
   hSPI->status = BUSY;
 
   while (TxCount < 4 && TimeOutCount < TIMEOUT_THRESHOLD) {
     if ((hSPI->instance->SR & MASK_SPI_SR_TXE) == MASK_SPI_SR_TXE) {
-      pick = data & SIZE_8_MASK;
-      data = data >> 8;
+      pick = tmpdata & SIZE_8_MASK;
+      tmpdata = tmpdata >> 8;
       hSPI->instance->DR = pick;
       TxCount++;
     } else {
@@ -87,18 +88,18 @@ int SPIEmit(SPIHandle *hSPI, uint32_t data) {
   }
 }
 
-void SPILatch(SPIHandle *hSPI) {
+void SPILatch(const SPIHandle *const hSPI) {
   _GPIOConfig latch = hSPI->gpios.latch;
   setGPIOPin(latch);
   resetGPIOPin(latch);
 }
 
-void SPIOutEn(SPIHandle *hSPI) {
+void SPIOutEn(const SPIHandle *const hSPI) {
   _GPIOConfig outEn = hSPI->gpios.outEn;
   setGPIOPin(outEn);
 }
 
-void SPIOutEnOff(SPIHandle *hSPI) {
+void SPIOutEnOff(const SPIHandle *const hSPI) {
   _GPIOConfig outEn = hSPI->gpios.outEn;
   resetGPIOPin(outEn);
 }

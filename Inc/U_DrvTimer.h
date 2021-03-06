@@ -26,6 +26,6 @@ typedef struct {
   Callback onTimeUpdateEvent;
 } TimerHandle;
 
-void timerInit(TimerHandle *const hTimer);
+void timerInit(const TimerHandle *const hTimer);
 
 #endif
